@@ -27,9 +27,9 @@ services:
       mountPath: /opt/render/project/src/media
       sizeGB: 1
 
+databases:
   # The Managed PostgreSQL Database
-  - type: pgo
-    name: talentorbit-db
+  - name: talentorbit-db
     region: ohio
     plan: free
     databaseName: talentorbit
