@@ -19,7 +19,7 @@ services:
       - key: DEBUG
         value: "False"
       - key: ALLOWED_HOSTS
-        value: "your-render-url.onrender.com" # You will replace this later
+        value: "talentorbit-web.onrender.com,*.onrender.com,localhost"
       # Razorpay and Email vars will be added manually in Render Dashboard for security
       # Cloudinary vars will be added manually in Render Dashboard for security
 
