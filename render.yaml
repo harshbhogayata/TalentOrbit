@@ -20,12 +20,7 @@ services:
       - key: ALLOWED_HOSTS
         value: "your-render-url.onrender.com" # You will replace this later
       # Razorpay and Email vars will be added manually in Render Dashboard for security
-      
-    # Persistent Disk for Media Uploads (Avatars, Resumes, etc.)
-    disk:
-      name: media-uploads
-      mountPath: /opt/render/project/src/media
-      sizeGB: 1
+      # Cloudinary vars will be added manually in Render Dashboard for security
 
 databases:
   # The Managed PostgreSQL Database
