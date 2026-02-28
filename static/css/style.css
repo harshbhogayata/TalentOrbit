@@ -670,12 +670,25 @@ body::after {
 /* ━━━ Bento Grid (Admin Dashboard) ━━━ */
 .bento-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(12, 1fr);
+    grid-auto-rows: minmax(140px, auto);
     gap: 1.5rem;
 }
 
 .bento-cell {
-    min-height: 0;
+    background: var(--glass-surface);
+    border: var(--glass-border);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s var(--ease-spring), box-shadow 0.3s ease;
+}
+
+.bento-cell:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    border-color: rgba(255, 255, 255, 0.1);
 }
 
 .bento-cell.span-2 {
@@ -690,13 +703,39 @@ body::after {
     grid-column: span 4;
 }
 
+.bento-cell.span-6 {
+    grid-column: span 6;
+}
+
+.bento-cell.span-8 {
+    grid-column: span 8;
+}
+
+.bento-cell.span-12 {
+    grid-column: span 12;
+}
+
 .bento-cell.row-2 {
     grid-row: span 2;
 }
 
-@media (max-width: 992px) {
+@media (max-width: 1200px) {
+
+    .bento-cell.span-2,
+    .bento-cell.span-3,
+    .bento-cell.span-4 {
+        grid-column: span 6;
+    }
+}
+
+@media (max-width: 768px) {
     .bento-grid {
-        grid-template-columns: repeat(2, 1fr);
+        display: flex;
+        flex-direction: column;
+    }
+
+    .bento-cell {
+        min-height: 160px;
     }
 
     .bento-cell.span-3,
@@ -1557,7 +1596,7 @@ body::after {
     font-size: 0.85rem;
 }
 
-.breadcrumb-item + .breadcrumb-item::before {
+.breadcrumb-item+.breadcrumb-item::before {
     color: var(--tungsten);
 }
 
