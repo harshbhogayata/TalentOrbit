@@ -404,7 +404,11 @@ class QuizQuestionForm(forms.ModelForm):
 # ──────────────────────────────────────────────────────────────
 
 class ChangePasswordForm(PasswordChangeForm):
-    """Styled password change form with form-control widgets."""
+    """Form to change a user's password with styled inputs."""
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields.values():
+            field.widget.attrs.update({'class': 'form-control', 'placeholder': field.label})
     old_password = forms.CharField(
         label='Current Password',
         widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Enter current password'}),
