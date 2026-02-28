@@ -1,0 +1,69 @@
+<li class="dash-nav-group">Overview</li>
+<li class="dash-nav-item">
+    <a class="dash-nav-link {% if current_page == 'dashboard' %}active{% endif %}" href="{% url 'dashboard' %}">
+        <i class="bi bi-grid-1x2"></i> Dashboard
+    </a>
+</li>
+
+<li class="dash-nav-group">Career</li>
+<li class="dash-nav-item">
+    <a class="dash-nav-link {% if current_page == 'jobs' %}active{% endif %}" href="{% url 'job_list' %}">
+        <i class="bi bi-briefcase"></i> Browse Jobs
+    </a>
+</li>
+<li class="dash-nav-item">
+    <a class="dash-nav-link {% if current_page == 'applications' %}active{% endif %}" href="{% url 'user_applications' %}">
+        <i class="bi bi-inbox"></i> My Applications
+    </a>
+</li>
+<li class="dash-nav-item">
+    <a class="dash-nav-link {% if current_page == 'saved_jobs' %}active{% endif %}" href="{% url 'saved_jobs' %}">
+        <i class="bi bi-bookmark-star"></i> Saved Jobs
+    </a>
+</li>
+
+<li class="dash-nav-group">Learning</li>
+<li class="dash-nav-item">
+    <a class="dash-nav-link {% if current_page == 'videos' %}active{% endif %}" href="{% url 'video_list' %}">
+        <i class="bi bi-play-circle"></i> Skill Videos
+    </a>
+</li>
+<li class="dash-nav-item">
+    <a class="dash-nav-link {% if current_page == 'quizzes' %}active{% endif %}" href="{% url 'quiz_list' %}">
+        <i class="bi bi-patch-question"></i> Quizzes
+    </a>
+</li>
+<li class="dash-nav-item">
+    <a class="dash-nav-link {% if current_page == 'quiz_history' %}active{% endif %}" href="{% url 'quiz_history' %}">
+        <i class="bi bi-clock-history"></i> Quiz History
+    </a>
+</li>
+
+<li class="dash-nav-group">Account</li>
+<li class="dash-nav-item">
+    <a class="dash-nav-link {% if current_page == 'subscription' %}active{% endif %}" href="{% url 'subscription_page' %}">
+        <i class="bi bi-star"></i> Subscription
+    </a>
+</li>
+<li class="dash-nav-item">
+    <a class="dash-nav-link {% if current_page == 'profile' %}active{% endif %}" href="{% url 'user_profile' %}">
+        <i class="bi bi-person"></i> Profile
+    </a>
+</li>
+<li class="dash-nav-item">
+    <a class="dash-nav-link {% if current_page == 'password' %}active{% endif %}" href="{% url 'change_password' %}">
+        <i class="bi bi-shield-lock"></i> Password
+    </a>
+</li>
+<li class="dash-nav-item">
+    <a class="dash-nav-link {% if current_page == 'notifications' %}active{% endif %}" href="{% url 'notifications' %}">
+        <i class="bi bi-bell"></i> Notifications
+    </a>
+</li>
+
+<li class="dash-nav-sep"></li>
+<li class="dash-nav-item">
+    <a class="dash-nav-link dash-nav-danger {% if current_page == 'deactivate' %}active{% endif %}" href="{% url 'deactivate_account' %}">
+        <i class="bi bi-x-octagon"></i> Deactivate
+    </a>
+</li>

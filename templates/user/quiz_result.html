@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block title %}Quiz Results{% endblock %}
+{% block content %}
+<div class="container page-content" style="max-width: 600px;">
+    <div class="glass-card p-4 p-md-5 text-center fade-in">
+        {% if attempt.passed %}
+        <i class="bi bi-trophy-fill" style="font-size: 4rem; color: var(--signal-amber); display: block; margin-bottom: 1rem;"></i>
+        <h2 style="font-weight: 800; color: var(--nvidia-green);">Congratulations! 🎉</h2>
+        {% else %}
+        <i class="bi bi-emoji-frown" style="font-size: 4rem; color: var(--crimson-red); display: block; margin-bottom: 1rem;"></i>
+        <h2 style="font-weight: 800; color: var(--crimson-red);">Keep Trying!</h2>
+        {% endif %}
+
+        <p style="color: var(--text-secondary); margin: 1rem 0;">Quiz: <strong>{{ quiz.title }}</strong></p>
+
+        <div class="row g-3 my-4">
+            <div class="col-4">
+                <div class="stat-card">
+                    <div class="value" style="font-size: 2rem;">{{ attempt.percentage }}%</div>
+                    <div class="label">Score</div>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="stat-card">
+                    <div class="value" style="font-size: 2rem;">{{ attempt.score }}</div>
+                    <div class="label">Correct</div>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="stat-card">
+                    <div class="value" style="font-size: 2rem;">{{ attempt.total_questions }}</div>
+                    <div class="label">Total</div>
+                </div>
+            </div>
+        </div>
+
+        <p style="color: var(--text-muted); font-size: 0.9rem;">Passing score: {{ quiz.passing_score }}%</p>
+
+        <div class="d-flex gap-3 justify-content-center mt-4 flex-wrap">
+            <a href="{% url 'take_quiz' quiz.pk %}" class="btn btn-primary-gradient"><i class="bi bi-arrow-repeat me-2"></i>Retake</a>
+            <a href="{% url 'quiz_list' %}" class="btn btn-glass">All Quizzes</a>
+            <a href="{% url 'dashboard' %}" class="btn btn-glass">Dashboard</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

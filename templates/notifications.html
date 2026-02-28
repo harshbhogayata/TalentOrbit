@@ -1,0 +1,47 @@
+{% extends 'dashboard_base.html' %}
+{% block title %}Notifications{% endblock %}
+{% block sidebar_nav %}
+{% include 'includes/sidebar_user.html' with current_page='notifications' %}
+{% endblock %}
+
+{% block dashboard_content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 style="font-weight: 800;"><i class="bi bi-bell me-2" style="color: var(--primary-light);"></i>Notifications</h2>
+    {% if notifications %}
+    <form method="POST" action="{% url 'mark_all_read' %}" class="d-inline">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-glass btn-sm"><i class="bi bi-check-all me-1"></i>Mark All Read</button>
+    </form>
+    {% endif %}
+</div>
+
+{% for n in notifications %}
+<div class="notif-item {% if not n.is_read %}unread{% endif %} fade-in">
+    <div class="notif-icon {{ n.notif_type }}">
+        <i
+            class="bi bi-{% if n.notif_type == 'application' %}briefcase{% elif n.notif_type == 'subscription' %}star{% elif n.notif_type == 'approval' %}building{% elif n.notif_type == 'tender' %}file-earmark{% else %}bell{% endif %}"></i>
+    </div>
+    <div class="flex-grow-1">
+        <div class="d-flex justify-content-between align-items-start">
+            <div>
+                <div style="font-weight: 600;">{{ n.title }}</div>
+                <div style="color: var(--text-muted); font-size: 0.9rem; margin-top: 0.25rem;">{{ n.message }}</div>
+            </div>
+            <small style="color: var(--text-muted); white-space: nowrap; margin-left: 1rem;">{{ n.created_at|timesince }} ago</small>
+        </div>
+    </div>
+    {% if not n.is_read %}
+    <form method="POST" action="{% url 'mark_notification_read' n.pk %}" class="d-inline ms-2">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-sm btn-glass" title="Mark as read"><i class="bi bi-check"></i></button>
+    </form>
+    {% endif %}
+</div>
+{% empty %}
+<div class="empty-state">
+    <i class="bi bi-bell-slash d-block"></i>
+    <h4>No notifications</h4>
+    <p>You're all caught up!</p>
+</div>
+{% endfor %}
+{% endblock %}

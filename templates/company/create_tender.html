@@ -1,0 +1,23 @@
+{% extends 'dashboard_base.html' %}
+{% block title %}Create Tender{% endblock %}
+{% block sidebar_nav %}
+{% include 'includes/sidebar_company.html' with current_page='create_tender' %}
+{% endblock %}
+
+{% block dashboard_content %}
+<h2 style="font-weight: 800; margin-bottom: 2rem;"><i class="bi bi-plus-square me-2"
+        style="color: var(--primary-light);"></i>Create Tender</h2>
+<div class="glass-card" style="max-width: 700px;">
+    <form method="POST">
+        {% csrf_token %}
+        {% for field in form %}
+        <div class="mb-3">
+            <label class="form-label">{{ field.label }}</label>
+            {{ field }}
+        </div>
+        {% endfor %}
+        <button type="submit" class="btn btn-primary-gradient w-100"><i class="bi bi-send me-2"></i>Create
+            Tender</button>
+    </form>
+</div>
+{% endblock %}

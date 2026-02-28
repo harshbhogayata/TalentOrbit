@@ -1,0 +1,175 @@
+{% extends 'dashboard_base.html' %}
+{% block title %}Admin Dashboard{% endblock %}
+
+{% block dashboard_content %}
+<div class="d-flex justify-content-between align-items-end mb-5">
+    <div>
+        <h2 class="h3 fw-bold mb-1">Total Situational Awareness</h2>
+        <p class="text-secondary mb-0">Overview of system health and performance</p>
+    </div>
+    <div class="d-flex gap-2">
+        <button class="btn btn-glass btn-sm"><i class="bi bi-arrow-clockwise me-2"></i>Refresh</button>
+        <button class="btn btn-primary-gradient btn-sm"><i class="bi bi-download me-2"></i>Report</button>
+    </div>
+</div>
+
+<!-- Bento Grid -->
+<div class="bento-grid">
+
+    <!-- Cell A: Total Users (Big Data Viz Placeholder) -->
+    <div class="bento-cell span-4 row-2">
+        <div class="d-flex justify-content-between align-items-start mb-3">
+            <h5 class="fw-bold text-titanium mb-0">Total Talent</h5>
+            <span class="badge-dot success"></span>
+        </div>
+        <div class="mt-auto">
+            <h1 class="display-3 fw-bold text-gradient mb-0">{{ total_users }}</h1>
+            <p class="text-secondary small">Active candidates on platform</p>
+        </div>
+        <div class="mt-3">
+            <div class="progress" style="height: 4px; background: rgba(255,255,255,0.1);">
+                <div class="progress-bar bg-primary" style="width: 75%"></div>
+            </div>
+            <div class="d-flex justify-content-between mt-2 small text-muted">
+                <span>Growth</span>
+                <span class="text-success">+12%</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cell B: Companies -->
+    <div class="bento-cell span-4">
+        <div class="d-flex align-items-center gap-3 mb-2">
+            <div class="rounded-circle d-flex align-items-center justify-content-center"
+                style="width: 40px; height: 40px; background: rgba(118, 185, 0, 0.1); color: var(--nvidia-green);">
+                <i class="bi bi-building"></i>
+            </div>
+            <h6 class="mb-0 fw-bold">Companies</h6>
+        </div>
+        <div class="d-flex align-items-baseline gap-2 mt-2">
+            <span class="h3 fw-bold mb-0">{{ total_companies }}</span>
+            <small class="text-secondary">Total</small>
+        </div>
+        <small class="text-warning mt-auto d-block"><i class="bi bi-clock-history me-1"></i>{{ pending_companies }}
+            Pending Approval</small>
+    </div>
+
+    <!-- Cell C: Jobs -->
+    <div class="bento-cell span-4">
+        <div class="d-flex align-items-center gap-3 mb-2">
+            <div class="rounded-circle d-flex align-items-center justify-content-center"
+                style="width: 40px; height: 40px; background: rgba(79, 70, 229, 0.1); color: var(--electric-indigo);">
+                <i class="bi bi-briefcase"></i>
+            </div>
+            <h6 class="mb-0 fw-bold">Active Jobs</h6>
+        </div>
+        <div class="d-flex align-items-baseline gap-2 mt-2">
+            <span class="h3 fw-bold mb-0">{{ total_jobs }}</span>
+            <small class="text-secondary">Openings</small>
+        </div>
+    </div>
+
+    <!-- Cell D: Videos -->
+    <div class="bento-cell span-2">
+        <div class="text-center">
+            <i class="bi bi-play-circle fs-3 text-secondary mb-2 d-block"></i>
+            <h4 class="fw-bold mb-0">{{ total_videos }}</h4>
+            <small class="text-muted">Videos</small>
+        </div>
+    </div>
+
+    <!-- Cell E: Quizzes -->
+    <div class="bento-cell span-2">
+        <div class="text-center">
+            <i class="bi bi-patch-question fs-3 text-secondary mb-2 d-block"></i>
+            <h4 class="fw-bold mb-0">{{ total_quizzes }}</h4>
+            <small class="text-muted">Quizzes</small>
+        </div>
+    </div>
+
+    <!-- Cell F: Pending Approvals Queue (Wide) -->
+    <div class="bento-cell span-4">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h6 class="fw-bold mb-0">Pending Approvals</h6>
+            <span class="badge bg-warning text-dark rounded-pill">{{ pending_company_list|length }}</span>
+        </div>
+        <div class="overflow-auto" style="max-height: 200px;">
+            {% if pending_company_list %}
+            <ul class="list-unstyled mb-0 d-flex flex-column gap-2">
+                {% for c in pending_company_list|slice:":3" %}
+                <li class="d-flex align-items-center justify-content-between p-2 rounded-3"
+                    style="background: rgba(255,255,255,0.03);">
+                    <div class="d-flex align-items-center gap-2">
+                        <div class="avatar-circle"
+                            style="width: 24px; height: 24px; font-size: 10px; background: var(--tungsten);">{{ c.company_name|first }}</div>
+                        <span class="small fw-medium">{{ c.company_name|truncatechars:15 }}</span>
+                    </div>
+                    <div class="d-flex gap-1">
+                        <form method="POST" action="{% url 'admin_approve_company' c.pk %}">{% csrf_token %}
+                            <button class="btn btn-sm p-1 text-success"><i class="bi bi-check-lg"></i></button>
+                        </form>
+                        <form method="POST" action="{% url 'admin_reject_company' c.pk %}">{% csrf_token %}
+                            <button class="btn btn-sm p-1 text-danger"><i class="bi bi-x-lg"></i></button>
+                        </form>
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+            {% if pending_company_list|length > 3 %}
+            <div class="text-center mt-2">
+                <a href="{% url 'admin_manage_companies' %}?status=pending"
+                    class="small text-indigo text-decoration-none">View all</a>
+            </div>
+            {% endif %}
+            {% else %}
+            <div class="text-center text-muted small py-4">All caught up!</div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Cell G: Recent Users Table (Wide) -->
+    <div class="bento-cell span-12 span-lg-8">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h6 class="fw-bold mb-0">Recent Registrations</h6>
+            <a href="{% url 'admin_manage_users' %}" class="btn-link text-secondary small">View All</a>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead>
+                    <tr>
+                        <th class="ps-0">User</th>
+                        <th>Email</th>
+                        <th>Date</th>
+                        <th class="text-end pe-0">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for u in recent_users|slice:":5" %}
+                    <tr>
+                        <td class="ps-0">
+                            <div class="d-flex align-items-center gap-2">
+                                <div class="avatar-circle"
+                                    style="width: 32px; height: 32px; background: var(--glass-surface); border: 1px solid var(--tungsten); display: grid; place-items: center; font-size: 0.8rem;">
+                                    {{ u.username|first|upper }}
+                                </div>
+                                <span class="fw-medium">{{ u.username }}</span>
+                            </div>
+                        </td>
+                        <td class="text-secondary small">{{ u.email }}</td>
+                        <td class="text-secondary small">{{ u.date_joined|date:"M d" }}</td>
+                        <td class="text-end pe-0">
+                            {% if u.subscription_active %}
+                            <span class="badge-dot success"></span><span class="small text-success">Premium</span>
+                            {% else %}
+                            <span class="badge-dot warning"></span><span class="small text-secondary">Free</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

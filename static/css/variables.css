@@ -1,0 +1,96 @@
+:root {
+    /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+       TalentOrbit — Kinetic Obsidian (Trillion-Dollar Aesthetic)
+       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+    /* ━━━ Palette: Midnight Slate ━━━ */
+    --void-slate: #0B0F19;
+    /* Global Background */
+    --glass-surface: #161A23;
+    /* Cards / Sidebars (Base) */
+    --glass-overlay: rgba(22, 26, 35, 0.75);
+    /* Backdrop Filter Base */
+    --tungsten: rgba(255, 255, 255, 0.08);
+    /* Borders */
+    --titanium-white: #F9FAFB;
+    /* Primary Text */
+    --carbon-dust: #9CA3AF;
+    /* Secondary Text */
+    --font-heading: var(--font-display);
+
+    /* ━━━ Added Missing Variables ━━━ */
+    --gradient-primary: linear-gradient(135deg, var(--electric-indigo), #818CF8);
+    --gradient-warm: linear-gradient(135deg, #F59E0B, #EF4444);
+    --gradient-cool: linear-gradient(135deg, #3B82F6, #8B5CF6);
+    --danger-light: rgba(239, 68, 68, 0.12);
+    --accent: var(--electric-indigo);
+    --primary-100: rgba(79, 70, 229, 0.12);
+    --radius: var(--radius-lg);
+
+    /* ━━━ Action Palette ━━━ */
+    --nvidia-green: #76B900;
+    /* Success / Growth */
+    --electric-indigo: #4F46E5;
+    /* Primary Action */
+    --indigo-glow: rgba(79, 70, 229, 0.5);
+    /* Focus Rings */
+    --signal-amber: #F59E0B;
+    /* Warning */
+    --crimson-red: #EF4444;
+    /* Destructive */
+
+    /* ━━━ Bootstrap Mappings (Overrides) ━━━ */
+    --bs-body-bg: var(--void-slate);
+    --bs-body-color: var(--titanium-white);
+    --bs-primary: var(--electric-indigo);
+    --bs-secondary: var(--carbon-dust);
+    --bs-secondary-rgb: 156, 163, 175;
+    /* Carbon Dust RGB */
+    --bs-success: var(--nvidia-green);
+    --bs-warning: var(--signal-amber);
+    --bs-danger: var(--crimson-red);
+    --bs-border-color: var(--tungsten);
+
+    /* ━━━ Typography ━━━ */
+    --font-sans: 'Inter', sans-serif;
+    --font-display: 'Space Grotesk', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+
+    /* ━━━ Glassmorphism & Physics ━━━ */
+    --blur-strength: 20px;
+    --glass-border: 1px solid rgba(255, 255, 255, 0.08);
+    /* Tungsten */
+    --glass-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.3);
+
+    /* Spring Physics for transitions */
+    --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+    /* ━━━ Semantic Aliases ━━━ */
+    --text-primary: var(--titanium-white);
+    --text-secondary: var(--carbon-dust);
+    --text-muted: rgba(156, 163, 175, 0.7);
+
+    --bg-body: var(--void-slate);
+    --bg-surface: var(--glass-surface);
+    --bg-card: rgba(22, 26, 35, 0.6);
+
+    --primary: var(--electric-indigo);
+    --primary-light: #6366F1;
+    --primary-50: rgba(79, 70, 229, 0.08);
+
+    --success: var(--nvidia-green);
+    --warning: var(--signal-amber);
+    --danger: var(--crimson-red);
+    --info: #3B82F6;
+
+    --brand-primary: var(--electric-indigo);
+    --success-light: rgba(118, 185, 0, 0.15);
+    --warning-light: rgba(245, 158, 11, 0.15);
+
+    /* ━━━ Spacing ━━━ */
+    --grid-unit: 8px;
+    --radius-lg: 24px;
+    /* "Friendly curves" */
+    --radius-md: 12px;
+    --radius-sm: 8px;
+}

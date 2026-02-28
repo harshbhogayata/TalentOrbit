@@ -1,0 +1,56 @@
+<li class="dash-nav-group">Overview</li>
+<li class="dash-nav-item">
+    <a class="dash-nav-link {% if current_page == 'dashboard' %}active{% endif %}" href="{% url 'admin_dashboard' %}">
+        <i class="bi bi-grid-1x2"></i> Dashboard
+    </a>
+</li>
+
+<li class="dash-nav-group">Management</li>
+<li class="dash-nav-item">
+    <a class="dash-nav-link {% if current_page == 'companies' %}active{% endif %}" href="{% url 'admin_manage_companies' %}">
+        <i class="bi bi-building"></i> Companies
+    </a>
+</li>
+<li class="dash-nav-item">
+    <a class="dash-nav-link {% if current_page == 'users' %}active{% endif %}" href="{% url 'admin_manage_users' %}">
+        <i class="bi bi-people"></i> Users
+    </a>
+</li>
+<li class="dash-nav-item">
+    <a class="dash-nav-link {% if current_page == 'categories' %}active{% endif %}" href="{% url 'admin_manage_categories' %}">
+        <i class="bi bi-tags"></i> Categories
+    </a>
+</li>
+<li class="dash-nav-item">
+    <a class="dash-nav-link {% if current_page == 'jobs' %}active{% endif %}" href="{% url 'admin_manage_jobs' %}">
+        <i class="bi bi-briefcase"></i> Jobs
+    </a>
+</li>
+
+<li class="dash-nav-group">Content</li>
+<li class="dash-nav-item">
+    <a class="dash-nav-link {% if current_page == 'videos' %}active{% endif %}" href="{% url 'admin_manage_videos' %}">
+        <i class="bi bi-play-circle"></i> Skill Videos
+    </a>
+</li>
+<li class="dash-nav-item">
+    <a class="dash-nav-link {% if current_page == 'quizzes' %}active{% endif %}" href="{% url 'admin_manage_quizzes' %}">
+        <i class="bi bi-patch-question"></i> Quizzes
+    </a>
+</li>
+
+<li class="dash-nav-group">Actions</li>
+<li class="dash-nav-item">
+    <form method="POST" action="{% url 'admin_send_notifications' %}" class="dash-nav-form"
+        onsubmit="return confirm('Send subscription expiry notifications?')">
+        {% csrf_token %}
+        <button type="submit" class="dash-nav-link dash-nav-btn {% if current_page == 'notifications_send' %}active{% endif %}">
+            <i class="bi bi-bell"></i> Send Alerts
+        </button>
+    </form>
+</li>
+<li class="dash-nav-item">
+    <a class="dash-nav-link {% if current_page == 'messages' %}active{% endif %}" href="{% url 'notifications' %}">
+        <i class="bi bi-envelope"></i> Messages
+    </a>
+</li>

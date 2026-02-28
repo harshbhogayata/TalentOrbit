@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block title %}Login{% endblock %}
+{% block footer %}{% endblock %}
+
+{% block content %}
+<div class="auth-page">
+    <div class="auth-card fade-in">
+        <div class="text-center mb-4">
+            <div class="auth-logo"><i class="bi bi-globe2"></i></div>
+            <h2 class="mb-2">TalentOrbit</h2>
+            <p class="text-white small fw-normal">Welcome back! Log in to your account.</p>
+        </div>
+
+        {% if email_unverified %}
+        <div class="alert alert-custom alert-warning mb-3">
+            <div class="d-flex align-items-start gap-2">
+                <i class="bi bi-envelope-exclamation mt-1"></i>
+                <div>
+                    Your email address has not been verified. Please check your inbox.
+                    <form method="POST" action="{% url 'resend_verification' %}" class="d-inline">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-link p-0"
+                            style="color: inherit; font-size: 0.9rem; text-decoration: underline;">
+                            Resend verification email
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        {% elif form.errors %}
+        <div class="alert alert-custom alert-danger mb-3">
+            <i class="bi bi-exclamation-circle"></i>
+            Invalid username or password. Please try again.
+        </div>
+        {% endif %}
+
+        <form method="POST" novalidate id="loginForm">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label class="form-label">Username</label>
+                {{ form.username }}
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Password</label>
+                {{ form.password }}
+                <div class="text-end mt-1">
+                    <a href="{% url 'password_reset' %}" style="color: var(--text-muted); font-size: 0.85rem;">Forgot
+                        Password?</a>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary-gradient w-100 py-2 mt-2" id="loginBtn">
+                <i class="bi bi-box-arrow-in-right me-2"></i>Log In
+            </button>
+        </form>
+
+        <p class="text-center mt-4" style="color: var(--text-secondary);">
+            Don't have an account?<br>
+            <a href="{% url 'register_user' %}" class="fw-semibold">Sign up as User</a>
+            &nbsp;·&nbsp;
+            <a href="{% url 'register_company' %}" class="fw-semibold">Register as Company</a>
+        </p>
+    </div>
+</div>
+{% endblock %}

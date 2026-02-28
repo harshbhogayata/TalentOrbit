@@ -1,0 +1,69 @@
+{% extends 'dashboard_base.html' %}
+{% block title %}Application — {{ application.job.title }}{% endblock %}
+{% block sidebar_nav %}
+{% include 'includes/sidebar_user.html' with current_page='applications' %}
+{% endblock %}
+
+{% block dashboard_content %}
+<div class="mb-4">
+    <a href="{% url 'user_applications' %}" class="text-decoration-none text-secondary">
+        <i class="bi bi-arrow-left me-1"></i>Back to Applications
+    </a>
+</div>
+
+<div class="glass-card mb-4">
+    <div class="d-flex justify-content-between align-items-start mb-4">
+        <div>
+            <h2 style="font-weight: 800; margin-bottom: 0.5rem;">{{ application.job.title }}</h2>
+            <p class="mb-0" style="color: var(--text-secondary); font-size: 1.1rem;">
+                <i class="bi bi-building me-2"></i>{{ application.job.company.company_name }}
+            </p>
+        </div>
+        <span class="badge-status badge-{{ application.status }}" style="font-size: 1rem; padding: 0.5rem 1rem;">
+            {{ application.get_status_display }}
+        </span>
+    </div>
+
+    <div class="row g-4 mb-4">
+        <div class="col-md-4">
+            <h6 class="text-secondary text-uppercase small fw-bold">Applied On</h6>
+            <p class="fw-medium">{{ application.applied_at|date:"F d, Y" }}</p>
+        </div>
+        <div class="col-md-4">
+            <h6 class="text-secondary text-uppercase small fw-bold">Job Type</h6>
+            <p class="fw-medium">{{ application.job.get_job_type_display }}</p>
+        </div>
+        <div class="col-md-4">
+            <h6 class="text-secondary text-uppercase small fw-bold">Location</h6>
+            <p class="fw-medium">{{ application.job.location|default:"Remote" }}</p>
+        </div>
+    </div>
+
+    <hr class="divider my-4">
+
+    <div class="mb-4">
+        <h5 class="fw-bold mb-3">Cover Letter</h5>
+        <div class="p-3 bg-light rounded-3 border"
+            style="white-space: pre-wrap; font-family: inherit; color: var(--text-primary);">{{ application.cover_letter }}</div>
+    </div>
+
+    <div class="d-flex gap-3 mt-4">
+        <a href="{{ application.resume.url }}" target="_blank" class="btn btn-outline-primary">
+            <i class="bi bi-file-earmark-pdf me-2"></i>View Resume
+        </a>
+        <a href="{% url 'job_detail' application.job.pk %}" class="btn btn-glass">
+            View Job Posting
+        </a>
+
+        {% if application.status == 'pending' %}
+        <form method="POST" action="{% url 'withdraw_application' application.pk %}" class="ms-auto"
+            onsubmit="return confirm('Are you sure you want to withdraw this application? This action cannot be undone.')">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-outline-danger">
+                <i class="bi bi-x-circle me-2"></i>Withdraw Application
+            </button>
+        </form>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

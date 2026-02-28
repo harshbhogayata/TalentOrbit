@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+{% block title %}Quiz: {{ quiz.title }}{% endblock %}
+{% block footer %}{% endblock %}
+{% block content %}
+<div class="container page-content" style="max-width: 800px;">
+    <!-- Quiz Header -->
+    <div class="glass-card p-4 mb-4">
+        <div class="d-flex justify-content-between align-items-start gap-3">
+            <div>
+                <h2 style="font-weight: 800; margin-bottom: 0.25rem;">{{ quiz.title }}</h2>
+                <p class="mb-0" style="color: var(--text-muted);">{{ questions|length }} questions &middot; {{ quiz.time_limit }} minutes &middot; {{ quiz.passing_score }}% to pass</p>
+            </div>
+            <div id="timer" class="badge-status badge-active flex-shrink-0" style="font-size: 1.05rem; padding: 0.5rem 1rem; white-space: nowrap;">
+                <i class="bi bi-clock me-1"></i><span id="time">{{ quiz.time_limit }}:00</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Questions -->
+    <form method="POST" id="quizForm">
+        {% csrf_token %}
+        <input type="hidden" name="started_at" id="startedAt">
+        {% for q in questions %}
+        <div class="glass-card p-4 mb-3 fade-in">
+            <h6 class="quiz-question mb-4">
+                <span class="question-number">{{ forloop.counter }}</span>
+                {{ q.question_text }}
+            </h6>
+            <div class="row g-2">
+                <div class="col-md-6">
+                    <label class="quiz-option">
+                        <input type="radio" name="question_{{ q.id }}" value="A" required>
+                        <span class="quiz-option-label ms-2"><strong>A.</strong> {{ q.option_a }}</span>
+                    </label>
+                </div>
+                <div class="col-md-6">
+                    <label class="quiz-option">
+                        <input type="radio" name="question_{{ q.id }}" value="B">
+                        <span class="quiz-option-label ms-2"><strong>B.</strong> {{ q.option_b }}</span>
+                    </label>
+                </div>
+                <div class="col-md-6">
+                    <label class="quiz-option">
+                        <input type="radio" name="question_{{ q.id }}" value="C">
+                        <span class="quiz-option-label ms-2"><strong>C.</strong> {{ q.option_c }}</span>
+                    </label>
+                </div>
+                <div class="col-md-6">
+                    <label class="quiz-option">
+                        <input type="radio" name="question_{{ q.id }}" value="D">
+                        <span class="quiz-option-label ms-2"><strong>D.</strong> {{ q.option_d }}</span>
+                    </label>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        <button type="submit" class="btn btn-primary-gradient w-100 py-3 mt-2" style="font-size: 1.1rem;" id="submitQuizBtn">
+            <i class="bi bi-check-circle me-2"></i>Submit Quiz
+        </button>
+    </form>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Record start time for server-side validation
+    document.getElementById('startedAt').value = new Date().toISOString();
+
+    let totalSecs = {{ quiz.time_limit }} * 60;
+    const timerEl = document.getElementById('time');
+    const timerBadge = document.getElementById('timer');
+    function tick() {
+        if (totalSecs <= 0) { document.getElementById('quizForm').submit(); return; }
+        totalSecs--;
+        const m = Math.floor(totalSecs / 60);
+        const s = totalSecs % 60;
+        timerEl.textContent = m + ':' + (s < 10 ? '0' : '') + s;
+        if (totalSecs < 60) { timerBadge.className = 'badge-status badge-rejected'; timerBadge.style.animation = 'pulse 1s infinite'; }
+        else if (totalSecs < 180) { timerBadge.className = 'badge-status badge-pending'; }
+    }
+    setInterval(tick, 1000);
+</script>
+{% endblock %}

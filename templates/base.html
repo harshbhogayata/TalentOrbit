@@ -1,0 +1,297 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Hire Sphere — The Kinetic Obsidian Talent Operating System.">
+    <title>{% block title %}TalentOrbit{% endblock %} | Hire Sphere</title>
+
+    <!-- Google Fonts: Inter, Space Grotesk, JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'css/variables.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <!-- GSAP & Lenis -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>
+
+    {% block extra_css %}{% endblock %}
+</head>
+
+<body class="d-flex flex-column min-vh-100">
+
+    <!-- ═══ App Container ═══ -->
+    <div class="app-container">
+
+        {% if user.is_authenticated and user.role == "company" or user.is_staff %}
+        <!-- ═══ Sidebar (Admin/Company) ═══ -->
+        <nav class="sidebar-glass">
+            <div class="d-flex align-items-center gap-2 mb-5">
+                <div class="brand-icon-wrapper"
+                    style="width: 40px; height: 40px; background: var(--electric-indigo); border-radius: 12px; display: grid; place-items: center;">
+                    <i class="bi bi-rocket-takeoff-fill text-white"></i>
+                </div>
+                <span class="fs-4 fw-bold font-display tracking-tight text-white">Hire Sphere</span>
+            </div>
+
+            <div class="nav flex-column gap-2">
+                <a href="{% url 'dashboard' %}"
+                    class="btn btn-glass w-100 text-start d-flex align-items-center gap-3 border-0">
+                    <i class="bi bi-grid-fill text-muted"></i> Dashboard
+                </a>
+
+                {% if user.role == "company" %}
+                <a href="{% url 'company_profile' %}"
+                    class="btn btn-glass w-100 text-start d-flex align-items-center gap-3 border-0">
+                    <i class="bi bi-building text-muted"></i> Profile
+                </a>
+                <a href="{% url 'job_list' %}"
+                    class="btn btn-glass w-100 text-start d-flex align-items-center gap-3 border-0">
+                    <i class="bi bi-briefcase text-muted"></i> My Jobs
+                </a>
+                {% endif %}
+
+                {% if user.is_staff %}
+                <a href="/admin/" class="btn btn-glass w-100 text-start d-flex align-items-center gap-3 border-0">
+                    <i class="bi bi-shield-lock text-muted"></i> Admin Console
+                </a>
+                {% endif %}
+            </div>
+
+            <div class="mt-auto">
+                <div class="d-flex align-items-center gap-3 p-3 rounded-3" style="background: rgba(255,255,255,0.03);">
+                    <div class="avatar-circle"
+                        style="width: 32px; height: 32px; background: var(--tungsten); border-radius: 50%; overflow: hidden;">
+                        {% if user.company_profile.logo %}
+                        <img src="{{ user.company_profile.logo.url }}" class="w-100 h-100 object-fit-cover">
+                        {% else %}
+                        <span class="d-flex w-100 h-100 align-items-center justify-content-center text-muted small">{{ user.username|first|upper }}</span>
+                        {% endif %}
+                    </div>
+                    <div class="flex-grow-1 overflow-hidden">
+                        <div class="text-white small fw-medium text-truncate">{{ user.username }}</div>
+                        <div class="text-muted small" style="font-size: 0.75rem;">{{ user.email }}</div>
+                    </div>
+                    <form method="POST" action="{% url 'logout' %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-link text-muted p-0"><i
+                                class="bi bi-box-arrow-right"></i></button>
+                    </form>
+                </div>
+            </div>
+        </nav>
+        {% endif %}
+
+        <!-- ═══ Main Liquid Content ═══ -->
+        <main
+            class="content-liquid {% if user.is_authenticated and user.role == 'company' or user.is_staff %}with-sidebar{% endif %}">
+
+            {% if not user.is_authenticated or user.role == "user" %}
+            <!-- ═══ Top Navbar (User/Public) ═══ -->
+            <nav class="navbar fixed-top" id="mainNav">
+                <div class="container">
+                    <div class="navbar-glass d-flex align-items-center justify-content-between w-100 p-2 ps-4 pe-2"
+                        style="background: var(--glass-overlay); backdrop-filter: blur(20px);">
+                        <!-- Brand -->
+                        <a class="navbar-brand d-flex align-items-center gap-2 m-0" href="{% url 'home' %}">
+                            <div class="brand-icon-wrapper text-indigo">
+                                <i class="bi bi-rocket-takeoff-fill"></i>
+                            </div>
+                            <span class="brand-text text-white">Hire Sphere</span>
+                        </a>
+
+                        <!-- Desktop Menu -->
+                        <div class="d-none d-lg-flex align-items-center gap-1">
+                            <a class="nav-link px-3 py-2 rounded-pill {% if request.resolver_match.url_name == 'home' %}text-white bg-white bg-opacity-10{% endif %}"
+                                href="{% url 'home' %}">Home</a>
+                            <a class="nav-link px-3 py-2 rounded-pill" href="{% url 'job_list' %}">Jobs</a>
+                            <a class="nav-link px-3 py-2 rounded-pill" href="{% url 'company_list' %}">Companies</a>
+                        </div>
+
+                        <!-- Auth Actions -->
+                        <div class="d-flex align-items-center gap-3">
+                            {% if user.is_authenticated %}
+                            <div class="dropdown">
+                                <a href="#" class="d-flex align-items-center gap-2 text-decoration-none"
+                                    data-bs-toggle="dropdown">
+                                    <div class="avatar-circle"
+                                        style="width: 36px; height: 36px; background: var(--electric-indigo); border-radius: 50%; display: grid; place-items: center; color: white; font-weight: 600;">
+                                        {{ user.username|first|upper }}
+                                    </div>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end mt-3 p-2 border-0 shadow-lg"
+                                    style="background: var(--glass-surface); border: 1px solid var(--tungsten);">
+                                    <li><a class="dropdown-item rounded-3 py-2 text-white"
+                                            href="{% url 'dashboard' %}">Dashboard</a></li>
+                                    <li><a class="dropdown-item rounded-3 py-2 text-white"
+                                            href="{% url 'user_profile' %}">Profile</a></li>
+                                    <li>
+                                        <hr class="dropdown-divider bg-white opacity-10">
+                                    </li>
+                                    <li>
+                                        <form method="POST" action="{% url 'logout' %}">
+                                            {% csrf_token %}
+                                            <button type="submit"
+                                                class="dropdown-item rounded-3 py-2 text-danger w-100 text-start bg-transparent">Logout</button>
+                                        </form>
+                                    </li>
+                                </ul>
+                            </div>
+                            {% else %}
+                            <a href="{% url 'login' %}"
+                                class="text-white small fw-medium text-decoration-none">Login</a>
+                            <a href="{% url 'register_user' %}" class="btn btn-primary btn-sm rounded-pill px-4">Get
+                                Started</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </nav>
+            <div style="padding-top: 80px;"></div> <!-- Spacer for fixed nav -->
+            {% endif %}
+
+            <!-- Django Messages -->
+            {% if messages %}
+            <div class="message-container position-fixed top-0 end-0 p-3" style="z-index: 9999; margin-top: 80px;">
+                {% for message in messages %}
+                <div class="toast show align-items-center border-0 mb-2 glass-card" role="alert" aria-live="assertive"
+                    aria-atomic="true" style="background: var(--glass-surface); color: var(--titanium-white);">
+                    <div class="d-flex">
+                        <div class="toast-body">
+                            {{ message }}
+                        </div>
+                        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
+                            aria-label="Close"></button>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <!-- Block Content -->
+            {% block content %}{% endblock %}
+
+            <!-- Footer -->
+            {% if not user.role == "company" and not user.is_staff %}
+            {% block footer %}
+            <footer class="footer mt-auto" style="border-top: 1px solid var(--tungsten);">
+                <!-- Newsletter -->
+                <div style="background: rgba(79,70,229,0.04); border-bottom: 1px solid var(--tungsten);">
+                    <div class="container py-5 text-center">
+                        <h4 class="fw-bold mb-2">Stay in the Loop</h4>
+                        <p class="text-secondary mb-4" style="max-width: 460px; margin: 0 auto;">Get the latest jobs, tips and career insights delivered to your inbox.</p>
+                        <form id="newsletterForm" class="d-flex gap-2 justify-content-center flex-wrap" style="max-width: 480px; margin: 0 auto;">
+                            {% csrf_token %}
+                            <input type="email" class="form-control" placeholder="you@example.com" required style="max-width: 300px;">
+                            <button type="submit" class="btn btn-primary-gradient rounded-pill px-4">Subscribe</button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Footer Grid -->
+                <div class="container py-5">
+                    <div class="row g-4">
+                        <!-- Brand -->
+                        <div class="col-lg-4 col-md-6">
+                            <div class="d-flex align-items-center gap-2 mb-3">
+                                <div style="width: 36px; height: 36px; background: var(--electric-indigo); border-radius: 10px; display: grid; place-items: center;">
+                                    <i class="bi bi-rocket-takeoff-fill text-white"></i>
+                                </div>
+                                <span class="fw-bold fs-5 text-white" style="font-family: var(--font-display);">Hire Sphere</span>
+                            </div>
+                            <p class="text-secondary small mb-0" style="max-width: 280px;">The modern talent operating system. Connecting world-class companies with exceptional professionals.</p>
+                        </div>
+
+                        <!-- Quick Links -->
+                        <div class="col-lg-2 col-md-3 col-6">
+                            <h6 class="text-white fw-bold mb-3 small text-uppercase" style="letter-spacing: 0.05em;">Platform</h6>
+                            <ul class="list-unstyled d-flex flex-column gap-2 mb-0">
+                                <li><a href="{% url 'job_list' %}" class="text-secondary small text-decoration-none">Browse Jobs</a></li>
+                                <li><a href="{% url 'company_list' %}" class="text-secondary small text-decoration-none">Companies</a></li>
+                                <li><a href="{% url 'about' %}" class="text-secondary small text-decoration-none">About Us</a></li>
+                                <li><a href="{% url 'contact' %}" class="text-secondary small text-decoration-none">Contact</a></li>
+                            </ul>
+                        </div>
+
+                        <!-- For Employers -->
+                        <div class="col-lg-2 col-md-3 col-6">
+                            <h6 class="text-white fw-bold mb-3 small text-uppercase" style="letter-spacing: 0.05em;">Employers</h6>
+                            <ul class="list-unstyled d-flex flex-column gap-2 mb-0">
+                                <li><a href="{% url 'register_company' %}" class="text-secondary small text-decoration-none">Post a Job</a></li>
+                                <li><a href="{% url 'register_company' %}" class="text-secondary small text-decoration-none">Hire Talent</a></li>
+                                <li><a href="#pricing" class="text-secondary small text-decoration-none">Pricing</a></li>
+                            </ul>
+                        </div>
+
+                        <!-- Legal -->
+                        <div class="col-lg-2 col-md-3 col-6">
+                            <h6 class="text-white fw-bold mb-3 small text-uppercase" style="letter-spacing: 0.05em;">Legal</h6>
+                            <ul class="list-unstyled d-flex flex-column gap-2 mb-0">
+                                <li><a href="{% url 'terms' %}" class="text-secondary small text-decoration-none">Terms of Service</a></li>
+                                <li><a href="{% url 'privacy' %}" class="text-secondary small text-decoration-none">Privacy Policy</a></li>
+                            </ul>
+                        </div>
+
+                        <!-- Social -->
+                        <div class="col-lg-2 col-md-3 col-6">
+                            <h6 class="text-white fw-bold mb-3 small text-uppercase" style="letter-spacing: 0.05em;">Connect</h6>
+                            <div class="d-flex gap-3 social-links">
+                                <a href="#" class="text-secondary fs-5"><i class="bi bi-twitter-x"></i></a>
+                                <a href="#" class="text-secondary fs-5"><i class="bi bi-linkedin"></i></a>
+                                <a href="#" class="text-secondary fs-5"><i class="bi bi-github"></i></a>
+                                <a href="#" class="text-secondary fs-5"><i class="bi bi-instagram"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bottom Bar -->
+                    <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 pt-4 mt-4" style="border-top: 1px solid var(--tungsten);">
+                        <p class="text-secondary small mb-0">&copy; 2026 Hire Sphere. Crafted with Kinetic Obsidian.</p>
+                        <div class="d-flex gap-3">
+                            <a href="{% url 'terms' %}" class="text-secondary small text-decoration-none">Terms</a>
+                            <a href="{% url 'privacy' %}" class="text-secondary small text-decoration-none">Privacy</a>
+                            <a href="{% url 'contact' %}" class="text-secondary small text-decoration-none">Contact</a>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+            {% endblock %}
+            {% endif %}
+
+        </main>
+    </div>
+
+    <!-- Toast Container -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <!-- Back to Top -->
+    <button id="backToTop" class="back-to-top" aria-label="Back to top">
+        <i class="bi bi-chevron-up"></i>
+    </button>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- App Scripts -->
+    <script src="{% static 'js/main.js' %}"></script>
+    <script src="{% static 'js/app.js' %}"></script>
+
+    {% block extra_js %}{% endblock %}
+</body>
+
+</html>

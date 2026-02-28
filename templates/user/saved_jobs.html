@@ -1,0 +1,67 @@
+{% extends 'dashboard_base.html' %}
+{% block title %}Saved Jobs{% endblock %}
+{% block sidebar_nav %}
+{% include 'includes/sidebar_user.html' with current_page='saved_jobs' %}
+{% endblock %}
+
+{% block dashboard_content %}
+<h2 style="font-weight: 800; margin-bottom: 2rem;"><i class="bi bi-bookmark-star me-2"
+        style="color: var(--accent);"></i>Saved Jobs</h2>
+
+<div class="row g-4">
+    {% for saved in page_obj %}
+    <div class="col-lg-6">
+        <div class="glass-card p-4 h-100">
+            <div class="d-flex align-items-start justify-content-between mb-3">
+                <div class="d-flex align-items-center gap-3">
+                    <div class="bg-surface rounded-3 d-flex align-items-center justify-content-center"
+                        style="width: 48px; height: 48px; overflow: hidden; border: 1px solid rgba(0,0,0,0.05);">
+                        {% if saved.job.company.logo %}
+                        <img src="{{ saved.job.company.logo.url }}" alt="{{ saved.job.company.company_name }} logo"
+                            class="w-100 h-100 object-fit-cover">
+                        {% else %}
+                        <span class="fw-bold text-dark">{{ saved.job.company.company_name|first }}</span>
+                        {% endif %}
+                    </div>
+                    <div>
+                        <a href="{% url 'job_detail' saved.job.pk %}" class="text-decoration-none">
+                            <h5 class="fw-bold text-primary mb-0" style="font-size: 1.1rem;">{{ saved.job.title }}</h5>
+                        </a>
+                        <small class="text-secondary">{{ saved.job.company.company_name }}</small>
+                    </div>
+                </div>
+                <form method="POST" action="{% url 'toggle_save_job' saved.job.pk %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-sm" style="color: var(--accent);" title="Unsave">
+                        <i class="bi bi-bookmark-fill"></i>
+                    </button>
+                </form>
+            </div>
+            <div class="d-flex gap-2 flex-wrap mb-3">
+                <span class="badge rounded-pill bg-surface border-glass text-secondary fw-normal">{{ saved.job.get_job_type_display }}</span>
+                {% if saved.job.location %}
+                <span class="badge rounded-pill bg-surface border-glass text-secondary fw-normal">{{ saved.job.location }}</span>
+                {% endif %}
+                <span class="badge rounded-pill bg-surface border-glass text-secondary fw-normal">{{ saved.job.salary_display }}</span>
+            </div>
+            <div class="d-flex justify-content-between align-items-center">
+                <small class="text-muted">Saved {{ saved.saved_at|timesince }} ago</small>
+                <a href="{% url 'job_detail' saved.job.pk %}" class="btn btn-sm btn-glass">View Job <i
+                        class="bi bi-arrow-right ms-1"></i></a>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="col-12">
+        <div class="empty-state">
+            <i class="bi bi-bookmark d-block"></i>
+            <h4>No saved jobs yet</h4>
+            <p>Browse jobs and click the bookmark icon to save them for later.</p>
+            <a href="{% url 'job_list' %}" class="btn btn-primary-gradient mt-2">Browse Jobs</a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% include 'includes/pagination.html' %}
+{% endblock %}

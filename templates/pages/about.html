@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% block title %}About Us{% endblock %}
+
+{% block content %}
+<div class="container page-content">
+    <div class="text-center mb-5">
+        <h1 class="section-title">About <span class="gradient-text">TalentOrbit</span></h1>
+        <p class="section-subtitle mx-auto" style="max-width: 600px;">
+            We're building the future of talent acquisition — connecting ambitious professionals with exceptional companies.
+        </p>
+    </div>
+
+    <div class="row g-4 mb-5">
+        <div class="col-md-4">
+            <div class="glass-card p-4 text-center h-100">
+                <div style="width: 56px; height: 56px; background: var(--primary-50); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; font-size: 1.5rem; color: var(--primary-light);">
+                    <i class="bi bi-rocket-takeoff"></i>
+                </div>
+                <h5 style="font-family: var(--font-heading); font-weight: 700;">Our Mission</h5>
+                <p style="color: var(--text-secondary); font-size: 0.9rem;">
+                    To make the hiring process seamless, transparent, and efficient for both job seekers and employers.
+                </p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="glass-card p-4 text-center h-100">
+                <div style="width: 56px; height: 56px; background: var(--success-light); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; font-size: 1.5rem; color: var(--success);">
+                    <i class="bi bi-eye"></i>
+                </div>
+                <h5 style="font-family: var(--font-heading); font-weight: 700;">Our Vision</h5>
+                <p style="color: var(--text-secondary); font-size: 0.9rem;">
+                    To become the most trusted talent acquisition platform, empowering careers and building great teams.
+                </p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="glass-card p-4 text-center h-100">
+                <div style="width: 56px; height: 56px; background: var(--warning-light); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; font-size: 1.5rem; color: var(--warning);">
+                    <i class="bi bi-heart"></i>
+                </div>
+                <h5 style="font-family: var(--font-heading); font-weight: 700;">Our Values</h5>
+                <p style="color: var(--text-secondary); font-size: 0.9rem;">
+                    Transparency, innovation, and putting people first in every interaction on our platform.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="glass-card glass-card-featured text-center py-4 mb-5">
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="hero-stat-number" style="font-family: var(--font-heading);">{{ stats.jobs }}+</div>
+                <div class="hero-stat-label">Active Job Listings</div>
+            </div>
+            <div class="col-md-4">
+                <div class="hero-stat-number" style="font-family: var(--font-heading);">{{ stats.companies }}+</div>
+                <div class="hero-stat-label">Trusted Companies</div>
+            </div>
+            <div class="col-md-4">
+                <div class="hero-stat-number" style="font-family: var(--font-heading);">{{ stats.users }}+</div>
+                <div class="hero-stat-label">Registered Professionals</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="text-center">
+        <h3 class="section-title mb-3">Ready to Get Started?</h3>
+        <div class="d-flex justify-content-center gap-3">
+            <a href="{% url 'register_user' %}" class="btn btn-primary-gradient">Find a Job</a>
+            <a href="{% url 'register_company' %}" class="btn btn-outline-glow">Hire Talent</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

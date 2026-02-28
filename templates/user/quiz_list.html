@@ -1,0 +1,51 @@
+{% extends 'dashboard_base.html' %}
+{% block title %}Quizzes{% endblock %}
+{% block sidebar_nav %}
+{% include 'includes/sidebar_user.html' with current_page='quizzes' %}
+{% endblock %}
+
+{% block dashboard_content %}
+<h2 style="font-weight: 800; margin-bottom: 2rem;"><i class="bi bi-patch-question me-2"
+        style="color: var(--primary-light);"></i>Skill Quizzes</h2>
+
+<div class="row g-4">
+    {% for quiz in quizzes %}
+    <div class="col-lg-4 col-md-6">
+        <div class="glass-card p-4 h-100 d-flex flex-column">
+            <h5 style="font-weight: 700; margin-bottom: 0.25rem;">{{ quiz.title }}</h5>
+            <small style="color: var(--text-muted);">{{ quiz.category.name|default:"General" }}</small>
+            {% if quiz.description %}
+            <p class="mt-2 mb-0" style="color: var(--text-secondary); font-size: 0.9rem;">{{ quiz.description|truncatewords:15 }}</p>
+            {% endif %}
+            <div class="d-flex gap-3 my-3" style="color: var(--text-secondary); font-size: 0.85rem;">
+                <span><i class="bi bi-question-circle me-1"></i>{{ quiz.question_count }} Qs</span>
+                <span><i class="bi bi-clock me-1"></i>{{ quiz.time_limit }} min</span>
+                <span><i class="bi bi-trophy me-1"></i>{{ quiz.passing_score }}%</span>
+            </div>
+            <div class="mb-3">
+                {% if quiz.latest_attempt %}
+                    {% if quiz.has_passed %}
+                    <span class="badge-status badge-active"><i class="bi bi-check-circle me-1"></i>Passed</span>
+                    {% else %}
+                    <span class="badge-status badge-rejected"><i class="bi bi-x-circle me-1"></i>Failed</span>
+                    {% endif %}
+                {% else %}
+                <span class="badge-status">Not Attempted</span>
+                {% endif %}
+            </div>
+            <a href="{% url 'take_quiz' quiz.pk %}" class="btn btn-primary-gradient btn-sm w-100 mt-auto">
+                <i class="bi bi-play me-1"></i>{% if quiz.latest_attempt %}Retake{% else %}Start{% endif %} Quiz
+            </a>
+        </div>
+    </div>
+    {% empty %}
+    <div class="col-12">
+        <div class="empty-state">
+            <i class="bi bi-patch-question d-block"></i>
+            <h4>No quizzes available</h4>
+            <p>Check back later.</p>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

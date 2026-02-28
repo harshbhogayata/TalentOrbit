@@ -1,0 +1,41 @@
+{% extends 'dashboard_base.html' %}
+{% block title %}Watch: {{ video.title }}{% endblock %}
+{% block sidebar_nav %}
+{% include 'includes/sidebar_user.html' with current_page='videos' %}
+{% endblock %}
+
+{% block dashboard_content %}
+<a href="{% url 'video_list' %}" style="color: var(--text-muted); font-size: 0.9rem;"><i
+        class="bi bi-arrow-left me-1"></i>Back to Videos</a>
+
+<div class="glass-card mt-3">
+    <div class="video-player"
+        style="background: #000; border-radius: var(--radius); overflow: hidden; margin-bottom: 1.5rem;">
+        {% if video.video_url %}
+        <div style="position: relative; padding-bottom: 56.25%; height: 0;">
+            <iframe src="{{ video.video_url }}"
+                style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;"
+                allowfullscreen></iframe>
+        </div>
+        {% elif video.video_file %}
+        <video controls style="width: 100%; display: block;">
+            <source src="{{ video.video_file.url }}" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        {% else %}
+        <div style="padding: 4rem; text-align: center; color: var(--text-muted);">
+            <i class="bi bi-exclamation-circle fs-1 d-block mb-2"></i>
+            Video content not available.
+        </div>
+        {% endif %}
+    </div>
+
+    <h3 style="font-weight: 800; margin-bottom: 0.5rem;">{{ video.title }}</h3>
+    {% if video.description %}<p style="color: var(--text-secondary);">{{ video.description }}</p>{% endif %}
+    <div class="d-flex gap-3" style="color: var(--text-muted); font-size: 0.85rem;">
+        {% if video.duration %}<span><i class="bi bi-clock me-1"></i>{{ video.duration }}</span>{% endif %}
+        <span><i class="bi bi-calendar me-1"></i>{{ video.created_at|date:"M d, Y" }}</span>
+        {% if video.is_premium %}<span class="premium-badge">Premium</span>{% endif %}
+    </div>
+</div>
+{% endblock %}

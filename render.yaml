@@ -1,0 +1,36 @@
+services:
+  # The Web Service (Django Application)
+  - type: web
+    name: talentorbit-web
+    env: python
+    region: ohio
+    buildCommand: "./build.sh"
+    startCommand: "gunicorn talentorbit.wsgi:application --bind 0.0.0.0:$PORT"
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.0
+      - key: DATABASE_URL
+        fromDatabase:
+          name: talentorbit-db
+          property: connectionString
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DEBUG
+        value: "False"
+      - key: ALLOWED_HOSTS
+        value: "your-render-url.onrender.com" # You will replace this later
+      # Razorpay and Email vars will be added manually in Render Dashboard for security
+      
+    # Persistent Disk for Media Uploads (Avatars, Resumes, etc.)
+    disk:
+      name: media-uploads
+      mountPath: /opt/render/project/src/media
+      sizeGB: 1
+
+  # The Managed PostgreSQL Database
+  - type: pgo
+    name: talentorbit-db
+    region: ohio
+    plan: free # Uses the free tier (expires after 90 days of inactivity)
+    databaseName: talentorbit
+    user: talentorbit_user

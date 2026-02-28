@@ -1,0 +1,209 @@
+{% extends 'dashboard_base.html' %}
+{% block title %}Company Profile{% endblock %}
+{% block sidebar_nav %}
+{% include 'includes/sidebar_company.html' with current_page='profile' %}
+{% endblock %}
+
+{% block dashboard_content %}
+<h2 style="font-weight: 800; margin-bottom: 2rem;">
+    <i class="bi bi-building-gear me-2" style="color: var(--primary-light);"></i>Company Profile
+</h2>
+
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="row g-4">
+
+        <!-- LEFT: Logo + account info -->
+        <div class="col-lg-4">
+            <div class="glass-card text-center" style="padding: 2.5rem 2rem;">
+                <!-- Logo preview -->
+                <div class="position-relative d-inline-block mb-4">
+                    <div id="logo-preview-wrap" style="width: 120px; height: 120px; border-radius: 16px; overflow: hidden;
+                            border: 2px solid rgba(255,255,255,0.1); display: flex;
+                            align-items: center; justify-content: center;
+                            background: rgba(59,130,246,0.08); margin: 0 auto;">
+                        {% if profile.logo %}
+                        <img id="logo-preview" src="{{ profile.logo.url }}" alt="Logo"
+                            style="width:100%; height:100%; object-fit:cover;">
+                        <i class="bi bi-building" id="logo-preview-icon"
+                            style="font-size:3rem; color: var(--brand-primary); display:none;"></i>
+                        {% else %}
+                        <i class="bi bi-building" id="logo-preview-icon"
+                            style="font-size:3rem; color: var(--brand-primary);"></i>
+                        <img id="logo-preview" src="" alt="Logo"
+                            style="width:100%; height:100%; object-fit:cover; display:none;">
+                        {% endif %}
+                    </div>
+                    <label for="{{ profile_form.logo.id_for_label }}"
+                        class="position-absolute bottom-0 end-0 btn btn-sm btn-primary-gradient" style="border-radius:50%; width:32px; height:32px; padding:0;
+                              display:flex; align-items:center; justify-content:center; cursor:pointer;"
+                        title="Upload logo">
+                        <i class="bi bi-camera-fill" style="font-size:.75rem;"></i>
+                    </label>
+                </div>
+
+                <h5 class="text-white fw-bold mb-1">{{ profile.company_name }}</h5>
+                <p class="text-secondary small mb-3">{{ profile.industry|default:"Industry not set" }}</p>
+
+                <span class="badge rounded-pill px-3 py-2 mb-1 badge-{{ profile.status }}" style="font-size:.8rem;">
+                    {{ profile.get_status_display }}
+                </span>
+
+                <div style="display:none;">{{ profile_form.logo }}</div>
+                {% if profile_form.logo.errors %}
+                <div class="text-danger small mt-1">{{ profile_form.logo.errors|striptags }}</div>
+                {% endif %}
+
+                <hr style="border-color: rgba(255,255,255,0.08); margin: 1.5rem 0;">
+
+                <div class="d-grid gap-2">
+                    <a href="{% url 'change_password' %}" class="btn btn-outline-custom btn-sm">
+                        <i class="bi bi-lock me-2"></i>Change Password
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- RIGHT: Forms -->
+        <div class="col-lg-8">
+            <!-- Account info card -->
+            <div class="glass-card mb-4">
+                <h6 class="fw-bold mb-4"
+                    style="font-size:.8rem; text-transform:uppercase; letter-spacing:.08em; color: var(--text-muted);">
+                    <i class="bi bi-person me-2" style="color: var(--brand-primary);"></i>Account Information
+                </h6>
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label class="form-label small text-secondary">First Name</label>
+                        {{ user_form.first_name }}
+                        {% if user_form.first_name.errors %}<div class="text-danger small mt-1">{{
+                            user_form.first_name.errors|striptags }}</div>{% endif %}
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label small text-secondary">Last Name</label>
+                        {{ user_form.last_name }}
+                        {% if user_form.last_name.errors %}<div class="text-danger small mt-1">{{
+                            user_form.last_name.errors|striptags }}</div>{% endif %}
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label small text-secondary">Email Address</label>
+                        {{ user_form.email }}
+                        {% if user_form.email.errors %}<div class="text-danger small mt-1">{{
+                            user_form.email.errors|striptags }}</div>{% endif %}
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label small text-secondary">Phone Number</label>
+                        {{ user_form.phone }}
+                        {% if user_form.phone.errors %}<div class="text-danger small mt-1">{{
+                            user_form.phone.errors|striptags }}</div>{% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Company details card -->
+            <div class="glass-card">
+                <h6 class="fw-bold mb-4"
+                    style="font-size:.8rem; text-transform:uppercase; letter-spacing:.08em; color: var(--text-muted);">
+                    <i class="bi bi-building me-2" style="color: var(--brand-primary);"></i>Company Details
+                </h6>
+                <div class="row g-3">
+                    <div class="col-12">
+                        <label class="form-label small text-secondary">Company Name</label>
+                        {{ profile_form.company_name }}
+                        {% if profile_form.company_name.errors %}<div class="text-danger small mt-1">{{
+                            profile_form.company_name.errors|striptags }}</div>{% endif %}
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label small text-secondary">Industry</label>
+                        {{ profile_form.industry }}
+                        {% if profile_form.industry.errors %}<div class="text-danger small mt-1">{{
+                            profile_form.industry.errors|striptags }}</div>{% endif %}
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label small text-secondary">Website</label>
+                        {{ profile_form.website }}
+                        {% if profile_form.website.errors %}<div class="text-danger small mt-1">{{
+                            profile_form.website.errors|striptags }}</div>{% endif %}
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label small text-secondary">Established Year</label>
+                        {{ profile_form.established_year }}
+                        {% if profile_form.established_year.errors %}<div class="text-danger small mt-1">{{
+                            profile_form.established_year.errors|striptags }}</div>{% endif %}
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label small text-secondary">Employee Count</label>
+                        {{ profile_form.employee_count }}
+                        {% if profile_form.employee_count.errors %}<div class="text-danger small mt-1">{{
+                            profile_form.employee_count.errors|striptags }}</div>{% endif %}
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label small text-secondary">Company Description</label>
+                        {{ profile_form.description }}
+                        {% if profile_form.description.errors %}<div class="text-danger small mt-1">{{
+                            profile_form.description.errors|striptags }}</div>{% endif %}
+                    </div>
+
+                    <div class="col-12">
+                        <hr style="border-color: rgba(255,255,255,0.08); margin: .5rem 0;">
+                        <label class="form-label small text-secondary mt-2">
+                            <i class="bi bi-geo-alt me-1" style="color: var(--brand-primary);"></i>Location
+                        </label>
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label small text-secondary">Address</label>
+                        {{ profile_form.address }}
+                        {% if profile_form.address.errors %}<div class="text-danger small mt-1">{{
+                            profile_form.address.errors|striptags }}</div>{% endif %}
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label small text-secondary">City</label>
+                        {{ profile_form.city }}
+                        {% if profile_form.city.errors %}<div class="text-danger small mt-1">{{
+                            profile_form.city.errors|striptags }}</div>{% endif %}
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label small text-secondary">State</label>
+                        {{ profile_form.state }}
+                        {% if profile_form.state.errors %}<div class="text-danger small mt-1">{{
+                            profile_form.state.errors|striptags }}</div>{% endif %}
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label small text-secondary">Country</label>
+                        {{ profile_form.country }}
+                        {% if profile_form.country.errors %}<div class="text-danger small mt-1">{{
+                            profile_form.country.errors|striptags }}</div>{% endif %}
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-end mt-4 pt-2" style="border-top: 1px solid rgba(255,255,255,0.06);">
+                    <button type="submit" class="btn btn-primary-gradient px-5">
+                        <i class="bi bi-check-circle me-2"></i>Save Changes
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<script>
+    // Live logo preview
+    document.addEventListener('DOMContentLoaded', function () {
+        const input = document.getElementById('{{ profile_form.logo.id_for_label }}');
+        if (!input) return;
+        input.addEventListener('change', function () {
+            const file = this.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                const img = document.getElementById('logo-preview');
+                const icon = document.getElementById('logo-preview-icon');
+                img.src = e.target.result;
+                img.style.display = 'block';
+                if (icon) icon.style.display = 'none';
+            };
+            reader.readAsDataURL(file);
+        });
+    });
+</script>
+{% endblock %}

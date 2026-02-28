@@ -1,0 +1,57 @@
+{% extends 'dashboard_base.html' %}
+{% block title %}Skill Videos{% endblock %}
+{% block sidebar_nav %}
+{% include 'includes/sidebar_user.html' with current_page='videos' %}
+{% endblock %}
+
+{% block dashboard_content %}
+<h2 style="font-weight: 800; margin-bottom: 2rem;"><i class="bi bi-play-circle me-2"
+        style="color: var(--primary-light);"></i>Skill Videos</h2>
+
+{% if not user.subscription_active %}
+<div class="alert alert-custom alert-warning mb-4">
+    <i class="bi bi-lock"></i>
+    Premium videos require an active subscription. <a href="{% url 'subscription_page' %}">Upgrade now</a>.
+</div>
+{% endif %}
+
+<div class="row g-4">
+    {% for video in videos %}
+    <div class="col-lg-4 col-md-6">
+        <div class="video-card">
+            <div class="video-thumbnail">
+                {% if video.thumbnail %}<img src="{{ video.thumbnail.url }}" alt="{{ video.title }} thumbnail"
+                    style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;">{% endif %}
+                {% if video.is_premium and not user.subscription_active %}
+                <span class="premium-badge"><i class="bi bi-lock me-1"></i>Premium</span>
+                {% elif video.is_premium %}
+                <span class="premium-badge">Premium</span>
+                {% endif %}
+                <div class="play-btn"><i class="bi bi-play-fill"></i></div>
+            </div>
+            <div class="video-info">
+                <h6 style="font-weight: 600; margin-bottom: 0.25rem;">{{ video.title }}</h6>
+                <small style="color: var(--text-muted);">{{ video.duration|default:"—" }}</small>
+                <div class="mt-2">
+                    {% if video.is_premium and not user.subscription_active %}
+                    <a href="{% url 'subscription_page' %}" class="btn btn-sm btn-outline-glow"><i
+                            class="bi bi-lock me-1"></i>Subscribe</a>
+                    {% else %}
+                    <a href="{% url 'video_detail' video.pk %}" class="btn btn-sm btn-primary-gradient"><i
+                            class="bi bi-play me-1"></i>Watch</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="col-12">
+        <div class="empty-state">
+            <i class="bi bi-play-circle d-block"></i>
+            <h4>No videos available</h4>
+            <p>Check back later for new content.</p>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

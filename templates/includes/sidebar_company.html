@@ -1,0 +1,42 @@
+<li class="dash-nav-group">Overview</li>
+<li class="dash-nav-item">
+    <a class="dash-nav-link {% if current_page == 'dashboard' %}active{% endif %}" href="{% url 'dashboard' %}">
+        <i class="bi bi-grid-1x2"></i> Dashboard
+    </a>
+</li>
+
+<li class="dash-nav-group">Recruitment</li>
+<li class="dash-nav-item">
+    <a class="dash-nav-link {% if current_page == 'post_job' %}active{% endif %}" href="{% url 'company_post_job' %}">
+        <i class="bi bi-plus-circle"></i> Post Job
+    </a>
+</li>
+<li class="dash-nav-item">
+    <a class="dash-nav-link {% if current_page == 'jobs' %}active{% endif %}" href="{% url 'company_manage_jobs' %}">
+        <i class="bi bi-briefcase"></i> My Jobs
+    </a>
+</li>
+
+<li class="dash-nav-group">Business</li>
+<li class="dash-nav-item">
+    <a class="dash-nav-link {% if current_page == 'tenders' %}active{% endif %}" href="{% url 'company_tenders' %}">
+        <i class="bi bi-file-earmark-text"></i> Tenders
+    </a>
+</li>
+<li class="dash-nav-item">
+    <a class="dash-nav-link {% if current_page == 'create_tender' %}active{% endif %}" href="{% url 'company_create_tender' %}">
+        <i class="bi bi-plus-square"></i> Create Tender
+    </a>
+</li>
+
+<li class="dash-nav-group">Settings</li>
+<li class="dash-nav-item">
+    <a class="dash-nav-link {% if current_page == 'profile' %}active{% endif %}" href="{% url 'company_profile' %}">
+        <i class="bi bi-gear"></i> Profile
+    </a>
+</li>
+<li class="dash-nav-item">
+    <a class="dash-nav-link {% if current_page == 'notifications' %}active{% endif %}" href="{% url 'notifications' %}">
+        <i class="bi bi-bell"></i> Notifications
+    </a>
+</li>

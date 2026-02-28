@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block footer %}{% endblock %}
+
+{% block content %}
+<div class="d-flex">
+    <nav class="sidebar-dash">
+        <ul class="dash-nav-list">{% block sidebar_nav %}{% endblock %}</ul>
+    </nav>
+    <div class="flex-grow-1 py-5 px-4 px-lg-5" style="max-width: 1600px; min-width: 0;">
+        {% block dashboard_content %}{% endblock %}
+    </div>
+</div>
+{% endblock %}

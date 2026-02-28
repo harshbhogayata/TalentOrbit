@@ -1,0 +1,382 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Home — Find Your Dream Career{% endblock %}
+
+{% block content %}
+<!-- ═══ Hero Section ═══ -->
+<section class="hero-section">
+    <!-- Animated Gradient Background -->
+    <div class="hero-bg-blob-primary"></div>
+    <div class="hero-bg-blob-secondary"></div>
+
+    <div class="container position-relative z-2">
+        <div class="hero-content fade-up">
+            <span class="badge badge-status badge-active mb-3 px-3 py-2 border-glass hero-badge">
+                <i class="bi bi-stars text-warning me-2"></i>The Future of Hiring
+            </span>
+
+            <h1 class="display-hero">
+                FIND YOUR <br>
+                <span class="text-gradient hero-text-orbit">ORBIT</span>.
+            </h1>
+
+            <p class="lead hero-lead">
+                Connect with world-class companies and accelerate your career trajectory.
+                <span class="text-primary fw-medium">No noise, just opportunities.</span>
+            </p>
+
+            <!-- Search Bar -->
+            <form action="{% url 'job_list' %}"
+                class="glass-card p-2 mx-auto mb-5 d-flex align-items-center gap-2 search-form-hero">
+                <i class="bi bi-search ms-3 text-secondary"></i>
+                <input type="text" name="q" id="heroSearchInput"
+                    class="form-control bg-transparent border-0 text-primary shadow-none flex-grow-1 search-input-hero"
+                    placeholder="Search roles, skills, or companies..." autocomplete="off">
+                <button type="submit" class="btn btn-primary-gradient rounded-pill px-4">Search</button>
+                <div class="search-suggestions" id="heroSearchSuggestions"></div>
+            </form>
+
+            <!-- Stats -->
+            <div class="d-flex justify-content-center gap-3 gap-md-5 text-start flex-wrap">
+                <div>
+                    <div class="h3 fw-bold mb-0 text-primary" data-count="{{ stats.jobs }}">0+</div>
+                    <small class="text-secondary text-uppercase tracking-wider">Active Jobs</small>
+                </div>
+                <div>
+                    <div class="h3 fw-bold mb-0 text-primary" data-count="{{ stats.companies }}">0+</div>
+                    <small class="text-secondary text-uppercase tracking-wider">Companies</small>
+                </div>
+                <div>
+                    <div class="h3 fw-bold mb-0 text-primary" data-count="{{ stats.users }}">0+</div>
+                    <small class="text-secondary text-uppercase tracking-wider">Talents</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SVG Wave Divider -->
+<div class="section-divider">
+    <svg viewBox="0 0 1440 60" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+        <path d="M0,30 C360,60 720,0 1080,30 C1260,45 1380,35 1440,30 L1440,60 L0,60 Z" fill="#0B0F19" />
+    </svg>
+</div>
+
+<!-- ═══ Categories Section ═══ -->
+<section class="py-5">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-end mb-5 fade-up">
+            <div>
+                <h2 class="h1 fw-bold mb-1">Explore <span class="text-gradient">Categories</span></h2>
+                <p class="text-secondary mb-0">Browse opportunities by industry</p>
+            </div>
+            <a href="{% url 'job_list' %}" class="btn btn-glass rounded-pill px-4">View All <i
+                    class="bi bi-arrow-right ms-2"></i></a>
+        </div>
+
+        <div class="row g-3">
+            {% for cat in categories %}
+            <div class="col-lg-3 col-md-4 col-6">
+                <a href="{% url 'job_list' %}?category={{ cat.slug }}" class="text-decoration-none">
+                    <div class="glass-card text-center p-4 h-100 fade-up">
+                        <div class="mb-3 d-inline-flex align-items-center justify-content-center cat-icon-box">
+                            <i class="bi {{ cat.icon|default:'bi-briefcase' }}"></i>
+                        </div>
+                        <h5 class="fw-bold text-primary mb-1" style="font-size: 1.1rem;">{{ cat.name }}</h5>
+                        <small class="text-secondary">{{ cat.job_count }} Open Positions</small>
+                    </div>
+                </a>
+            </div>
+            {% empty %}
+            <div class="col-12 text-center text-secondary">
+                <p>No categories found.</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- SVG Angle Divider -->
+<div class="section-divider">
+    <svg viewBox="0 0 1440 40" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+        <path d="M0,40 L1440,0 L1440,40 Z" fill="#0B0F19" />
+    </svg>
+</div>
+
+<!-- ═══ Featured Jobs ═══ -->
+<section class="py-5 position-relative">
+    <div class="container">
+        <div class="mb-5 fade-up">
+            <h2 class="h1 fw-bold mb-1">Latest <span class="text-gradient">Openings</span></h2>
+            <p class="text-secondary">Fresh opportunities waiting for you</p>
+        </div>
+
+        <div class="row g-4">
+            {% for job in featured_jobs %}
+            <div class="col-lg-4 col-md-6">
+                <a href="{% url 'job_detail' job.pk %}" class="text-decoration-none">
+                    <div class="glass-card h-100 p-4 fade-up hover-lift">
+                        <div class="d-flex align-items-start justify-content-between mb-3">
+                            <div class="d-flex align-items-center gap-3">
+                                <div class="bg-surface rounded-3 d-flex align-items-center justify-content-center"
+                                    style="width: 48px; height: 48px; overflow: hidden; border: 1px solid rgba(0,0,0,0.05);">
+                                    {% if job.company.logo %}
+                                    <img src="{{ job.company.logo.url }}" class="w-100 h-100 object-fit-cover">
+                                    {% else %}
+                                    <span class="fw-bold text-dark">{{ job.company.company_name|first }}</span>
+                                    {% endif %}
+                                </div>
+                                <div>
+                                    <h5 class="fw-bold text-primary mb-0" style="font-size: 1.1rem;">{{ job.title|truncatechars:25 }}</h5>
+                                    <small class="text-secondary">{{ job.company.company_name }}</small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <div class="d-flex gap-2 flex-wrap">
+                                <span class="badge rounded-pill bg-surface border-glass text-secondary fw-normal">{{ job.get_job_type_display }}</span>
+                                {% if job.location %}
+                                <span class="badge rounded-pill bg-surface border-glass text-secondary fw-normal">{{ job.location }}</span>
+                                {% endif %}
+                                <span class="badge rounded-pill bg-surface border-glass text-secondary fw-normal">{{ job.salary_display }}</span>
+                            </div>
+                        </div>
+
+                        <div class="d-flex align-items-center justify-content-between mt-auto">
+                            <small class="text-muted">{{ job.created_at|timesince }} ago</small>
+                            <span class="btn-link text-primary text-decoration-none small">View <i
+                                    class="bi bi-arrow-right ms-1"></i></span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            {% empty %}
+            <div class="col-12 text-center py-5">
+                <h4 class="text-secondary">No jobs posted yet.</h4>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- ═══ Top Companies ═══ -->
+<section class="py-5 position-relative bg-surface" style="overflow: hidden;">
+    <!-- Decorative radial blob -->
+    <div class="decoration-blob"
+        style="top: -100px; right: -100px; width: 400px; height: 400px; background: radial-gradient(circle, rgba(59,130,246,0.06) 0%, transparent 70%);">
+    </div>
+    <div class="container position-relative">
+        <div class="section-header text-center" data-animate>
+            <h2 class="section-title">Trusted by <span class="text-gradient">Top Companies</span></h2>
+            <p class="section-subtitle">Leading organizations hire through TalentOrbit</p>
+        </div>
+        <div class="row g-4">
+            {% for c in companies %}
+            <div class="col-lg-2 col-md-4 col-6">
+                <a href="{% url 'company_detail' c.pk %}" class="text-decoration-none h-100 d-block">
+                    <div class="company-card" data-animate data-delay="{{ forloop.counter0 }}00">
+                        <div class="company-avatar">
+                            {% if c.logo %}
+                            <img src="{{ c.logo.url }}" alt="{{ c.company_name }} logo">
+                            {% else %}
+                            {{ c.company_name|first }}
+                            {% endif %}
+                        </div>
+                        <h6 style="color: var(--text-primary); font-weight: 600;">{{ c.company_name|truncatewords:2 }}
+                        </h6>
+                        <small style="color: var(--text-muted);">{{ c.industry|default:"Technology" }}</small>
+                    </div>
+                </a>
+            </div>
+            {% empty %}
+            <div class="col-12">
+                <div class="empty-state">
+                    <i class="bi bi-building d-block"></i>
+                    <h4>No companies yet</h4>
+                    <p>Be the first company to join TalentOrbit!</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- ═══ Pricing Section ═══ -->
+<section class="position-relative bg-surface" id="pricing" style="padding: 5rem 0 4rem;">
+    <!-- Decorative blob -->
+    <div
+        style="position: absolute; width: 600px; height: 600px; border-radius: 50%; background: radial-gradient(circle, rgba(139,92,246,0.06) 0%, transparent 70%); top: 50%; left: 50%; transform: translate(-50%,-50%); pointer-events: none;">
+    </div>
+    <div class="container position-relative">
+        <div class="text-center mb-5 fade-up">
+            <h2 class="section-title">Unlock <span class="text-gradient">Premium</span></h2>
+            <p class="section-subtitle">Skill videos, quizzes, and exclusive content — one flat price</p>
+        </div>
+        <div class="row g-4 justify-content-center align-items-stretch" style="padding-top: 1.5rem;">
+
+            <!-- Monthly -->
+            <div class="col-lg-4 col-md-6 fade-up">
+                <div class="glass-card h-100 d-flex flex-column" style="padding: 2rem;">
+                    <div class="mb-1">
+                        <span class="pill-plan pill-plan-blue">Monthly</span>
+                    </div>
+                    <p class="text-secondary mb-3" style="font-size: 0.9rem;">Perfect for exploring</p>
+                    <div class="mb-4">
+                        <span
+                            style="font-size: 3rem; font-weight: 800; color: var(--text-primary); letter-spacing: -0.04em;">₹299</span>
+                        <span class="text-secondary" style="font-size: 0.95rem;">/month</span>
+                    </div>
+                    <ul class="list-unstyled mb-4 flex-grow-1"
+                        style="display: flex; flex-direction: column; gap: 0.75rem;">
+                        <li class="d-flex align-items-center gap-2"
+                            style="color: var(--text-secondary); font-size: 0.95rem;">
+                            <i class="bi bi-check-circle-fill" style="color: var(--success); flex-shrink: 0;"></i>
+                            Access all skill videos
+                        </li>
+                        <li class="d-flex align-items-center gap-2"
+                            style="color: var(--text-secondary); font-size: 0.95rem;">
+                            <i class="bi bi-check-circle-fill" style="color: var(--success); flex-shrink: 0;"></i> Take
+                            unlimited quizzes
+                        </li>
+                        <li class="d-flex align-items-center gap-2"
+                            style="color: var(--text-secondary); font-size: 0.95rem;">
+                            <i class="bi bi-check-circle-fill" style="color: var(--success); flex-shrink: 0;"></i>
+                            Priority support
+                        </li>
+                    </ul>
+                    {% if user.is_authenticated and user.role == 'user' %}
+                    <a href="{% url 'subscription_page' %}" class="btn btn-outline-glow w-100 mt-auto">Get Started</a>
+                    {% elif user.is_authenticated %}
+                    <button class="btn btn-outline-secondary w-100 mt-auto" disabled>Candidates Only</button>
+                    {% else %}
+                    <a href="{% url 'register_user' %}" class="btn btn-outline-glow w-100 mt-auto">Get Started Free</a>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Quarterly (featured) -->
+            <div class="col-lg-4 col-md-6 fade-up">
+                <div class="glass-card glass-card-featured h-100 d-flex flex-column position-relative"
+                    style="padding: 2rem;">
+                    <!-- Popular pill -->
+                    <div class="text-center mb-3">
+                        <span class="pill-popular">MOST POPULAR</span>
+                    </div>
+                    <div class="mb-1">
+                        <span class="pill-plan">Quarterly</span>
+                    </div>
+                    <p class="text-secondary mb-3" style="font-size: 0.9rem;">Save 11% vs monthly</p>
+                    <div class="mb-4">
+                        <span
+                            style="font-size: 3rem; font-weight: 800; color: var(--text-primary); letter-spacing: -0.04em;">₹799</span>
+                        <span class="text-secondary" style="font-size: 0.95rem;">/3 months</span>
+                    </div>
+                    <ul class="list-unstyled mb-4 flex-grow-1"
+                        style="display: flex; flex-direction: column; gap: 0.75rem;">
+                        <li class="d-flex align-items-center gap-2"
+                            style="color: var(--text-secondary); font-size: 0.95rem;">
+                            <i class="bi bi-check-circle-fill" style="color: var(--success); flex-shrink: 0;"></i>
+                            Everything in Monthly
+                        </li>
+                        <li class="d-flex align-items-center gap-2"
+                            style="color: var(--text-secondary); font-size: 0.95rem;">
+                            <i class="bi bi-check-circle-fill" style="color: var(--success); flex-shrink: 0;"></i>
+                            Extended quiz history
+                        </li>
+                        <li class="d-flex align-items-center gap-2"
+                            style="color: var(--text-secondary); font-size: 0.95rem;">
+                            <i class="bi bi-check-circle-fill" style="color: var(--success); flex-shrink: 0;"></i>
+                            Priority support
+                        </li>
+                    </ul>
+                    {% if user.is_authenticated and user.role == 'user' %}
+                    <a href="{% url 'subscription_page' %}" class="btn btn-primary-gradient w-100 mt-auto">Get
+                        Started</a>
+                    {% elif user.is_authenticated %}
+                    <button class="btn btn-outline-secondary w-100 mt-auto" disabled>Candidates Only</button>
+                    {% else %}
+                    <a href="{% url 'register_user' %}" class="btn btn-primary-gradient w-100 mt-auto">Get Started
+                        Free</a>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Yearly -->
+            <div class="col-lg-4 col-md-6 fade-up">
+                <div class="glass-card h-100 d-flex flex-column" style="padding: 2rem;">
+                    <div class="mb-1">
+                        <span class="pill-plan pill-plan-amber">Yearly</span>
+                    </div>
+                    <p class="text-secondary mb-3" style="font-size: 0.9rem;">Best for serious learners</p>
+                    <div class="mb-4">
+                        <span
+                            style="font-size: 3rem; font-weight: 800; color: var(--text-primary); letter-spacing: -0.04em;">₹2499</span>
+                        <span class="text-secondary" style="font-size: 0.95rem;">/year</span>
+                    </div>
+                    <ul class="list-unstyled mb-4 flex-grow-1"
+                        style="display: flex; flex-direction: column; gap: 0.75rem;">
+                        <li class="d-flex align-items-center gap-2"
+                            style="color: var(--text-secondary); font-size: 0.95rem;">
+                            <i class="bi bi-check-circle-fill" style="color: var(--success); flex-shrink: 0;"></i>
+                            Everything in Quarterly
+                        </li>
+                        <li class="d-flex align-items-center gap-2"
+                            style="color: var(--text-secondary); font-size: 0.95rem;">
+                            <i class="bi bi-check-circle-fill" style="color: var(--success); flex-shrink: 0;"></i> Save
+                            30% overall
+                        </li>
+                        <li class="d-flex align-items-center gap-2"
+                            style="color: var(--text-secondary); font-size: 0.95rem;">
+                            <i class="bi bi-check-circle-fill" style="color: var(--success); flex-shrink: 0;"></i> Full
+                            year of access
+                        </li>
+                        <li class="d-flex align-items-center gap-2"
+                            style="color: var(--text-secondary); font-size: 0.95rem;">
+                            <i class="bi bi-check-circle-fill" style="color: var(--success); flex-shrink: 0;"></i>
+                            Priority support
+                        </li>
+                    </ul>
+                    {% if user.is_authenticated and user.role == 'user' %}
+                    <a href="{% url 'subscription_page' %}" class="btn btn-outline-glow w-100 mt-auto">Get Started</a>
+                    {% elif user.is_authenticated %}
+                    <button class="btn btn-outline-secondary w-100 mt-auto" disabled>Candidates Only</button>
+                    {% else %}
+                    <a href="{% url 'register_user' %}" class="btn btn-outline-glow w-100 mt-auto">Get Started Free</a>
+                    {% endif %}
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- SVG Wave Divider -->
+<div class="section-divider" style="margin-top: -1px;">
+    <svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+        <path d="M0,30 C360,60 1080,0 1440,30 L1440,60 L0,60 Z" fill="#161A23" opacity="0.15" />
+    </svg>
+</div>
+
+<!-- ═══ CTA Section ═══ -->
+<section class="py-5 position-relative" style="overflow: hidden;">
+    <div class="cta-gradient-bg"></div>
+    <div class="container position-relative">
+        <div class="glass-card glass-card-cta text-center py-5" data-animate>
+            <h2 class="section-title mb-3">Ready to Launch Your Career?</h2>
+            <p class="section-subtitle mx-auto" style="max-width: 500px;">
+                Join thousands of professionals who found their dream jobs through TalentOrbit.
+            </p>
+            <div class="d-flex justify-content-center gap-3 mt-4 flex-wrap">
+                <a href="{% url 'register_user' %}" class="btn btn-primary-gradient btn-lg">
+                    <i class="bi bi-rocket-takeoff me-2"></i>Get Started Free
+                </a>
+                <a href="{% url 'register_company' %}" class="btn btn-outline-glow btn-lg">
+                    <i class="bi bi-building me-2"></i>Hire Talent
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

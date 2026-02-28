@@ -1,0 +1,239 @@
+{% extends 'dashboard_base.html' %}
+{% block title %}Subscription{% endblock %}
+{% block sidebar_nav %}
+{% include 'includes/sidebar_user.html' with current_page='subscription' %}
+{% endblock %}
+
+{% block dashboard_content %}
+<h2 style="font-weight: 800; margin-bottom: 0.5rem;">
+    <i class="bi bi-star me-2" style="color: var(--warning);"></i>Subscription Plans
+</h2>
+<p style="color: var(--text-secondary); margin-bottom: 2rem;">Unlock premium skill videos, quizzes, and exclusive
+    content.</p>
+
+{% if is_subscribed %}
+<div class="alert-success-subtle">
+    <i class="bi bi-check-circle-fill" style="color: var(--success); font-size: 1.1rem;"></i>
+    <span>You are subscribed! Access expires on <strong>{{ expiry|date:"M d, Y" }}</strong>.</span>
+</div>
+{% endif %}
+
+<div class="row g-4 justify-content-center align-items-stretch" style="margin-top: 2rem; padding-top: 1.5rem;">
+
+    <!-- Monthly -->
+    <div class="col-lg-4 col-md-6">
+        <div class="glass-card h-100 d-flex flex-column" style="padding: 2rem;">
+            <div class="mb-1">
+                <span class="pill-plan pill-plan-blue">Monthly</span>
+            </div>
+            <p class="text-secondary mb-3" style="font-size: 0.9rem;">Perfect for exploring</p>
+            <div class="mb-4">
+                <span
+                    style="font-size: 3rem; font-weight: 800; color: var(--text-primary); letter-spacing: -0.04em;">&#8377;299</span>
+                <span class="text-secondary" style="font-size: 0.95rem;">/month</span>
+            </div>
+            <ul class="list-unstyled mb-4 flex-grow-1" style="display: flex; flex-direction: column; gap: 0.75rem;">
+                <li class="d-flex align-items-center gap-2" style="color: var(--text-secondary); font-size: 0.95rem;">
+                    <i class="bi bi-check-circle-fill" style="color: var(--success); flex-shrink: 0;"></i> Access all
+                    skill videos
+                </li>
+                <li class="d-flex align-items-center gap-2" style="color: var(--text-secondary); font-size: 0.95rem;">
+                    <i class="bi bi-check-circle-fill" style="color: var(--success); flex-shrink: 0;"></i> Take
+                    unlimited quizzes
+                </li>
+                <li class="d-flex align-items-center gap-2" style="color: var(--text-secondary); font-size: 0.95rem;">
+                    <i class="bi bi-check-circle-fill" style="color: var(--success); flex-shrink: 0;"></i> Priority
+                    support
+                </li>
+            </ul>
+            <button type="button" class="btn btn-outline-glow w-100 mt-auto payment-btn"
+                onclick="startPayment(this, 'monthly')">
+                <i class="bi bi-lightning-charge me-1"></i> Choose Plan
+            </button>
+        </div>
+    </div>
+
+    <!-- Quarterly (featured) -->
+    <div class="col-lg-4 col-md-6">
+        <div class="glass-card glass-card-featured h-100 d-flex flex-column position-relative" style="padding: 2rem;">
+            <div class="text-center mb-3">
+                <span class="pill-popular">MOST POPULAR</span>
+            </div>
+            <div class="mb-1">
+                <span class="pill-plan">Quarterly</span>
+            </div>
+            <p class="text-secondary mb-3" style="font-size: 0.9rem;">Save 11% vs monthly</p>
+            <div class="mb-4">
+                <span
+                    style="font-size: 3rem; font-weight: 800; color: var(--text-primary); letter-spacing: -0.04em;">&#8377;799</span>
+                <span class="text-secondary" style="font-size: 0.95rem;">/3 months</span>
+            </div>
+            <ul class="list-unstyled mb-4 flex-grow-1" style="display: flex; flex-direction: column; gap: 0.75rem;">
+                <li class="d-flex align-items-center gap-2" style="color: var(--text-secondary); font-size: 0.95rem;">
+                    <i class="bi bi-check-circle-fill" style="color: var(--success); flex-shrink: 0;"></i> Everything in
+                    Monthly
+                </li>
+                <li class="d-flex align-items-center gap-2" style="color: var(--text-secondary); font-size: 0.95rem;">
+                    <i class="bi bi-check-circle-fill" style="color: var(--success); flex-shrink: 0;"></i> Extended quiz
+                    history
+                </li>
+                <li class="d-flex align-items-center gap-2" style="color: var(--text-secondary); font-size: 0.95rem;">
+                    <i class="bi bi-check-circle-fill" style="color: var(--success); flex-shrink: 0;"></i> Priority
+                    support
+                </li>
+            </ul>
+            <button type="button" class="btn btn-primary-gradient w-100 mt-auto payment-btn"
+                onclick="startPayment(this, 'quarterly')">
+                <i class="bi bi-lightning-charge me-1"></i> Choose Plan
+            </button>
+        </div>
+    </div>
+
+    <!-- Yearly -->
+    <div class="col-lg-4 col-md-6">
+        <div class="glass-card h-100 d-flex flex-column" style="padding: 2rem;">
+            <div class="mb-1">
+                <span class="pill-plan pill-plan-amber">Yearly</span>
+            </div>
+            <p class="text-secondary mb-3" style="font-size: 0.9rem;">Best for serious learners</p>
+            <div class="mb-4">
+                <span
+                    style="font-size: 3rem; font-weight: 800; color: var(--text-primary); letter-spacing: -0.04em;">&#8377;2499</span>
+                <span class="text-secondary" style="font-size: 0.95rem;">/year</span>
+            </div>
+            <ul class="list-unstyled mb-4 flex-grow-1" style="display: flex; flex-direction: column; gap: 0.75rem;">
+                <li class="d-flex align-items-center gap-2" style="color: var(--text-secondary); font-size: 0.95rem;">
+                    <i class="bi bi-check-circle-fill" style="color: var(--success); flex-shrink: 0;"></i> Everything in
+                    Quarterly
+                </li>
+                <li class="d-flex align-items-center gap-2" style="color: var(--text-secondary); font-size: 0.95rem;">
+                    <i class="bi bi-check-circle-fill" style="color: var(--success); flex-shrink: 0;"></i> Save 30%
+                    overall
+                </li>
+                <li class="d-flex align-items-center gap-2" style="color: var(--text-secondary); font-size: 0.95rem;">
+                    <i class="bi bi-check-circle-fill" style="color: var(--success); flex-shrink: 0;"></i> Full year of
+                    access
+                </li>
+                <li class="d-flex align-items-center gap-2" style="color: var(--text-secondary); font-size: 0.95rem;">
+                    <i class="bi bi-check-circle-fill" style="color: var(--success); flex-shrink: 0;"></i> Priority
+                    support
+                </li>
+            </ul>
+            <button type="button" class="btn btn-outline-glow w-100 mt-auto payment-btn"
+                onclick="startPayment(this, 'yearly')">
+                <i class="bi bi-lightning-charge me-1"></i> Choose Plan
+            </button>
+        </div>
+    </div>
+
+</div>
+
+<!-- Hidden CSRF form for payment verification POST -->
+<form id="paymentVerifyForm" method="POST" action="{% url 'verify_razorpay_payment' %}" style="display:none;">
+    {% csrf_token %}
+    <input type="hidden" name="razorpay_order_id" id="rzp_order_id">
+    <input type="hidden" name="razorpay_payment_id" id="rzp_payment_id">
+    <input type="hidden" name="razorpay_signature" id="rzp_signature">
+    <input type="hidden" name="plan" id="rzp_plan">
+</form>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+    function getCsrfToken() {
+        return document.querySelector('[name=csrfmiddlewaretoken]').value;
+    }
+
+    function startPayment(btn, plan) {
+        console.log('Starting payment for plan:', plan);
+
+        // Disable all buttons to prevent double click
+        document.querySelectorAll('.payment-btn').forEach(b => b.disabled = true);
+
+        // Show loading state
+        const originalText = btn.innerHTML;
+        btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Processing...';
+
+        // Generates URL like /razorpay/order/monthly/
+        const url = "{% url 'create_razorpay_order' 'PLAN' %}".replace('PLAN', plan);
+        console.log('Fetching URL:', url);
+
+        fetch(url, {
+            method: 'GET',
+            headers: {
+                'X-CSRFToken': getCsrfToken(),
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(r => {
+                console.log('Response status:', r.status);
+                return r.json();
+            })
+            .then(data => {
+                console.log('Response data:', data);
+
+                if (data.error) {
+                    alert(data.error);
+                    resetButtons();
+                    return;
+                }
+
+                try {
+                    const options = {
+                        key: data.key_id,
+                        amount: data.amount,
+                        currency: data.currency,
+                        name: 'TalentOrbit',
+                        description: data.plan_label + ' Subscription',
+                        order_id: data.order_id,
+                        prefill: {
+                            name: data.user_name,
+                            email: data.user_email
+                        },
+                        theme: { color: '#8b5cf6' },
+                        handler: function (response) {
+                            console.log('Payment success:', response);
+                            document.getElementById('rzp_order_id').value = response.razorpay_order_id;
+                            document.getElementById('rzp_payment_id').value = response.razorpay_payment_id;
+                            document.getElementById('rzp_signature').value = response.razorpay_signature;
+                            document.getElementById('rzp_plan').value = plan;
+                            document.getElementById('paymentVerifyForm').submit();
+                        },
+                        modal: {
+                            ondismiss: function () {
+                                console.log('Payment modal dismissed');
+                                resetButtons();
+                            }
+                        }
+                    };
+
+                    const rzp = new Razorpay(options);
+
+                    rzp.on('payment.failed', function (r) {
+                        console.error('Payment failed:', r.error);
+                        alert('Payment failed: ' + r.error.description);
+                        resetButtons();
+                    });
+
+                    rzp.open();
+
+                } catch (e) {
+                    console.error('Razorpay initialization error:', e);
+                    alert('Payment system error. Please try again.');
+                    resetButtons();
+                }
+            })
+            .catch(err => {
+                console.error('Fetch error:', err);
+                alert('Could not connect to payment service. Please try again.');
+                resetButtons();
+            });
+
+        function resetButtons() {
+            document.querySelectorAll('.payment-btn').forEach(b => b.disabled = false);
+            btn.innerHTML = originalText;
+        }
+    }
+</script>
+{% endblock %}

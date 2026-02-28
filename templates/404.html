@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}Page Not Found{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="text-center py-5" style="max-width: 500px; margin: 0 auto;">
+        <div style="font-size: 8rem; font-weight: 800; font-family: var(--font-heading); line-height: 1; background: var(--gradient-warm); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
+            404
+        </div>
+        <h2 style="font-family: var(--font-heading); font-weight: 700; margin-bottom: 1rem;">Page Not Found</h2>
+        <p style="color: var(--text-secondary); margin-bottom: 2rem;">
+            The page you're looking for doesn't exist or has been moved.
+        </p>
+        <div class="d-flex justify-content-center gap-3">
+            <a href="{% url 'home' %}" class="btn btn-primary-gradient">
+                <i class="bi bi-house me-2"></i>Go Home
+            </a>
+            <a href="{% url 'job_list' %}" class="btn btn-outline-glow">
+                <i class="bi bi-briefcase me-2"></i>Browse Jobs
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block footer %}{% endblock %}

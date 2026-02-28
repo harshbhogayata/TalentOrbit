@@ -1,0 +1,2163 @@
+WARNING 2026-02-17 19:42:17,283 log Too Many Requests: /login/
+WARNING 2026-02-17 19:42:17,284 log Too Many Requests: /login/
+WARNING 2026-02-17 19:42:17,285 log Too Many Requests: /login/
+WARNING 2026-02-17 19:44:07,045 log Too Many Requests: /login/
+WARNING 2026-02-17 19:44:07,046 log Too Many Requests: /login/
+WARNING 2026-02-17 19:44:07,047 log Too Many Requests: /login/
+WARNING 2026-02-17 19:46:44,720 log Not Found: /favicon.ico
+WARNING 2026-02-17 19:48:53,976 log Too Many Requests: /login/
+WARNING 2026-02-17 19:48:53,977 log Too Many Requests: /login/
+WARNING 2026-02-17 19:48:53,978 log Too Many Requests: /login/
+WARNING 2026-02-17 19:50:33,988 log Too Many Requests: /login/
+WARNING 2026-02-17 19:50:33,989 log Too Many Requests: /login/
+WARNING 2026-02-17 19:50:33,990 log Too Many Requests: /login/
+WARNING 2026-02-17 19:54:05,752 log Too Many Requests: /login/
+WARNING 2026-02-17 19:54:05,753 log Too Many Requests: /login/
+WARNING 2026-02-17 19:54:05,754 log Too Many Requests: /login/
+WARNING 2026-02-17 20:11:11,009 log Too Many Requests: /login/
+WARNING 2026-02-17 20:11:11,011 log Too Many Requests: /login/
+WARNING 2026-02-17 20:11:11,012 log Too Many Requests: /login/
+WARNING 2026-02-17 20:11:11,013 log Too Many Requests: /login/
+WARNING 2026-02-17 20:11:11,013 log Too Many Requests: /login/
+WARNING 2026-02-17 20:11:14,239 log Too Many Requests: /register/
+WARNING 2026-02-17 20:11:14,345 log Too Many Requests: /register/
+WARNING 2026-02-17 20:36:42,865 log Not Found: /favicon.ico
+WARNING 2026-02-17 20:36:58,766 log Too Many Requests: /login/
+WARNING 2026-02-17 20:36:58,768 log Too Many Requests: /login/
+WARNING 2026-02-17 20:36:58,769 log Too Many Requests: /login/
+WARNING 2026-02-17 20:36:58,770 log Too Many Requests: /login/
+WARNING 2026-02-17 20:36:58,772 log Too Many Requests: /login/
+WARNING 2026-02-17 20:37:01,461 log Too Many Requests: /register/
+WARNING 2026-02-17 20:37:01,467 log Too Many Requests: /register/
+WARNING 2026-02-17 20:38:06,347 log Not Found: /user/applications/1/withdraw/
+WARNING 2026-02-17 20:49:47,052 log Too Many Requests: /login/
+WARNING 2026-02-17 20:49:47,053 log Too Many Requests: /login/
+WARNING 2026-02-17 20:49:47,053 log Too Many Requests: /login/
+WARNING 2026-02-17 20:49:47,054 log Too Many Requests: /login/
+WARNING 2026-02-17 20:49:47,055 log Too Many Requests: /login/
+WARNING 2026-02-17 20:50:46,662 log Not Found: /user/applications/1/withdraw/
+WARNING 2026-02-17 21:05:23,378 log Too Many Requests: /login/
+WARNING 2026-02-17 21:05:23,379 log Too Many Requests: /login/
+WARNING 2026-02-17 21:05:23,381 log Too Many Requests: /login/
+WARNING 2026-02-17 21:05:23,382 log Too Many Requests: /login/
+WARNING 2026-02-17 21:05:23,383 log Too Many Requests: /login/
+WARNING 2026-02-17 21:06:23,519 log Not Found: /user/applications/1/withdraw/
+WARNING 2026-02-17 21:08:24,672 log Too Many Requests: /login/
+WARNING 2026-02-17 21:08:24,673 log Too Many Requests: /login/
+WARNING 2026-02-17 21:08:24,675 log Too Many Requests: /login/
+WARNING 2026-02-17 21:08:24,675 log Too Many Requests: /login/
+WARNING 2026-02-17 21:08:24,676 log Too Many Requests: /login/
+WARNING 2026-02-17 21:09:24,314 log Not Found: /user/applications/1/withdraw/
+WARNING 2026-02-17 21:11:43,106 log Too Many Requests: /login/
+WARNING 2026-02-17 21:11:43,107 log Too Many Requests: /login/
+WARNING 2026-02-17 21:11:43,109 log Too Many Requests: /login/
+WARNING 2026-02-17 21:11:43,110 log Too Many Requests: /login/
+WARNING 2026-02-17 21:11:43,110 log Too Many Requests: /login/
+WARNING 2026-02-17 21:12:11,830 log Too Many Requests: /login/
+WARNING 2026-02-17 21:12:11,832 log Too Many Requests: /login/
+WARNING 2026-02-17 21:12:11,833 log Too Many Requests: /login/
+WARNING 2026-02-17 21:12:11,834 log Too Many Requests: /login/
+WARNING 2026-02-17 21:12:11,835 log Too Many Requests: /login/
+WARNING 2026-02-17 21:12:43,755 log Not Found: /user/applications/1/withdraw/
+WARNING 2026-02-17 21:13:12,533 log Not Found: /user/applications/1/withdraw/
+WARNING 2026-02-17 21:15:03,820 log Too Many Requests: /login/
+WARNING 2026-02-17 21:15:03,821 log Too Many Requests: /login/
+WARNING 2026-02-17 21:15:03,822 log Too Many Requests: /login/
+WARNING 2026-02-17 21:15:03,823 log Too Many Requests: /login/
+WARNING 2026-02-17 21:15:03,824 log Too Many Requests: /login/
+WARNING 2026-02-17 21:16:03,669 log Not Found: /user/applications/1/withdraw/
+WARNING 2026-02-17 21:21:01,951 log Not Found: /favicon.ico
+ERROR 2026-02-17 21:32:59,532 log Internal Server Error: /
+Traceback (most recent call last):
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 577, in parse
+    compile_func = self.tags[command]
+                   ~~~~~~~~~^^^^^^^^^
+KeyError: 'endif'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\harsh\Desktop\TalentOrbit\core\views.py", line 85, in home
+    return render(request, 'home.html', {
+        'featured_jobs': featured_jobs,
+    ...<2 lines>...
+        'stats': stats,
+    })
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\backends\django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 174, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 1091, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 1052, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loader_tags.py", line 135, in render
+    compiled_parent = self.get_parent(context)
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loader_tags.py", line 132, in get_parent
+    return self.find_template(parent, context)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loader_tags.py", line 110, in find_template
+    template, origin = context.template.engine.find_template(
+                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        template_name,
+        ^^^^^^^^^^^^^^
+        skip=history,
+        ^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 157, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 199, in compile_nodelist
+    nodelist = parser.parse()
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 579, in parse
+    self.invalid_block_tag(token, command, parse_until)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 644, in invalid_block_tag
+    raise self.error(
+    ...<3 lines>...
+    )
+django.template.exceptions.TemplateSyntaxError: Template: C:\Users\harsh\Desktop\TalentOrbit\templates\base.html, Invalid block tag on line 162: 'endif'. Did you forget to register or load this tag?
+ERROR 2026-02-17 21:32:59,640 log Internal Server Error: /
+Traceback (most recent call last):
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 577, in parse
+    compile_func = self.tags[command]
+                   ~~~~~~~~~^^^^^^^^^
+KeyError: 'endif'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\harsh\Desktop\TalentOrbit\core\views.py", line 85, in home
+    return render(request, 'home.html', {
+        'featured_jobs': featured_jobs,
+    ...<2 lines>...
+        'stats': stats,
+    })
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\backends\django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 174, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 1091, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 1052, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loader_tags.py", line 135, in render
+    compiled_parent = self.get_parent(context)
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loader_tags.py", line 132, in get_parent
+    return self.find_template(parent, context)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loader_tags.py", line 110, in find_template
+    template, origin = context.template.engine.find_template(
+                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        template_name,
+        ^^^^^^^^^^^^^^
+        skip=history,
+        ^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 157, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 199, in compile_nodelist
+    nodelist = parser.parse()
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 579, in parse
+    self.invalid_block_tag(token, command, parse_until)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 644, in invalid_block_tag
+    raise self.error(
+    ...<3 lines>...
+    )
+django.template.exceptions.TemplateSyntaxError: Template: C:\Users\harsh\Desktop\TalentOrbit\templates\base.html, Invalid block tag on line 162: 'endif'. Did you forget to register or load this tag?
+ERROR 2026-02-17 22:07:07,409 log Internal Server Error: /
+Traceback (most recent call last):
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 577, in parse
+    compile_func = self.tags[command]
+                   ~~~~~~~~~^^^^^^^^^
+KeyError: 'endif'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\harsh\Desktop\TalentOrbit\core\views.py", line 85, in home
+    return render(request, 'home.html', {
+        'featured_jobs': featured_jobs,
+    ...<2 lines>...
+        'stats': stats,
+    })
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\backends\django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 174, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 1091, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 1052, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loader_tags.py", line 135, in render
+    compiled_parent = self.get_parent(context)
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loader_tags.py", line 132, in get_parent
+    return self.find_template(parent, context)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loader_tags.py", line 110, in find_template
+    template, origin = context.template.engine.find_template(
+                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        template_name,
+        ^^^^^^^^^^^^^^
+        skip=history,
+        ^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 157, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 199, in compile_nodelist
+    nodelist = parser.parse()
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 579, in parse
+    self.invalid_block_tag(token, command, parse_until)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 644, in invalid_block_tag
+    raise self.error(
+    ...<3 lines>...
+    )
+django.template.exceptions.TemplateSyntaxError: Template: C:\Users\harsh\Desktop\TalentOrbit\templates\base.html, Invalid block tag on line 162: 'endif'. Did you forget to register or load this tag?
+ERROR 2026-02-17 22:08:27,957 log Internal Server Error: /jobs/
+Traceback (most recent call last):
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 577, in parse
+    compile_func = self.tags[command]
+                   ~~~~~~~~~^^^^^^^^^
+KeyError: 'endblock'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\harsh\Desktop\TalentOrbit\core\views.py", line 138, in job_list
+    return render(request, 'jobs/job_list.html', {
+        'page_obj': page_obj,
+    ...<7 lines>...
+        'breadcrumbs': [{'title': 'Jobs'}],
+    })
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\backends\django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 174, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 1091, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 1052, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loader_tags.py", line 135, in render
+    compiled_parent = self.get_parent(context)
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loader_tags.py", line 132, in get_parent
+    return self.find_template(parent, context)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loader_tags.py", line 110, in find_template
+    template, origin = context.template.engine.find_template(
+                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        template_name,
+        ^^^^^^^^^^^^^^
+        skip=history,
+        ^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 157, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 199, in compile_nodelist
+    nodelist = parser.parse()
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 579, in parse
+    self.invalid_block_tag(token, command, parse_until)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 644, in invalid_block_tag
+    raise self.error(
+    ...<3 lines>...
+    )
+django.template.exceptions.TemplateSyntaxError: Template: C:\Users\harsh\Desktop\TalentOrbit\templates\base.html, Invalid block tag on line 162: 'endblock'. Did you forget to register or load this tag?
+ERROR 2026-02-17 22:35:57,180 log Internal Server Error: /
+Traceback (most recent call last):
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 577, in parse
+    compile_func = self.tags[command]
+                   ~~~~~~~~~^^^^^^^^^
+KeyError: 'endif'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\harsh\Desktop\TalentOrbit\core\views.py", line 85, in home
+    return render(request, 'home.html', {
+        'featured_jobs': featured_jobs,
+    ...<2 lines>...
+        'stats': stats,
+    })
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\backends\django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 174, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 1091, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 1052, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loader_tags.py", line 135, in render
+    compiled_parent = self.get_parent(context)
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loader_tags.py", line 132, in get_parent
+    return self.find_template(parent, context)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loader_tags.py", line 110, in find_template
+    template, origin = context.template.engine.find_template(
+                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        template_name,
+        ^^^^^^^^^^^^^^
+        skip=history,
+        ^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 157, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 199, in compile_nodelist
+    nodelist = parser.parse()
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 579, in parse
+    self.invalid_block_tag(token, command, parse_until)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 644, in invalid_block_tag
+    raise self.error(
+    ...<3 lines>...
+    )
+django.template.exceptions.TemplateSyntaxError: Template: C:\Users\harsh\Desktop\TalentOrbit\templates\base.html, Invalid block tag on line 162: 'endif'. Did you forget to register or load this tag?
+WARNING 2026-02-17 22:35:58,035 log Not Found: /favicon.ico
+WARNING 2026-02-17 22:36:42,766 log Not Found: /favicon.ico
+WARNING 2026-02-17 22:40:09,111 log Not Found: /favicon.ico
+WARNING 2026-02-17 22:45:51,659 log Not Found: /favicon.ico
+WARNING 2026-02-17 22:46:42,902 log Not Found: /favicon.ico
+WARNING 2026-02-17 22:50:32,801 log Not Found: /favicon.ico
+WARNING 2026-02-17 22:57:12,032 log Not Found: /favicon.ico
+WARNING 2026-02-17 22:59:35,960 log Not Found: /favicon.ico
+WARNING 2026-02-17 23:01:05,389 log Not Found: /favicon.ico
+WARNING 2026-02-17 23:03:24,562 log Not Found: /favicon.ico
+WARNING 2026-02-17 23:04:57,332 log Not Found: /favicon.ico
+WARNING 2026-02-17 23:06:34,477 log Not Found: /favicon.ico
+WARNING 2026-02-18 11:29:53,544 log Not Found: /favicon.ico
+WARNING 2026-02-18 12:19:45,152 log Not Found: /favicon.ico
+WARNING 2026-02-18 12:22:45,520 log Not Found: /favicon.ico
+WARNING 2026-02-18 12:26:32,296 log Not Found: /favicon.ico
+WARNING 2026-02-18 12:26:36,501 log Not Found: /favicon.ico
+WARNING 2026-02-18 12:26:43,286 log Not Found: /favicon.ico
+WARNING 2026-02-18 12:32:36,112 log Not Found: /favicon.ico
+WARNING 2026-02-18 12:34:07,616 log Not Found: /favicon.ico
+WARNING 2026-02-18 12:35:30,380 log Not Found: /favicon.ico
+WARNING 2026-02-18 12:36:35,799 log Not Found: /favicon.ico
+WARNING 2026-02-18 12:37:47,775 log Not Found: /favicon.ico
+WARNING 2026-02-18 12:55:18,025 log Not Found: /favicon.ico
+WARNING 2026-02-18 13:19:06,822 log Not Found: /favicon.ico
+WARNING 2026-02-18 13:22:08,359 log Not Found: /favicon.ico
+WARNING 2026-02-18 13:26:20,572 log Not Found: /favicon.ico
+WARNING 2026-02-18 13:26:41,075 log Not Found: /favicon.ico
+WARNING 2026-02-18 14:18:36,999 log Not Found: /favicon.ico
+WARNING 2026-02-18 15:45:28,373 log Not Found: /favicon.ico
+ERROR 2026-02-18 15:45:30,219 log Internal Server Error: /user/subscription/
+Traceback (most recent call last):
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "c:\Users\harsh\Desktop\TalentOrbit\core\views.py", line 53, in wrapper
+    return view_func(request, *args, **kwargs)
+  File "c:\Users\harsh\Desktop\TalentOrbit\core\views.py", line 1056, in subscription_page
+    return render(request, 'user/subscription.html', {
+        'is_subscribed': request.user.subscription_active,
+        'expiry': request.user.subscription_expiry,
+    })
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\backends\django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 174, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 1091, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 1052, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loader_tags.py", line 160, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 1091, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 1052, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loader_tags.py", line 160, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 1091, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 1052, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loader_tags.py", line 66, in render
+    result = block.nodelist.render(context)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 1091, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 1052, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\defaulttags.py", line 511, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\urls\base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\urls\resolvers.py", line 842, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'c                    ay_order' not found. 'c                    ay_order' is not a valid view function or pattern name.
+ERROR 2026-02-18 15:45:36,411 log Internal Server Error: /user/subscription/
+Traceback (most recent call last):
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "c:\Users\harsh\Desktop\TalentOrbit\core\views.py", line 53, in wrapper
+    return view_func(request, *args, **kwargs)
+  File "c:\Users\harsh\Desktop\TalentOrbit\core\views.py", line 1056, in subscription_page
+    return render(request, 'user/subscription.html', {
+        'is_subscribed': request.user.subscription_active,
+        'expiry': request.user.subscription_expiry,
+    })
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\backends\django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 174, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 1091, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 1052, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loader_tags.py", line 160, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 1091, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 1052, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loader_tags.py", line 160, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 1091, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 1052, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loader_tags.py", line 66, in render
+    result = block.nodelist.render(context)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 1091, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 1052, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\defaulttags.py", line 511, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\urls\base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\urls\resolvers.py", line 842, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'c                    ay_order' not found. 'c                    ay_order' is not a valid view function or pattern name.
+ERROR 2026-02-18 15:47:05,974 log Internal Server Error: /user/subscription/
+Traceback (most recent call last):
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 577, in parse
+    compile_func = self.tags[command]
+                   ~~~~~~~~~^^^^^^^^^
+KeyError: 'endblock'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "c:\Users\harsh\Desktop\TalentOrbit\core\views.py", line 53, in wrapper
+    return view_func(request, *args, **kwargs)
+  File "c:\Users\harsh\Desktop\TalentOrbit\core\views.py", line 1056, in subscription_page
+    return render(request, 'user/subscription.html', {
+        'is_subscribed': request.user.subscription_active,
+        'expiry': request.user.subscription_expiry,
+    })
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\backends\django.py", line 79, in get_template
+    return Template(self.engine.get_template(template_name), self)
+                    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\engine.py", line 186, in get_template
+    template, origin = self.find_template(template_name)
+                       ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 157, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 199, in compile_nodelist
+    nodelist = parser.parse()
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 585, in parse
+    raise self.error(token, e)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 583, in parse
+    compiled_result = compile_func(self, token)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loader_tags.py", line 307, in do_extends
+    nodelist = parser.parse()
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 579, in parse
+    self.invalid_block_tag(token, command, parse_until)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 644, in invalid_block_tag
+    raise self.error(
+    ...<3 lines>...
+    )
+django.template.exceptions.TemplateSyntaxError: Template: C:\Users\harsh\Desktop\TalentOrbit\templates\user\subscription.html, Invalid block tag on line 298: 'endblock'. Did you forget to register or load this tag?
+WARNING 2026-02-18 15:47:06,235 log Not Found: /favicon.ico
+WARNING 2026-02-18 15:47:11,391 log Not Found: /favicon.ico
+ERROR 2026-02-18 15:47:15,426 log Internal Server Error: /user/subscription/
+Traceback (most recent call last):
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 577, in parse
+    compile_func = self.tags[command]
+                   ~~~~~~~~~^^^^^^^^^
+KeyError: 'endblock'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "c:\Users\harsh\Desktop\TalentOrbit\core\views.py", line 53, in wrapper
+    return view_func(request, *args, **kwargs)
+  File "c:\Users\harsh\Desktop\TalentOrbit\core\views.py", line 1056, in subscription_page
+    return render(request, 'user/subscription.html', {
+        'is_subscribed': request.user.subscription_active,
+        'expiry': request.user.subscription_expiry,
+    })
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\backends\django.py", line 79, in get_template
+    return Template(self.engine.get_template(template_name), self)
+                    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\engine.py", line 186, in get_template
+    template, origin = self.find_template(template_name)
+                       ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 157, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 199, in compile_nodelist
+    nodelist = parser.parse()
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 585, in parse
+    raise self.error(token, e)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 583, in parse
+    compiled_result = compile_func(self, token)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loader_tags.py", line 307, in do_extends
+    nodelist = parser.parse()
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 579, in parse
+    self.invalid_block_tag(token, command, parse_until)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 644, in invalid_block_tag
+    raise self.error(
+    ...<3 lines>...
+    )
+django.template.exceptions.TemplateSyntaxError: Template: C:\Users\harsh\Desktop\TalentOrbit\templates\user\subscription.html, Invalid block tag on line 298: 'endblock'. Did you forget to register or load this tag?
+WARNING 2026-02-18 15:49:20,218 log Not Found: /favicon.ico
+WARNING 2026-02-18 18:25:37,410 log Not Found: /favicon.ico
+WARNING 2026-02-18 18:28:09,846 log Not Found: /favicon.ico
+ERROR 2026-02-18 18:30:53,190 log Internal Server Error: /user/payment/create-order/quarterly/
+ERROR 2026-02-18 18:31:00,207 log Internal Server Error: /user/payment/create-order/yearly/
+WARNING 2026-02-18 18:38:04,507 log Not Found: /favicon.ico
+WARNING 2026-02-18 18:55:36,580 log Not Found: /favicon.ico
+ERROR 2026-02-18 19:26:26,568 log Internal Server Error: /
+Traceback (most recent call last):
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 577, in parse
+    compile_func = self.tags[command]
+                   ~~~~~~~~~^^^^^^^^^
+KeyError: 'endif'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "c:\Users\harsh\Desktop\TalentOrbit\core\views.py", line 85, in home
+    return render(request, 'home.html', {
+        'featured_jobs': featured_jobs,
+    ...<2 lines>...
+        'stats': stats,
+    })
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\backends\django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 174, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 1091, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 1052, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loader_tags.py", line 135, in render
+    compiled_parent = self.get_parent(context)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loader_tags.py", line 132, in get_parent
+    return self.find_template(parent, context)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loader_tags.py", line 110, in find_template
+    template, origin = context.template.engine.find_template(
+                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        template_name,
+        ^^^^^^^^^^^^^^
+        skip=history,
+        ^^^^^^^^^^^^^
+    )
+    ^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 157, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 199, in compile_nodelist
+    nodelist = parser.parse()
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 579, in parse
+    self.invalid_block_tag(token, command, parse_until)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 644, in invalid_block_tag
+    raise self.error(
+    ...<3 lines>...
+    )
+django.template.exceptions.TemplateSyntaxError: Template: C:\Users\harsh\Desktop\TalentOrbit\templates\base.html, Invalid block tag on line 166: 'endif'. Did you forget to register or load this tag?
+ERROR 2026-02-18 19:26:29,219 log Internal Server Error: /
+Traceback (most recent call last):
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 577, in parse
+    compile_func = self.tags[command]
+                   ~~~~~~~~~^^^^^^^^^
+KeyError: 'endif'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "c:\Users\harsh\Desktop\TalentOrbit\core\views.py", line 85, in home
+    return render(request, 'home.html', {
+        'featured_jobs': featured_jobs,
+    ...<2 lines>...
+        'stats': stats,
+    })
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\backends\django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 174, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 1091, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 1052, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loader_tags.py", line 135, in render
+    compiled_parent = self.get_parent(context)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loader_tags.py", line 132, in get_parent
+    return self.find_template(parent, context)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loader_tags.py", line 110, in find_template
+    template, origin = context.template.engine.find_template(
+                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        template_name,
+        ^^^^^^^^^^^^^^
+        skip=history,
+        ^^^^^^^^^^^^^
+    )
+    ^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 157, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 199, in compile_nodelist
+    nodelist = parser.parse()
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 579, in parse
+    self.invalid_block_tag(token, command, parse_until)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 644, in invalid_block_tag
+    raise self.error(
+    ...<3 lines>...
+    )
+django.template.exceptions.TemplateSyntaxError: Template: C:\Users\harsh\Desktop\TalentOrbit\templates\base.html, Invalid block tag on line 166: 'endif'. Did you forget to register or load this tag?
+WARNING 2026-02-18 19:26:29,537 log Not Found: /favicon.ico
+ERROR 2026-02-18 19:27:58,705 log Internal Server Error: /
+Traceback (most recent call last):
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 577, in parse
+    compile_func = self.tags[command]
+                   ~~~~~~~~~^^^^^^^^^
+KeyError: 'endif'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "c:\Users\harsh\Desktop\TalentOrbit\core\views.py", line 85, in home
+    return render(request, 'home.html', {
+        'featured_jobs': featured_jobs,
+    ...<2 lines>...
+        'stats': stats,
+    })
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\backends\django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 174, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 1091, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 1052, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loader_tags.py", line 135, in render
+    compiled_parent = self.get_parent(context)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loader_tags.py", line 132, in get_parent
+    return self.find_template(parent, context)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loader_tags.py", line 110, in find_template
+    template, origin = context.template.engine.find_template(
+                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        template_name,
+        ^^^^^^^^^^^^^^
+        skip=history,
+        ^^^^^^^^^^^^^
+    )
+    ^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 157, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 199, in compile_nodelist
+    nodelist = parser.parse()
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 579, in parse
+    self.invalid_block_tag(token, command, parse_until)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 644, in invalid_block_tag
+    raise self.error(
+    ...<3 lines>...
+    )
+django.template.exceptions.TemplateSyntaxError: Template: C:\Users\harsh\Desktop\TalentOrbit\templates\base.html, Invalid block tag on line 166: 'endif'. Did you forget to register or load this tag?
+WARNING 2026-02-18 19:27:59,351 log Not Found: /favicon.ico
+ERROR 2026-02-18 19:31:45,219 log Internal Server Error: /
+Traceback (most recent call last):
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 577, in parse
+    compile_func = self.tags[command]
+                   ~~~~~~~~~^^^^^^^^^
+KeyError: 'endif'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "c:\Users\harsh\Desktop\TalentOrbit\core\views.py", line 85, in home
+    return render(request, 'home.html', {
+        'featured_jobs': featured_jobs,
+    ...<2 lines>...
+        'stats': stats,
+    })
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\backends\django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 174, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 1091, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 1052, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loader_tags.py", line 135, in render
+    compiled_parent = self.get_parent(context)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loader_tags.py", line 132, in get_parent
+    return self.find_template(parent, context)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loader_tags.py", line 110, in find_template
+    template, origin = context.template.engine.find_template(
+                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        template_name,
+        ^^^^^^^^^^^^^^
+        skip=history,
+        ^^^^^^^^^^^^^
+    )
+    ^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 157, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 199, in compile_nodelist
+    nodelist = parser.parse()
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 579, in parse
+    self.invalid_block_tag(token, command, parse_until)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 644, in invalid_block_tag
+    raise self.error(
+    ...<3 lines>...
+    )
+django.template.exceptions.TemplateSyntaxError: Template: C:\Users\harsh\Desktop\TalentOrbit\templates\base.html, Invalid block tag on line 166: 'endif'. Did you forget to register or load this tag?
+WARNING 2026-02-18 19:31:45,843 log Not Found: /favicon.ico
+WARNING 2026-02-18 19:38:51,182 log Not Found: /favicon.ico
+WARNING 2026-02-18 19:48:48,619 log Not Found: /favicon.ico
+ERROR 2026-02-18 19:49:35,819 log Internal Server Error: /jobs/
+Traceback (most recent call last):
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\smartif.py", line 181, in translate_token
+    op = OPERATORS[token]
+         ~~~~~~~~~^^^^^^^
+KeyError: 'cat.slug==selected_category'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "c:\Users\harsh\Desktop\TalentOrbit\core\views.py", line 149, in job_list
+    return render(request, 'jobs/job_list.html', {
+        'page_obj': page_obj,
+    ...<7 lines>...
+        'breadcrumbs': [{'title': 'Jobs'}],
+    })
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\backends\django.py", line 79, in get_template
+    return Template(self.engine.get_template(template_name), self)
+                    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\engine.py", line 186, in get_template
+    template, origin = self.find_template(template_name)
+                       ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 157, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 199, in compile_nodelist
+    nodelist = parser.parse()
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 585, in parse
+    raise self.error(token, e)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 583, in parse
+    compiled_result = compile_func(self, token)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loader_tags.py", line 307, in do_extends
+    nodelist = parser.parse()
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 585, in parse
+    raise self.error(token, e)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 583, in parse
+    compiled_result = compile_func(self, token)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loader_tags.py", line 235, in do_block
+    nodelist = parser.parse(("endblock",))
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 585, in parse
+    raise self.error(token, e)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 583, in parse
+    compiled_result = compile_func(self, token)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\defaulttags.py", line 894, in do_for
+    nodelist_loop = parser.parse(
+        (
+    ...<2 lines>...
+        )
+    )
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 585, in parse
+    raise self.error(token, e)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 583, in parse
+    compiled_result = compile_func(self, token)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\defaulttags.py", line 993, in do_if
+    condition = TemplateIfParser(parser, bits).parse()
+                ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\defaulttags.py", line 926, in __init__
+    super().__init__(*args, **kwargs)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\smartif.py", line 172, in __init__
+    mapped_tokens.append(self.translate_token(token))
+                         ~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\smartif.py", line 183, in translate_token
+    return self.create_var(token)
+           ~~~~~~~~~~~~~~~^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\defaulttags.py", line 929, in create_var
+    return TemplateLiteral(self.template_parser.compile_filter(value), value)
+                           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 676, in compile_filter
+    return FilterExpression(token, self)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 776, in __init__
+    raise TemplateSyntaxError(
+    ...<2 lines>...
+    )
+django.template.exceptions.TemplateSyntaxError: Template: C:\Users\harsh\Desktop\TalentOrbit\templates\jobs\job_list.html, Could not parse the remainder: '==selected_category' from 'cat.slug==selected_category'
+WARNING 2026-02-19 13:27:29,171 log Not Found: /favicon.ico
+WARNING 2026-02-19 13:42:01,702 log Not Found: /favicon.ico
+ERROR 2026-02-19 13:42:35,441 log Internal Server Error: /jobs/
+Traceback (most recent call last):
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\smartif.py", line 181, in translate_token
+    op = OPERATORS[token]
+         ~~~~~~~~~^^^^^^^
+KeyError: 'cat.slug==selected_category'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "c:\Users\harsh\Desktop\TalentOrbit\core\views.py", line 149, in job_list
+    return render(request, 'jobs/job_list.html', {
+        'page_obj': page_obj,
+    ...<7 lines>...
+        'breadcrumbs': [{'title': 'Jobs'}],
+    })
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\backends\django.py", line 79, in get_template
+    return Template(self.engine.get_template(template_name), self)
+                    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\engine.py", line 186, in get_template
+    template, origin = self.find_template(template_name)
+                       ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 157, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 199, in compile_nodelist
+    nodelist = parser.parse()
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 585, in parse
+    raise self.error(token, e)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 583, in parse
+    compiled_result = compile_func(self, token)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loader_tags.py", line 307, in do_extends
+    nodelist = parser.parse()
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 585, in parse
+    raise self.error(token, e)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 583, in parse
+    compiled_result = compile_func(self, token)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loader_tags.py", line 235, in do_block
+    nodelist = parser.parse(("endblock",))
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 585, in parse
+    raise self.error(token, e)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 583, in parse
+    compiled_result = compile_func(self, token)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\defaulttags.py", line 894, in do_for
+    nodelist_loop = parser.parse(
+        (
+    ...<2 lines>...
+        )
+    )
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 585, in parse
+    raise self.error(token, e)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 583, in parse
+    compiled_result = compile_func(self, token)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\defaulttags.py", line 993, in do_if
+    condition = TemplateIfParser(parser, bits).parse()
+                ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\defaulttags.py", line 926, in __init__
+    super().__init__(*args, **kwargs)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\smartif.py", line 172, in __init__
+    mapped_tokens.append(self.translate_token(token))
+                         ~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\smartif.py", line 183, in translate_token
+    return self.create_var(token)
+           ~~~~~~~~~~~~~~~^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\defaulttags.py", line 929, in create_var
+    return TemplateLiteral(self.template_parser.compile_filter(value), value)
+                           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 676, in compile_filter
+    return FilterExpression(token, self)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 776, in __init__
+    raise TemplateSyntaxError(
+    ...<2 lines>...
+    )
+django.template.exceptions.TemplateSyntaxError: Template: C:\Users\harsh\Desktop\TalentOrbit\templates\jobs\job_list.html, Could not parse the remainder: '==selected_category' from 'cat.slug==selected_category'
+WARNING 2026-02-19 13:42:58,056 log Not Found: /favicon.ico
+ERROR 2026-02-19 13:59:47,571 log Internal Server Error: /jobs/
+Traceback (most recent call last):
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\smartif.py", line 181, in translate_token
+    op = OPERATORS[token]
+         ~~~~~~~~~^^^^^^^
+KeyError: 'cat.slug==selected_category'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "c:\Users\harsh\Desktop\TalentOrbit\core\views.py", line 149, in job_list
+    return render(request, 'jobs/job_list.html', {
+        'page_obj': page_obj,
+    ...<7 lines>...
+        'breadcrumbs': [{'title': 'Jobs'}],
+    })
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\backends\django.py", line 79, in get_template
+    return Template(self.engine.get_template(template_name), self)
+                    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\engine.py", line 186, in get_template
+    template, origin = self.find_template(template_name)
+                       ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 157, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 199, in compile_nodelist
+    nodelist = parser.parse()
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 585, in parse
+    raise self.error(token, e)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 583, in parse
+    compiled_result = compile_func(self, token)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loader_tags.py", line 307, in do_extends
+    nodelist = parser.parse()
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 585, in parse
+    raise self.error(token, e)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 583, in parse
+    compiled_result = compile_func(self, token)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loader_tags.py", line 235, in do_block
+    nodelist = parser.parse(("endblock",))
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 585, in parse
+    raise self.error(token, e)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 583, in parse
+    compiled_result = compile_func(self, token)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\defaulttags.py", line 894, in do_for
+    nodelist_loop = parser.parse(
+        (
+    ...<2 lines>...
+        )
+    )
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 585, in parse
+    raise self.error(token, e)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 583, in parse
+    compiled_result = compile_func(self, token)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\defaulttags.py", line 993, in do_if
+    condition = TemplateIfParser(parser, bits).parse()
+                ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\defaulttags.py", line 926, in __init__
+    super().__init__(*args, **kwargs)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\smartif.py", line 172, in __init__
+    mapped_tokens.append(self.translate_token(token))
+                         ~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\smartif.py", line 183, in translate_token
+    return self.create_var(token)
+           ~~~~~~~~~~~~~~~^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\defaulttags.py", line 929, in create_var
+    return TemplateLiteral(self.template_parser.compile_filter(value), value)
+                           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 676, in compile_filter
+    return FilterExpression(token, self)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 776, in __init__
+    raise TemplateSyntaxError(
+    ...<2 lines>...
+    )
+django.template.exceptions.TemplateSyntaxError: Template: C:\Users\harsh\Desktop\TalentOrbit\templates\jobs\job_list.html, Could not parse the remainder: '==selected_category' from 'cat.slug==selected_category'
+ERROR 2026-02-19 13:59:50,862 log Internal Server Error: /dashboard/
+Traceback (most recent call last):
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\smartif.py", line 181, in translate_token
+    op = OPERATORS[token]
+         ~~~~~~~~~^^^^^^^
+KeyError: '(user.is_authenticated'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "c:\Users\harsh\Desktop\TalentOrbit\core\views.py", line 357, in dashboard
+    return user_dashboard(request)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "c:\Users\harsh\Desktop\TalentOrbit\core\views.py", line 53, in wrapper
+    return view_func(request, *args, **kwargs)
+  File "c:\Users\harsh\Desktop\TalentOrbit\core\views.py", line 947, in user_dashboard
+    return render(request, 'user/dashboard.html', context)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\backends\django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 174, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 1091, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 1052, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loader_tags.py", line 160, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 1091, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 1052, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loader_tags.py", line 135, in render
+    compiled_parent = self.get_parent(context)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loader_tags.py", line 132, in get_parent
+    return self.find_template(parent, context)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loader_tags.py", line 110, in find_template
+    template, origin = context.template.engine.find_template(
+                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        template_name,
+        ^^^^^^^^^^^^^^
+        skip=history,
+        ^^^^^^^^^^^^^
+    )
+    ^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 157, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 199, in compile_nodelist
+    nodelist = parser.parse()
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 585, in parse
+    raise self.error(token, e)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 583, in parse
+    compiled_result = compile_func(self, token)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\defaulttags.py", line 993, in do_if
+    condition = TemplateIfParser(parser, bits).parse()
+                ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\defaulttags.py", line 926, in __init__
+    super().__init__(*args, **kwargs)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\smartif.py", line 172, in __init__
+    mapped_tokens.append(self.translate_token(token))
+                         ~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\smartif.py", line 183, in translate_token
+    return self.create_var(token)
+           ~~~~~~~~~~~~~~~^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\defaulttags.py", line 929, in create_var
+    return TemplateLiteral(self.template_parser.compile_filter(value), value)
+                           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 676, in compile_filter
+    return FilterExpression(token, self)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 776, in __init__
+    raise TemplateSyntaxError(
+    ...<2 lines>...
+    )
+django.template.exceptions.TemplateSyntaxError: Template: C:\Users\harsh\Desktop\TalentOrbit\templates\base.html, Could not parse the remainder: '(user.is_authenticated' from '(user.is_authenticated'
+WARNING 2026-02-19 13:59:51,196 log Not Found: /favicon.ico
+ERROR 2026-02-19 13:59:56,961 log Internal Server Error: /
+Traceback (most recent call last):
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\smartif.py", line 181, in translate_token
+    op = OPERATORS[token]
+         ~~~~~~~~~^^^^^^^
+KeyError: '(user.is_authenticated'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "c:\Users\harsh\Desktop\TalentOrbit\core\views.py", line 85, in home
+    return render(request, 'home.html', {
+        'featured_jobs': featured_jobs,
+    ...<2 lines>...
+        'stats': stats,
+    })
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\backends\django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 174, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 1091, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 1052, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loader_tags.py", line 135, in render
+    compiled_parent = self.get_parent(context)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loader_tags.py", line 132, in get_parent
+    return self.find_template(parent, context)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loader_tags.py", line 110, in find_template
+    template, origin = context.template.engine.find_template(
+                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        template_name,
+        ^^^^^^^^^^^^^^
+        skip=history,
+        ^^^^^^^^^^^^^
+    )
+    ^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 157, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 199, in compile_nodelist
+    nodelist = parser.parse()
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 585, in parse
+    raise self.error(token, e)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 583, in parse
+    compiled_result = compile_func(self, token)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\defaulttags.py", line 993, in do_if
+    condition = TemplateIfParser(parser, bits).parse()
+                ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\defaulttags.py", line 926, in __init__
+    super().__init__(*args, **kwargs)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\smartif.py", line 172, in __init__
+    mapped_tokens.append(self.translate_token(token))
+                         ~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\smartif.py", line 183, in translate_token
+    return self.create_var(token)
+           ~~~~~~~~~~~~~~~^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\defaulttags.py", line 929, in create_var
+    return TemplateLiteral(self.template_parser.compile_filter(value), value)
+                           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 676, in compile_filter
+    return FilterExpression(token, self)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 776, in __init__
+    raise TemplateSyntaxError(
+    ...<2 lines>...
+    )
+django.template.exceptions.TemplateSyntaxError: Template: C:\Users\harsh\Desktop\TalentOrbit\templates\base.html, Could not parse the remainder: '(user.is_authenticated' from '(user.is_authenticated'
+ERROR 2026-02-19 14:00:00,403 log Internal Server Error: /
+Traceback (most recent call last):
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\smartif.py", line 181, in translate_token
+    op = OPERATORS[token]
+         ~~~~~~~~~^^^^^^^
+KeyError: '(user.is_authenticated'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "c:\Users\harsh\Desktop\TalentOrbit\core\views.py", line 85, in home
+    return render(request, 'home.html', {
+        'featured_jobs': featured_jobs,
+    ...<2 lines>...
+        'stats': stats,
+    })
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\backends\django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 174, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 1091, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 1052, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loader_tags.py", line 135, in render
+    compiled_parent = self.get_parent(context)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loader_tags.py", line 132, in get_parent
+    return self.find_template(parent, context)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loader_tags.py", line 110, in find_template
+    template, origin = context.template.engine.find_template(
+                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        template_name,
+        ^^^^^^^^^^^^^^
+        skip=history,
+        ^^^^^^^^^^^^^
+    )
+    ^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 157, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 199, in compile_nodelist
+    nodelist = parser.parse()
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 585, in parse
+    raise self.error(token, e)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 583, in parse
+    compiled_result = compile_func(self, token)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\defaulttags.py", line 993, in do_if
+    condition = TemplateIfParser(parser, bits).parse()
+                ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\defaulttags.py", line 926, in __init__
+    super().__init__(*args, **kwargs)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\smartif.py", line 172, in __init__
+    mapped_tokens.append(self.translate_token(token))
+                         ~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\smartif.py", line 183, in translate_token
+    return self.create_var(token)
+           ~~~~~~~~~~~~~~~^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\defaulttags.py", line 929, in create_var
+    return TemplateLiteral(self.template_parser.compile_filter(value), value)
+                           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 676, in compile_filter
+    return FilterExpression(token, self)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 776, in __init__
+    raise TemplateSyntaxError(
+    ...<2 lines>...
+    )
+django.template.exceptions.TemplateSyntaxError: Template: C:\Users\harsh\Desktop\TalentOrbit\templates\base.html, Could not parse the remainder: '(user.is_authenticated' from '(user.is_authenticated'
+ERROR 2026-02-19 14:00:10,130 log Internal Server Error: /
+Traceback (most recent call last):
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\smartif.py", line 181, in translate_token
+    op = OPERATORS[token]
+         ~~~~~~~~~^^^^^^^
+KeyError: '(user.is_authenticated'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "c:\Users\harsh\Desktop\TalentOrbit\core\views.py", line 85, in home
+    return render(request, 'home.html', {
+        'featured_jobs': featured_jobs,
+    ...<2 lines>...
+        'stats': stats,
+    })
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\backends\django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 174, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 1091, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 1052, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loader_tags.py", line 135, in render
+    compiled_parent = self.get_parent(context)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loader_tags.py", line 132, in get_parent
+    return self.find_template(parent, context)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loader_tags.py", line 110, in find_template
+    template, origin = context.template.engine.find_template(
+                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        template_name,
+        ^^^^^^^^^^^^^^
+        skip=history,
+        ^^^^^^^^^^^^^
+    )
+    ^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 157, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 199, in compile_nodelist
+    nodelist = parser.parse()
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 585, in parse
+    raise self.error(token, e)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 583, in parse
+    compiled_result = compile_func(self, token)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\defaulttags.py", line 993, in do_if
+    condition = TemplateIfParser(parser, bits).parse()
+                ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\defaulttags.py", line 926, in __init__
+    super().__init__(*args, **kwargs)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\smartif.py", line 172, in __init__
+    mapped_tokens.append(self.translate_token(token))
+                         ~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\smartif.py", line 183, in translate_token
+    return self.create_var(token)
+           ~~~~~~~~~~~~~~~^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\defaulttags.py", line 929, in create_var
+    return TemplateLiteral(self.template_parser.compile_filter(value), value)
+                           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 676, in compile_filter
+    return FilterExpression(token, self)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 776, in __init__
+    raise TemplateSyntaxError(
+    ...<2 lines>...
+    )
+django.template.exceptions.TemplateSyntaxError: Template: C:\Users\harsh\Desktop\TalentOrbit\templates\base.html, Could not parse the remainder: '(user.is_authenticated' from '(user.is_authenticated'
+WARNING 2026-02-19 14:00:10,431 log Not Found: /favicon.ico
+ERROR 2026-02-19 14:02:13,480 log Internal Server Error: /
+Traceback (most recent call last):
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\smartif.py", line 181, in translate_token
+    op = OPERATORS[token]
+         ~~~~~~~~~^^^^^^^
+KeyError: '(user.is_authenticated'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "c:\Users\harsh\Desktop\TalentOrbit\core\views.py", line 85, in home
+    return render(request, 'home.html', {
+        'featured_jobs': featured_jobs,
+    ...<2 lines>...
+        'stats': stats,
+    })
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\backends\django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 174, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 1091, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 1052, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loader_tags.py", line 135, in render
+    compiled_parent = self.get_parent(context)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loader_tags.py", line 132, in get_parent
+    return self.find_template(parent, context)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loader_tags.py", line 110, in find_template
+    template, origin = context.template.engine.find_template(
+                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        template_name,
+        ^^^^^^^^^^^^^^
+        skip=history,
+        ^^^^^^^^^^^^^
+    )
+    ^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 157, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 199, in compile_nodelist
+    nodelist = parser.parse()
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 585, in parse
+    raise self.error(token, e)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 583, in parse
+    compiled_result = compile_func(self, token)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\defaulttags.py", line 993, in do_if
+    condition = TemplateIfParser(parser, bits).parse()
+                ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\defaulttags.py", line 926, in __init__
+    super().__init__(*args, **kwargs)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\smartif.py", line 172, in __init__
+    mapped_tokens.append(self.translate_token(token))
+                         ~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\smartif.py", line 183, in translate_token
+    return self.create_var(token)
+           ~~~~~~~~~~~~~~~^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\defaulttags.py", line 929, in create_var
+    return TemplateLiteral(self.template_parser.compile_filter(value), value)
+                           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 676, in compile_filter
+    return FilterExpression(token, self)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 776, in __init__
+    raise TemplateSyntaxError(
+    ...<2 lines>...
+    )
+django.template.exceptions.TemplateSyntaxError: Template: C:\Users\harsh\Desktop\TalentOrbit\templates\base.html, Could not parse the remainder: '(user.is_authenticated' from '(user.is_authenticated'
+WARNING 2026-02-19 14:02:13,817 log Not Found: /favicon.ico
+ERROR 2026-02-19 14:02:29,346 log Internal Server Error: /
+Traceback (most recent call last):
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\smartif.py", line 181, in translate_token
+    op = OPERATORS[token]
+         ~~~~~~~~~^^^^^^^
+KeyError: '(user.is_authenticated'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "c:\Users\harsh\Desktop\TalentOrbit\core\views.py", line 85, in home
+    return render(request, 'home.html', {
+        'featured_jobs': featured_jobs,
+    ...<2 lines>...
+        'stats': stats,
+    })
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\backends\django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 174, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 1091, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 1052, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loader_tags.py", line 135, in render
+    compiled_parent = self.get_parent(context)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loader_tags.py", line 132, in get_parent
+    return self.find_template(parent, context)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loader_tags.py", line 110, in find_template
+    template, origin = context.template.engine.find_template(
+                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        template_name,
+        ^^^^^^^^^^^^^^
+        skip=history,
+        ^^^^^^^^^^^^^
+    )
+    ^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 157, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 199, in compile_nodelist
+    nodelist = parser.parse()
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 585, in parse
+    raise self.error(token, e)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 583, in parse
+    compiled_result = compile_func(self, token)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\defaulttags.py", line 993, in do_if
+    condition = TemplateIfParser(parser, bits).parse()
+                ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\defaulttags.py", line 926, in __init__
+    super().__init__(*args, **kwargs)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\smartif.py", line 172, in __init__
+    mapped_tokens.append(self.translate_token(token))
+                         ~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\smartif.py", line 183, in translate_token
+    return self.create_var(token)
+           ~~~~~~~~~~~~~~~^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\defaulttags.py", line 929, in create_var
+    return TemplateLiteral(self.template_parser.compile_filter(value), value)
+                           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 676, in compile_filter
+    return FilterExpression(token, self)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 776, in __init__
+    raise TemplateSyntaxError(
+    ...<2 lines>...
+    )
+django.template.exceptions.TemplateSyntaxError: Template: C:\Users\harsh\Desktop\TalentOrbit\templates\base.html, Could not parse the remainder: '(user.is_authenticated' from '(user.is_authenticated'
+WARNING 2026-02-19 14:02:29,660 log Not Found: /favicon.ico
+ERROR 2026-02-19 14:03:07,874 log Internal Server Error: /
+Traceback (most recent call last):
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\smartif.py", line 181, in translate_token
+    op = OPERATORS[token]
+         ~~~~~~~~~^^^^^^^
+KeyError: '(user.is_authenticated'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "c:\Users\harsh\Desktop\TalentOrbit\core\views.py", line 85, in home
+    return render(request, 'home.html', {
+        'featured_jobs': featured_jobs,
+    ...<2 lines>...
+        'stats': stats,
+    })
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\backends\django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 174, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 1091, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 1052, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loader_tags.py", line 135, in render
+    compiled_parent = self.get_parent(context)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loader_tags.py", line 132, in get_parent
+    return self.find_template(parent, context)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loader_tags.py", line 110, in find_template
+    template, origin = context.template.engine.find_template(
+                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        template_name,
+        ^^^^^^^^^^^^^^
+        skip=history,
+        ^^^^^^^^^^^^^
+    )
+    ^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 157, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 199, in compile_nodelist
+    nodelist = parser.parse()
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 585, in parse
+    raise self.error(token, e)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 583, in parse
+    compiled_result = compile_func(self, token)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\defaulttags.py", line 993, in do_if
+    condition = TemplateIfParser(parser, bits).parse()
+                ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\defaulttags.py", line 926, in __init__
+    super().__init__(*args, **kwargs)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\smartif.py", line 172, in __init__
+    mapped_tokens.append(self.translate_token(token))
+                         ~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\smartif.py", line 183, in translate_token
+    return self.create_var(token)
+           ~~~~~~~~~~~~~~~^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\defaulttags.py", line 929, in create_var
+    return TemplateLiteral(self.template_parser.compile_filter(value), value)
+                           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 676, in compile_filter
+    return FilterExpression(token, self)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 776, in __init__
+    raise TemplateSyntaxError(
+    ...<2 lines>...
+    )
+django.template.exceptions.TemplateSyntaxError: Template: C:\Users\harsh\Desktop\TalentOrbit\templates\base.html, Could not parse the remainder: '(user.is_authenticated' from '(user.is_authenticated'
+WARNING 2026-02-19 14:03:08,181 log Not Found: /favicon.ico
+ERROR 2026-02-19 14:08:57,248 log Internal Server Error: /
+Traceback (most recent call last):
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\smartif.py", line 181, in translate_token
+    op = OPERATORS[token]
+         ~~~~~~~~~^^^^^^^
+KeyError: '(user.is_authenticated'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "c:\Users\harsh\Desktop\TalentOrbit\core\views.py", line 85, in home
+    return render(request, 'home.html', {
+        'featured_jobs': featured_jobs,
+    ...<2 lines>...
+        'stats': stats,
+    })
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\backends\django.py", line 79, in get_template
+    return Template(self.engine.get_template(template_name), self)
+                    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\engine.py", line 186, in get_template
+    template, origin = self.find_template(template_name)
+                       ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 157, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 199, in compile_nodelist
+    nodelist = parser.parse()
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 585, in parse
+    raise self.error(token, e)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 583, in parse
+    compiled_result = compile_func(self, token)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loader_tags.py", line 307, in do_extends
+    nodelist = parser.parse()
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 585, in parse
+    raise self.error(token, e)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 583, in parse
+    compiled_result = compile_func(self, token)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loader_tags.py", line 235, in do_block
+    nodelist = parser.parse(("endblock",))
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 585, in parse
+    raise self.error(token, e)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 583, in parse
+    compiled_result = compile_func(self, token)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\defaulttags.py", line 993, in do_if
+    condition = TemplateIfParser(parser, bits).parse()
+                ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\defaulttags.py", line 926, in __init__
+    super().__init__(*args, **kwargs)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\smartif.py", line 172, in __init__
+    mapped_tokens.append(self.translate_token(token))
+                         ~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\smartif.py", line 183, in translate_token
+    return self.create_var(token)
+           ~~~~~~~~~~~~~~~^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\defaulttags.py", line 929, in create_var
+    return TemplateLiteral(self.template_parser.compile_filter(value), value)
+                           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 676, in compile_filter
+    return FilterExpression(token, self)
+  File "c:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 776, in __init__
+    raise TemplateSyntaxError(
+    ...<2 lines>...
+    )
+django.template.exceptions.TemplateSyntaxError: Template: C:\Users\harsh\Desktop\TalentOrbit\templates\home.html, Could not parse the remainder: '(user.is_authenticated' from '(user.is_authenticated'
+WARNING 2026-02-19 14:08:57,841 log Not Found: /favicon.ico
+WARNING 2026-02-19 19:01:59,305 log Not Found: /favicon.ico
+WARNING 2026-02-19 19:03:47,804 log Not Found: /favicon.ico
+WARNING 2026-02-19 19:04:47,031 log Not Found: /favicon.ico
+WARNING 2026-02-19 19:06:44,810 log Not Found: /favicon.ico
+WARNING 2026-02-19 19:08:23,480 log Not Found: /favicon.ico
+WARNING 2026-02-19 19:11:50,789 log Not Found: /favicon.ico
+WARNING 2026-02-19 19:14:00,641 log Not Found: /favicon.ico
+WARNING 2026-02-19 19:18:06,182 log Not Found: /favicon.ico
+WARNING 2026-02-19 19:23:01,066 log Not Found: /favicon.ico
+WARNING 2026-02-19 19:26:50,920 log Not Found: /favicon.ico
+WARNING 2026-02-19 21:16:34,430 log Not Found: /favicon.ico
+WARNING 2026-02-19 21:17:57,010 log Not Found: /favicon.ico
+WARNING 2026-02-19 21:24:03,714 log Not Found: /favicon.ico
+WARNING 2026-02-28 13:31:09,110 log Not Found: /favicon.ico
+WARNING 2026-02-28 13:39:11,978 log Not Found: /favicon.ico

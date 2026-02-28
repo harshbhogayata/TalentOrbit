@@ -1,0 +1,31 @@
+{% extends 'dashboard_base.html' %}
+{% block title %}Edit Category — {{ category.name }}{% endblock %}
+{% block sidebar_nav %}
+{% include 'includes/sidebar_admin.html' with current_page='categories' %}
+{% endblock %}
+
+{% block dashboard_content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 style="font-weight: 800;"><i class="bi bi-pencil-square me-2"
+            style="color: var(--primary-light);"></i>Edit Category</h2>
+    <a href="{% url 'admin_manage_categories' %}" class="btn btn-glass"><i class="bi bi-arrow-left me-2"></i>Back</a>
+</div>
+
+<div class="glass-card" style="max-width: 600px;">
+    <form method="POST">
+        {% csrf_token %}
+        {% for field in form %}
+        <div class="mb-3">
+            <label class="form-label">{{ field.label }}</label>
+            {{ field }}
+            {% if field.help_text %}<small style="color: var(--text-muted);">{{ field.help_text }}</small>{% endif %}
+            {% for error in field.errors %}
+            <div class="text-danger small">{{ error }}</div>
+            {% endfor %}
+        </div>
+        {% endfor %}
+        <button type="submit" class="btn btn-primary-gradient w-100"><i class="bi bi-check-circle me-2"></i>Save
+            Changes</button>
+    </form>
+</div>
+{% endblock %}

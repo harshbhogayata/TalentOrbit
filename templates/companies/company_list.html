@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block title %}Browse Companies{% endblock %}
+
+{% block content %}
+<div class="container page-content">
+    {% include 'includes/breadcrumb.html' %}
+
+    <!-- Header -->
+    <div class="page-header">
+        <h1><i class="bi bi-building me-2" style="color: var(--primary-light);"></i>Top Companies</h1>
+        <p style="color: var(--text-secondary);">Discover great places to work</p>
+    </div>
+
+    <!-- Search -->
+    <div class="glass-card mb-4 p-3">
+        <form method="GET" class="d-flex gap-2">
+            <input type="text" name="q" class="form-control" placeholder="Search companies by name or industry..."
+                value="{{ query }}">
+            <button type="submit" class="btn btn-primary-gradient px-4">Search</button>
+        </form>
+    </div>
+
+    <!-- Results -->
+    <div class="row g-4">
+        {% for c in page_obj %}
+        <div class="col-lg-3 col-md-4 col-6">
+            <a href="{% url 'company_detail' c.pk %}" class="text-decoration-none">
+                <div class="glass-card h-100 text-center p-4 fade-up" style="transition: transform 0.3s ease;">
+                    <div class="d-inline-flex align-items-center justify-content-center mb-3"
+                        style="width: 64px; height: 64px; background: #f8f9fb; border-radius: 50%; overflow: hidden; border: 1px solid rgba(0,0,0,0.05);">
+                        {% if c.logo %}
+                        <img src="{{ c.logo.url }}" class="w-100 h-100 object-fit-cover">
+                        {% else %}
+                        <span class="fw-bold fs-4 text-primary">{{ c.company_name|first }}</span>
+                        {% endif %}
+                    </div>
+                    <h6 class="fw-bold text-primary mb-1">{{ c.company_name }}</h6>
+                    <small class="text-secondary d-block mb-3">{{ c.industry|default:"Technology" }}</small>
+                    <span class="badge rounded-pill bg-surface border-glass text-secondary fw-normal">
+                        <i class="bi bi-briefcase me-1"></i> {{ c.jobs.count }} Openings
+                    </span>
+                </div>
+            </a>
+        </div>
+        {% empty %}
+        <div class="col-12 text-center py-5">
+            <div class="empty-state">
+                <i class="bi bi-building d-block display-4 text-secondary mb-3"></i>
+                <h4 class="text-primary">No companies found</h4>
+                <p class="text-secondary">Try a different search or check back later.</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    {% include 'includes/pagination.html' %}
+</div>
+{% endblock %}

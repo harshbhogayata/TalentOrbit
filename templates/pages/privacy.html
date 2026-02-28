@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block title %}Privacy Policy{% endblock %}
+
+{% block content %}
+<div class="container" style="max-width: 800px;">
+    <h1 class="section-title mb-4">Privacy <span class="gradient-text">Policy</span></h1>
+    <p style="color: var(--text-muted); margin-bottom: 2rem;">Last updated: February 2026</p>
+
+    <div class="glass-card mb-4">
+        <h5 style="font-family: var(--font-heading); font-weight: 700;">1. Information We Collect</h5>
+        <p style="color: var(--text-secondary); font-size: 0.9rem;">
+            We collect information you provide directly, including your name, email address, phone number,
+            resume, and company details when you register and use our platform.
+        </p>
+    </div>
+
+    <div class="glass-card mb-4">
+        <h5 style="font-family: var(--font-heading); font-weight: 700;">2. How We Use Your Information</h5>
+        <p style="color: var(--text-secondary); font-size: 0.9rem;">
+            Your information is used to provide our services, match you with job opportunities,
+            facilitate communication between job seekers and employers, and improve our platform.
+        </p>
+    </div>
+
+    <div class="glass-card mb-4">
+        <h5 style="font-family: var(--font-heading); font-weight: 700;">3. Information Sharing</h5>
+        <p style="color: var(--text-secondary); font-size: 0.9rem;">
+            When you apply for a job, your resume and application details are shared with the respective company.
+            We do not sell your personal information to third parties.
+        </p>
+    </div>
+
+    <div class="glass-card mb-4">
+        <h5 style="font-family: var(--font-heading); font-weight: 700;">4. Data Security</h5>
+        <p style="color: var(--text-secondary); font-size: 0.9rem;">
+            We implement appropriate security measures to protect your personal information.
+            However, no method of transmission over the Internet is 100% secure.
+        </p>
+    </div>
+
+    <div class="glass-card mb-4">
+        <h5 style="font-family: var(--font-heading); font-weight: 700;">5. Your Rights</h5>
+        <p style="color: var(--text-secondary); font-size: 0.9rem;">
+            You have the right to access, update, or delete your personal information at any time
+            through your account settings or by contacting us.
+        </p>
+    </div>
+
+    <div class="glass-card">
+        <h5 style="font-family: var(--font-heading); font-weight: 700;">6. Contact Us</h5>
+        <p style="color: var(--text-secondary); font-size: 0.9rem;">
+            If you have questions about this Privacy Policy, please contact us at
+            <a href="{% url 'contact' %}">our contact page</a>.
+        </p>
+    </div>
+</div>
+{% endblock %}

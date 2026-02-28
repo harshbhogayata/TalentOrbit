@@ -1,0 +1,66 @@
+{% extends 'dashboard_base.html' %}
+{% block title %}Tenders{% endblock %}
+{% block sidebar_nav %}
+{% include 'includes/sidebar_company.html' with current_page='tenders' %}
+{% endblock %}
+
+{% block dashboard_content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 style="font-weight: 800;"><i class="bi bi-file-earmark-text me-2"
+            style="color: var(--primary-light);"></i>Tenders</h2>
+    <a href="{% url 'company_create_tender' %}" class="btn btn-primary-gradient"><i
+            class="bi bi-plus-circle me-2"></i>Create Tender</a>
+</div>
+
+<!-- My Tenders -->
+<h5 style="font-weight: 700; margin-bottom: 1rem;">My Tenders</h5>
+<div class="row g-4 mb-4">
+    {% for t in my_tenders %}
+    <div class="col-lg-4 col-md-6">
+        <a href="{% url 'company_tender_detail' t.pk %}" class="text-decoration-none">
+            <div class="tender-card">
+                <div class="d-flex justify-content-between mb-2">
+                    <h6 style="font-weight: 600; color: var(--text-primary);">{{ t.title|truncatewords:6 }}</h6>
+                    <span
+                        class="badge-status badge-{% if t.status == 'open' %}active{% elif t.status == 'awarded' %}shortlisted{% else %}rejected{% endif %}">{{ t.status }}</span>
+                </div>
+                <p style="color: var(--text-muted); font-size: 0.85rem;">{{ t.description|truncatewords:15 }}</p>
+                <div class="d-flex gap-3" style="color: var(--text-secondary); font-size: 0.85rem;">
+                    {% if t.budget %}<span><i class="bi bi-currency-rupee"></i> ₹{{ t.budget|floatformat:0 }}</span>{% endif %}
+                    <span><i class="bi bi-calendar"></i> {{ t.deadline|date:"M d" }}</span>
+                    <span><i class="bi bi-chat-dots"></i> {{ t.bids.count }} bids</span>
+                </div>
+            </div>
+        </a>
+    </div>
+    {% empty %}
+    <div class="col-12">
+        <p style="color: var(--text-muted);">You haven't created any tenders yet.</p>
+    </div>
+    {% endfor %}
+</div>
+
+<!-- Other Tenders -->
+<h5 style="font-weight: 700; margin-bottom: 1rem;">Open Tenders from Other Companies</h5>
+<div class="row g-4">
+    {% for t in other_tenders %}
+    <div class="col-lg-4 col-md-6">
+        <a href="{% url 'company_tender_detail' t.pk %}" class="text-decoration-none">
+            <div class="tender-card">
+                <h6 style="font-weight: 600; color: var(--text-primary);">{{ t.title|truncatewords:6 }}</h6>
+                <small style="color: var(--text-muted);">by {{ t.posted_by.company_name }}</small>
+                <p class="mt-2" style="color: var(--text-muted); font-size: 0.85rem;">{{ t.description|truncatewords:15 }}</p>
+                <div class="d-flex gap-3" style="color: var(--text-secondary); font-size: 0.85rem;">
+                    {% if t.budget %}<span><i class="bi bi-currency-rupee"></i> ₹{{ t.budget|floatformat:0 }}</span>{% endif %}
+                    <span><i class="bi bi-calendar"></i> {{ t.deadline|date:"M d" }}</span>
+                </div>
+            </div>
+        </a>
+    </div>
+    {% empty %}
+    <div class="col-12">
+        <p style="color: var(--text-muted);">No open tenders from other companies.</p>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

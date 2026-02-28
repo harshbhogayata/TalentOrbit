@@ -1,0 +1,63 @@
+{% extends 'dashboard_base.html' %}
+{% block title %}My Jobs{% endblock %}
+{% block sidebar_nav %}
+{% include 'includes/sidebar_company.html' with current_page='jobs' %}
+{% endblock %}
+
+{% block dashboard_content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 style="font-weight: 800;"><i class="bi bi-briefcase me-2" style="color: var(--primary-light);"></i>My Jobs</h2>
+    <a href="{% url 'company_post_job' %}" class="btn btn-primary-gradient"><i class="bi bi-plus-circle me-2"></i>Post
+        New Job</a>
+</div>
+
+<div class="table-dark-custom">
+    <table class="table mb-0">
+        <thead>
+            <tr>
+                <th>Job Title</th>
+                <th>Category</th>
+                <th>Applications</th>
+                <th>Status</th>
+                <th>Posted</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for job in jobs %}
+            <tr>
+                <td><strong>{{ job.title }}</strong></td>
+                <td>{{ job.category.name|default:"—" }}</td>
+                <td><a href="{% url 'company_view_applications' job.pk %}" style="color: var(--primary-light);">{{ job.app_count }} applicants</a></td>
+                <td>{% if job.is_active %}<span class="badge-status badge-active">Active</span>{% else %}<span
+                        class="badge-status badge-rejected">Inactive</span>{% endif %}</td>
+                <td>{{ job.created_at|date:"M d" }}</td>
+                <td>
+                    <a href="{% url 'company_view_applications' job.pk %}" class="btn btn-sm btn-glass"
+                        title="Applications"><i class="bi bi-people"></i></a>
+                    <a href="{% url 'company_edit_job' job.pk %}" class="btn btn-sm btn-glass" title="Edit"><i
+                            class="bi bi-pencil"></i></a>
+                    <form method="POST" action="{% url 'company_toggle_job' job.pk %}" class="d-inline">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-sm btn-glass" title="Toggle">
+                            <i class="bi bi-{% if job.is_active %}pause{% else %}play{% endif %}"></i>
+                        </button>
+                    </form>
+                    <form method="POST" action="{% url 'company_delete_job' job.pk %}" class="d-inline"
+                        onsubmit="return confirm('Delete?')">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-sm"
+                            style="background: var(--danger-light); color: var(--danger);"><i class="bi bi-trash"></i></button>
+                    </form>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="6" class="text-center py-4" style="color: var(--text-muted);">No jobs posted yet. <a
+                        href="{% url 'company_post_job' %}">Post your first job!</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

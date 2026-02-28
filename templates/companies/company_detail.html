@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% block title %}{{ company.company_name }}{% endblock %}
+{% block content %}
+<div class="container page-content">
+        {% include 'includes/breadcrumb.html' %}
+        <!-- Company Header -->
+        <div class="glass-card p-4 mb-5 fade-up">
+            <div class="d-flex align-items-center gap-4 mb-4">
+                <div class="d-flex align-items-center justify-content-center"
+                    style="width: 72px; height: 72px; font-size: 1.75rem; flex-shrink: 0; background: linear-gradient(135deg, rgba(37,99,235,0.1), rgba(59,130,246,0.05)); border: 1px solid rgba(37,99,235,0.2); border-radius: 18px;">
+                    {% if company.logo %}
+                    <img src="{{ company.logo.url }}" class="w-100 h-100 object-fit-cover" style="border-radius: 18px;">
+                    {% else %}
+                    <span class="text-primary fw-bold">{{ company.company_name|first }}</span>
+                    {% endif %}
+                </div>
+                <div>
+                    <h1 style="font-size: 1.75rem; font-weight: 800; margin-bottom: 0.25rem;">{{ company.company_name }}
+                    </h1>
+                    <div class="d-flex flex-wrap gap-3 text-secondary" style="font-size: 0.95rem;">
+                        {% if company.industry %}
+                        <span><i class="bi bi-tag me-1 text-primary"></i>{{ company.industry }}</span>
+                        {% endif %}
+                        {% if company.city %}
+                        <span><i class="bi bi-geo-alt me-1 text-primary"></i>{{ company.city }}{% if company.state %},
+                            {{ company.state }}{% endif %}</span>
+                        {% endif %}
+                        {% if company.website %}
+                        <a href="{{ company.website }}" target="_blank" class="text-decoration-none text-secondary">
+                            <i class="bi bi-link-45deg me-1 text-primary"></i>Website
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex gap-2 flex-wrap mb-4">
+                {% if company.employee_count %}
+                <span class="badge rounded-pill bg-surface border-glass text-secondary fw-normal px-3 py-2">
+                    <i class="bi bi-people me-2"></i>{{ company.employee_count }} employees
+                </span>
+                {% endif %}
+                {% if company.established_year %}
+                <span class="badge rounded-pill bg-surface border-glass text-secondary fw-normal px-3 py-2">
+                    <i class="bi bi-calendar me-2"></i>Est. {{ company.established_year }}
+                </span>
+                {% endif %}
+            </div>
+
+            {% if company.description %}
+            <div class="pt-4 border-top border-glass">
+                <p class="text-secondary mb-0" style="line-height: 1.7;">{{ company.description }}</p>
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Open Positions -->
+        <h3 class="fw-bold mb-4 fade-up">Open Positions</h3>
+        <div class="row g-4">
+            {% for job in jobs %}
+            <div class="col-lg-4 col-md-6">
+                <a href="{% url 'job_detail' job.pk %}" class="text-decoration-none">
+                    <div class="glass-card p-4 h-100 hover-lift fade-up">
+                        <h5 class="fw-bold text-primary mb-2">{{ job.title }}</h5>
+                        <p class="text-secondary small mb-3">{{ job.description|truncatewords:15 }}</p>
+                        <div class="d-flex gap-2">
+                            <span class="badge rounded-pill bg-surface border-glass text-secondary fw-normal">{{ job.get_job_type_display }}</span>
+                            <span class="badge rounded-pill bg-surface border-glass text-secondary fw-normal">{{ job.salary_display }}</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            {% empty %}
+            <div class="col-12">
+                <div class="glass-card text-center py-5">
+                    <i class="bi bi-briefcase d-block fs-1 text-secondary mb-3"></i>
+                    <h4 class="text-primary">No open positions</h4>
+                    <p class="text-secondary">This company hasn't posted any jobs yet.</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+</div>
+{% endblock %}

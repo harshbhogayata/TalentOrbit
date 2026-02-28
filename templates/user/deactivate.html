@@ -1,0 +1,41 @@
+{% extends 'dashboard_base.html' %}
+{% block title %}Deactivate Account{% endblock %}
+{% block sidebar_nav %}
+{% include 'includes/sidebar_user.html' with current_page='deactivate' %}
+{% endblock %}
+
+{% block dashboard_content %}
+<h2 style="font-weight: 800; margin-bottom: 2rem;"><i class="bi bi-exclamation-triangle me-2"
+        style="color: var(--danger);"></i>Deactivate Account</h2>
+
+<div class="glass-card" style="max-width: 550px; border-color: rgba(239, 68, 68, 0.2);">
+    <div class="alert-danger-subtle">
+        <h6 style="color: var(--danger); font-weight: 700; margin-bottom: 0.5rem;">
+            <i class="bi bi-exclamation-circle me-1"></i>Warning: This action will:
+        </h6>
+        <ul style="color: var(--danger); margin-bottom: 0; font-size: 0.9rem;">
+            <li>Disable your ability to log in</li>
+            <li>Hide your profile from companies</li>
+            <li>Preserve your data (contact support to reactivate)</li>
+        </ul>
+    </div>
+
+    <form method="POST" onsubmit="return confirm('Are you absolutely sure you want to deactivate your account?')">
+        {% csrf_token %}
+        {% for field in form %}
+        <div class="mb-3">
+            <label class="form-label" style="font-weight: 600;">{{ field.label }}</label>
+            {{ field }}
+            {% if field.errors %}
+            <div class="text-danger mt-1" style="font-size: 0.85rem;">
+                {% for error in field.errors %}{{ error }}{% endfor %}
+            </div>
+            {% endif %}
+        </div>
+        {% endfor %}
+        <button type="submit" class="btn w-100" style="background: var(--danger); color: white; font-weight: 600;">
+            <i class="bi bi-x-circle me-2"></i>Deactivate My Account
+        </button>
+    </form>
+</div>
+{% endblock %}

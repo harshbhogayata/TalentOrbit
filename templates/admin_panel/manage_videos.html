@@ -1,0 +1,76 @@
+{% extends 'dashboard_base.html' %}
+{% block title %}Manage Videos{% endblock %}
+{% block sidebar_nav %}
+{% include 'includes/sidebar_admin.html' with current_page='videos' %}
+{% endblock %}
+
+{% block dashboard_content %}
+<h2 style="font-weight: 800; margin-bottom: 2rem;"><i class="bi bi-play-circle me-2"
+        style="color: var(--primary-light);"></i>Skill Videos</h2>
+
+<!-- Upload Form -->
+<div class="glass-card mb-4">
+    <h5 style="font-weight: 700; margin-bottom: 1.5rem;">Upload New Video</h5>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="row g-3">
+            {% for field in form %}
+            <div
+                class="col-md-{% if field.name == 'description' %}12{% elif field.name == 'is_premium' %}12{% else %}6{% endif %}">
+                {% if field.name == 'is_premium' %}
+                <div class="form-check form-switch mt-2">
+                    <input class="form-check-input" type="checkbox" name="{{ field.name }}"
+                        id="{{ field.id_for_label }}" {% if field.value %}checked{% endif %}>
+                    <label class="form-check-label" for="{{ field.id_for_label }}">Premium Content (subscribers
+                        only)</label>
+                </div>
+                {% else %}
+                <label class="form-label">{{ field.label }}</label>
+                {{ field }}
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+        <button type="submit" class="btn btn-primary-gradient mt-3"><i class="bi bi-upload me-2"></i>Upload
+            Video</button>
+    </form>
+</div>
+
+<!-- Video List -->
+<div class="row g-4">
+    {% for video in videos %}
+    <div class="col-lg-4 col-md-6">
+        <div class="video-card">
+            <div class="video-thumbnail">
+                {% if video.thumbnail %}
+                <img src="{{ video.thumbnail.url }}" alt="{{ video.title }} thumbnail"
+                    style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;">
+                {% endif %}
+                {% if video.is_premium %}<span class="premium-badge">Premium</span>{% endif %}
+                <div class="play-btn"><i class="bi bi-play-fill"></i></div>
+            </div>
+            <div class="video-info">
+                <h6 style="font-weight: 600; margin-bottom: 0.25rem;">{{ video.title }}</h6>
+                <small style="color: var(--text-muted);">{{ video.duration|default:"—" }} · {{ video.created_at|date:"M d, Y" }}</small>
+                <div class="mt-2">
+                    <form method="POST" action="{% url 'admin_delete_video' video.pk %}" class="d-inline"
+                        onsubmit="return confirm('Delete?')">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-sm"
+                            style="background: var(--danger-light); color: var(--danger);"><i class="bi bi-trash me-1"></i>Delete</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="col-12">
+        <div class="empty-state">
+            <i class="bi bi-play-circle d-block"></i>
+            <h4>No videos uploaded</h4>
+            <p>Upload skill videos for subscribed users.</p>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

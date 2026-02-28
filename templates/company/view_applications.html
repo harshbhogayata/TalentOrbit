@@ -1,0 +1,84 @@
+{% extends 'dashboard_base.html' %}
+{% block title %}Applications — {{ job.title }}{% endblock %}
+{% block sidebar_nav %}
+{% include 'includes/sidebar_company.html' with current_page='jobs' %}
+{% endblock %}
+
+{% block dashboard_content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h2 style="font-weight: 800;"><i class="bi bi-people me-2" style="color: var(--primary-light);"></i>Applications
+        </h2>
+        <p style="color: var(--text-muted);">For: <strong>{{ job.title }}</strong></p>
+    </div>
+    <a href="{% url 'company_manage_jobs' %}" class="btn btn-glass"><i class="bi bi-arrow-left me-2"></i>Back</a>
+</div>
+
+<div class="table-dark-custom">
+    <table class="table mb-0">
+        <thead>
+            <tr>
+                <th>Applicant</th>
+                <th>Email</th>
+                <th>Resume</th>
+                <th>Cover Letter</th>
+                <th>Status</th>
+                <th>Applied</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for app in applications %}
+            <tr>
+                <td>
+                    <div class="d-flex align-items-center gap-2">
+                        <div
+                            style="width: 32px; height: 32px; background: var(--gradient-primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 0.75rem;">
+                            {{ app.applicant.username|first|upper }}</div>
+                        <a href="{% url 'company_view_applicant' app.applicant.pk %}"
+                            style="color: var(--text-primary); font-weight: 500; text-decoration: underline;">
+                            {{ app.applicant.get_full_name|default:app.applicant.username }}
+                        </a>
+                    </div>
+                </td>
+                <td>{{ app.applicant.email }}</td>
+                <td><a href="{{ app.resume.url }}" target="_blank" class="btn btn-glass btn-sm"><i
+                            class="bi bi-download me-1"></i>Resume</a></td>
+                <td style="max-width: 200px; overflow: hidden; text-overflow: ellipsis;">{{ app.cover_letter|truncatewords:10 }}</td>
+                <td><span class="badge-status badge-{{ app.status }}">{{ app.get_status_display }}</span></td>
+                <td>{{ app.applied_at|date:"M d" }}</td>
+                <td>
+                    <div class="d-flex gap-1">
+                        <form method="POST" action="{% url 'company_update_application' app.pk 'reviewed' %}"
+                            class="d-inline">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-sm"
+                                style="background: var(--primary-100); color: var(--primary-light);"
+                                title="Mark Reviewed"><i class="bi bi-eye"></i></button>
+                        </form>
+                        <form method="POST" action="{% url 'company_update_application' app.pk 'shortlisted' %}"
+                            class="d-inline">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-sm"
+                                style="background: var(--success-light); color: var(--success);" title="Shortlist"><i
+                                    class="bi bi-star"></i></button>
+                        </form>
+                        <form method="POST" action="{% url 'company_update_application' app.pk 'rejected' %}"
+                            class="d-inline" onsubmit="return confirm('Reject this application?')">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-sm"
+                                style="background: var(--danger-light); color: var(--danger);" title="Reject"><i
+                                    class="bi bi-x"></i></button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="7" class="text-center py-4" style="color: var(--text-muted);">No applications yet.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -1,0 +1,86 @@
+{% extends 'dashboard_base.html' %}
+{% block title %}Manage Companies{% endblock %}
+{% block sidebar_nav %}
+{% include 'includes/sidebar_admin.html' with current_page='companies' %}
+{% endblock %}
+
+{% block dashboard_content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 style="font-weight: 800;"><i class="bi bi-building me-2" style="color: var(--primary-light);"></i>Manage
+        Companies</h2>
+    <div class="d-flex gap-2">
+        <a href="?status=pending"
+            class="btn btn-glass btn-sm {% if status_filter == 'pending' %}active{% endif %}">Pending</a>
+        <a href="?status=approved"
+            class="btn btn-glass btn-sm {% if status_filter == 'approved' %}active{% endif %}">Approved</a>
+        <a href="?status=rejected"
+            class="btn btn-glass btn-sm {% if status_filter == 'rejected' %}active{% endif %}">Rejected</a>
+        <a href="{% url 'admin_manage_companies' %}"
+            class="btn btn-glass btn-sm {% if not status_filter %}active{% endif %}">All</a>
+    </div>
+</div>
+
+<div class="table-dark-custom">
+    <table class="table mb-0">
+        <thead>
+            <tr>
+                <th>Company</th>
+                <th>Contact</th>
+                <th>Industry</th>
+                <th>Status</th>
+                <th>Registered</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for c in page_obj %}
+            <tr>
+                <td>
+                    <div class="d-flex align-items-center gap-2">
+                        <div
+                            style="width: 36px; height: 36px; background: var(--gradient-primary); border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 0.8rem;">
+                            {{ c.company_name|first }}</div>
+                        <strong>{{ c.company_name }}</strong>
+                    </div>
+                </td>
+                <td>{{ c.user.email }}</td>
+                <td>{{ c.industry|default:"—" }}</td>
+                <td>
+                    <span class="badge-status badge-{{ c.status }}">{{ c.get_status_display }}</span>
+                </td>
+                <td>{{ c.created_at|date:"M d, Y" }}</td>
+                <td>
+                    {% if c.status == 'pending' %}
+                    <form method="POST" action="{% url 'admin_approve_company' c.pk %}" class="d-inline">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-sm"
+                            style="background: var(--success-light); color: var(--success);" title="Approve"><i
+                                class="bi bi-check-lg"></i></button>
+                    </form>
+                    <form method="POST" action="{% url 'admin_reject_company' c.pk %}" class="d-inline"
+                        onsubmit="return confirm('Reject this company?')">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-sm"
+                            style="background: var(--danger-light); color: var(--danger);" title="Reject"><i
+                                class="bi bi-x-lg"></i></button>
+                    </form>
+                    {% endif %}
+                    <form method="POST" action="{% url 'admin_delete_company' c.pk %}" class="d-inline"
+                        onsubmit="return confirm('Delete this company?')">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-sm"
+                            style="background: var(--danger-light); color: var(--danger);" title="Delete"><i class="bi bi-trash"></i></button>
+                    </form>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="6" class="text-center py-4" style="color: var(--text-muted);">No companies found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% include 'includes/pagination.html' %}
+{% endblock %}

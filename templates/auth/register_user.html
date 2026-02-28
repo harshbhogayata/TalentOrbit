@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% block title %}Sign Up{% endblock %}
+{% block footer %}{% endblock %}
+
+{% block content %}
+<div class="auth-page">
+    <div class="auth-card fade-in" style="max-width: 520px;">
+        <div class="text-center mb-4">
+            <div class="auth-logo"><i class="bi bi-globe2"></i></div>
+            <h2 class="mb-2">TalentOrbit</h2>
+            <p class="text-white small fw-normal">Create your account and start your journey.</p>
+        </div>
+
+        {% if form.errors %}
+        <div class="alert alert-custom alert-danger mb-3">
+            <i class="bi bi-exclamation-circle me-2"></i>
+            <div>
+                {% for field in form %}
+                {% for error in field.errors %}
+                <div>{{ error }}</div>
+                {% endfor %}
+                {% endfor %}
+                {% for error in form.non_field_errors %}
+                <div>{{ error }}</div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
+        <form method="POST" novalidate id="registerForm">
+            {% csrf_token %}
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label class="form-label">First Name</label>
+                    {{ form.first_name }}
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Last Name</label>
+                    {{ form.last_name }}
+                </div>
+            </div>
+            <div class="mb-3 mt-3">
+                <label class="form-label">Username</label>
+                {{ form.username }}
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Email</label>
+                {{ form.email }}
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Phone (optional)</label>
+                {{ form.phone }}
+            </div>
+            <div class="row g-3 mb-3">
+                <div class="col-md-6">
+                    <label class="form-label">Password</label>
+                    {{ form.password1 }}
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Confirm Password</label>
+                    {{ form.password2 }}
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary-gradient w-100 py-2 mt-2" id="registerBtn">
+                <i class="bi bi-person-plus me-2"></i>Create Account
+            </button>
+        </form>
+
+        <p class="text-center mt-4" style="color: var(--text-secondary);">
+            Already have an account? <a href="{% url 'login' %}" class="fw-semibold">Log In</a><br>
+            <small>Want to hire? <a href="{% url 'register_company' %}" class="fw-semibold">Register as
+                    Company</a></small>
+        </p>
+    </div>
+</div>
+{% endblock %}

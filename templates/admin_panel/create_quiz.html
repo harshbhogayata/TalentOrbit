@@ -1,0 +1,32 @@
+{% extends 'dashboard_base.html' %}
+{% block title %}Create Quiz{% endblock %}
+{% block sidebar_nav %}
+{% include 'includes/sidebar_admin.html' with current_page='quizzes' %}
+{% endblock %}
+
+{% block dashboard_content %}
+<h2 style="font-weight: 800; margin-bottom: 2rem;"><i class="bi bi-plus-circle me-2"
+        style="color: var(--primary-light);"></i>Create Quiz</h2>
+
+<div class="glass-card" style="max-width: 600px;">
+    <form method="POST">
+        {% csrf_token %}
+        {% for field in form %}
+        <div class="mb-3">
+            {% if field.name == 'is_active' %}
+            <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" name="{{ field.name }}" id="{{ field.id_for_label }}" {% if field.value %}checked{% endif %}>
+                <label class="form-check-label" for="{{ field.id_for_label }}">Active</label>
+            </div>
+            {% else %}
+            <label class="form-label">{{ field.label }}</label>
+            {{ field }}
+            {% if field.help_text %}<small style="color: var(--text-muted);">{{ field.help_text }}</small>{% endif %}
+            {% endif %}
+        </div>
+        {% endfor %}
+        <button type="submit" class="btn btn-primary-gradient w-100"><i class="bi bi-plus-circle me-2"></i>Create & Add
+            Questions</button>
+    </form>
+</div>
+{% endblock %}
