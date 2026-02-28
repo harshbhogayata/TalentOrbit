@@ -31,6 +31,6 @@ services:
   - type: pgo
     name: talentorbit-db
     region: ohio
-    plan: free # Uses the free tier (expires after 90 days of inactivity)
+    plan: free
     databaseName: talentorbit
     user: talentorbit_user
