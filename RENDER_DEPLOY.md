@@ -27,7 +27,10 @@ Once the deployment finishes and your site is live, there's one critical step fo
    - `RAZORPAY_KEY_SECRET`: Your live Razorpay secret
    - `EMAIL_URL`: Your Gmail SMTP string (e.g. `smtp://your-email@gmail.com:app-password@smtp.gmail.com:587/?tls=True`)
    - `DEFAULT_FROM_EMAIL`: `TalentOrbit <noreply@yourdomain.com>`
+   - `CLOUDINARY_CLOUD_NAME`: Your free Cloudinary cloud name
+   - `CLOUDINARY_API_KEY`: Your Cloudinary API key
+   - `CLOUDINARY_API_SECRET`: Your Cloudinary API secret
 
-*Note: The `SECRET_KEY` and `DATABASE_URL` are handled automatically by Render.*
+*Note: The `SECRET_KEY` and `DATABASE_URL` are handled automatically by Render. By using Cloudinary, your media storage is now 100% free and permanent.*
 
 Your app will be live at `https://talentorbit-web.onrender.com` (you can attach a custom domain in the Render settings).
