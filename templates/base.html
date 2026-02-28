@@ -5,8 +5,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Hire Sphere — The Kinetic Obsidian Talent Operating System.">
-    <title>{% block title %}TalentOrbit{% endblock %} | Hire Sphere</title>
+    <meta name="description" content="TalentOrbit — The Kinetic Obsidian Talent Operating System.">
+    <title>{% block title %}TalentOrbit{% endblock %} | TalentOrbit</title>
 
     <!-- Google Fonts: Inter, Space Grotesk, JetBrains Mono -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -44,9 +44,9 @@
             <div class="d-flex align-items-center gap-2 mb-5">
                 <div class="brand-icon-wrapper"
                     style="width: 40px; height: 40px; background: var(--electric-indigo); border-radius: 12px; display: grid; place-items: center;">
-                    <i class="bi bi-rocket-takeoff-fill text-white"></i>
+                    <i class="bi bi-globe2 text-white"></i>
                 </div>
-                <span class="fs-4 fw-bold font-display tracking-tight text-white">Hire Sphere</span>
+                <span class="fs-4 fw-bold font-display tracking-tight text-white">TalentOrbit</span>
             </div>
 
             <div class="nav flex-column gap-2">
@@ -80,7 +80,8 @@
                         {% if user.company_profile.logo %}
                         <img src="{{ user.company_profile.logo.url }}" class="w-100 h-100 object-fit-cover">
                         {% else %}
-                        <span class="d-flex w-100 h-100 align-items-center justify-content-center text-muted small">{{ user.username|first|upper }}</span>
+                        <span class="d-flex w-100 h-100 align-items-center justify-content-center text-muted small">{{
+                            user.username|first|upper }}</span>
                         {% endif %}
                     </div>
                     <div class="flex-grow-1 overflow-hidden">
@@ -110,9 +111,9 @@
                         <!-- Brand -->
                         <a class="navbar-brand d-flex align-items-center gap-2 m-0" href="{% url 'home' %}">
                             <div class="brand-icon-wrapper text-indigo">
-                                <i class="bi bi-rocket-takeoff-fill"></i>
+                                <i class="bi bi-globe2"></i>
                             </div>
-                            <span class="brand-text text-white">Hire Sphere</span>
+                            <span class="brand-text text-white">TalentOrbit</span>
                         </a>
 
                         <!-- Desktop Menu -->
@@ -194,10 +195,13 @@
                 <div style="background: rgba(79,70,229,0.04); border-bottom: 1px solid var(--tungsten);">
                     <div class="container py-5 text-center">
                         <h4 class="fw-bold mb-2">Stay in the Loop</h4>
-                        <p class="text-secondary mb-4" style="max-width: 460px; margin: 0 auto;">Get the latest jobs, tips and career insights delivered to your inbox.</p>
-                        <form id="newsletterForm" class="d-flex gap-2 justify-content-center flex-wrap" style="max-width: 480px; margin: 0 auto;">
+                        <p class="text-secondary mb-4" style="max-width: 460px; margin: 0 auto;">Get the latest jobs,
+                            tips and career insights delivered to your inbox.</p>
+                        <form id="newsletterForm" class="d-flex gap-2 justify-content-center flex-wrap"
+                            style="max-width: 480px; margin: 0 auto;">
                             {% csrf_token %}
-                            <input type="email" class="form-control" placeholder="you@example.com" required style="max-width: 300px;">
+                            <input type="email" class="form-control" placeholder="you@example.com" required
+                                style="max-width: 300px;">
                             <button type="submit" class="btn btn-primary-gradient rounded-pill px-4">Subscribe</button>
                         </form>
                     </div>
@@ -209,47 +213,63 @@
                         <!-- Brand -->
                         <div class="col-lg-4 col-md-6">
                             <div class="d-flex align-items-center gap-2 mb-3">
-                                <div style="width: 36px; height: 36px; background: var(--electric-indigo); border-radius: 10px; display: grid; place-items: center;">
-                                    <i class="bi bi-rocket-takeoff-fill text-white"></i>
+                                <div
+                                    style="width: 36px; height: 36px; background: var(--electric-indigo); border-radius: 10px; display: grid; place-items: center;">
+                                    <i class="bi bi-globe2 text-white"></i>
                                 </div>
-                                <span class="fw-bold fs-5 text-white" style="font-family: var(--font-display);">Hire Sphere</span>
+                                <span class="fw-bold fs-5 text-white"
+                                    style="font-family: var(--font-display);">TalentOrbit</span>
                             </div>
-                            <p class="text-secondary small mb-0" style="max-width: 280px;">The modern talent operating system. Connecting world-class companies with exceptional professionals.</p>
+                            <p class="text-secondary small mb-0" style="max-width: 280px;">The modern talent operating
+                                system. Connecting world-class companies with exceptional professionals.</p>
                         </div>
 
                         <!-- Quick Links -->
                         <div class="col-lg-2 col-md-3 col-6">
-                            <h6 class="text-white fw-bold mb-3 small text-uppercase" style="letter-spacing: 0.05em;">Platform</h6>
+                            <h6 class="text-white fw-bold mb-3 small text-uppercase" style="letter-spacing: 0.05em;">
+                                Platform</h6>
                             <ul class="list-unstyled d-flex flex-column gap-2 mb-0">
-                                <li><a href="{% url 'job_list' %}" class="text-secondary small text-decoration-none">Browse Jobs</a></li>
-                                <li><a href="{% url 'company_list' %}" class="text-secondary small text-decoration-none">Companies</a></li>
-                                <li><a href="{% url 'about' %}" class="text-secondary small text-decoration-none">About Us</a></li>
-                                <li><a href="{% url 'contact' %}" class="text-secondary small text-decoration-none">Contact</a></li>
+                                <li><a href="{% url 'job_list' %}"
+                                        class="text-secondary small text-decoration-none">Browse Jobs</a></li>
+                                <li><a href="{% url 'company_list' %}"
+                                        class="text-secondary small text-decoration-none">Companies</a></li>
+                                <li><a href="{% url 'about' %}" class="text-secondary small text-decoration-none">About
+                                        Us</a></li>
+                                <li><a href="{% url 'contact' %}"
+                                        class="text-secondary small text-decoration-none">Contact</a></li>
                             </ul>
                         </div>
 
                         <!-- For Employers -->
                         <div class="col-lg-2 col-md-3 col-6">
-                            <h6 class="text-white fw-bold mb-3 small text-uppercase" style="letter-spacing: 0.05em;">Employers</h6>
+                            <h6 class="text-white fw-bold mb-3 small text-uppercase" style="letter-spacing: 0.05em;">
+                                Employers</h6>
                             <ul class="list-unstyled d-flex flex-column gap-2 mb-0">
-                                <li><a href="{% url 'register_company' %}" class="text-secondary small text-decoration-none">Post a Job</a></li>
-                                <li><a href="{% url 'register_company' %}" class="text-secondary small text-decoration-none">Hire Talent</a></li>
-                                <li><a href="#pricing" class="text-secondary small text-decoration-none">Pricing</a></li>
+                                <li><a href="{% url 'register_company' %}"
+                                        class="text-secondary small text-decoration-none">Post a Job</a></li>
+                                <li><a href="{% url 'register_company' %}"
+                                        class="text-secondary small text-decoration-none">Hire Talent</a></li>
+                                <li><a href="#pricing" class="text-secondary small text-decoration-none">Pricing</a>
+                                </li>
                             </ul>
                         </div>
 
                         <!-- Legal -->
                         <div class="col-lg-2 col-md-3 col-6">
-                            <h6 class="text-white fw-bold mb-3 small text-uppercase" style="letter-spacing: 0.05em;">Legal</h6>
+                            <h6 class="text-white fw-bold mb-3 small text-uppercase" style="letter-spacing: 0.05em;">
+                                Legal</h6>
                             <ul class="list-unstyled d-flex flex-column gap-2 mb-0">
-                                <li><a href="{% url 'terms' %}" class="text-secondary small text-decoration-none">Terms of Service</a></li>
-                                <li><a href="{% url 'privacy' %}" class="text-secondary small text-decoration-none">Privacy Policy</a></li>
+                                <li><a href="{% url 'terms' %}" class="text-secondary small text-decoration-none">Terms
+                                        of Service</a></li>
+                                <li><a href="{% url 'privacy' %}"
+                                        class="text-secondary small text-decoration-none">Privacy Policy</a></li>
                             </ul>
                         </div>
 
                         <!-- Social -->
                         <div class="col-lg-2 col-md-3 col-6">
-                            <h6 class="text-white fw-bold mb-3 small text-uppercase" style="letter-spacing: 0.05em;">Connect</h6>
+                            <h6 class="text-white fw-bold mb-3 small text-uppercase" style="letter-spacing: 0.05em;">
+                                Connect</h6>
                             <div class="d-flex gap-3 social-links">
                                 <a href="#" class="text-secondary fs-5"><i class="bi bi-twitter-x"></i></a>
                                 <a href="#" class="text-secondary fs-5"><i class="bi bi-linkedin"></i></a>
@@ -260,8 +280,9 @@
                     </div>
 
                     <!-- Bottom Bar -->
-                    <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 pt-4 mt-4" style="border-top: 1px solid var(--tungsten);">
-                        <p class="text-secondary small mb-0">&copy; 2026 Hire Sphere. Crafted with Kinetic Obsidian.</p>
+                    <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 pt-4 mt-4"
+                        style="border-top: 1px solid var(--tungsten);">
+                        <p class="text-secondary small mb-0">&copy; 2026 TalentOrbit. Crafted with Kinetic Obsidian.</p>
                         <div class="d-flex gap-3">
                             <a href="{% url 'terms' %}" class="text-secondary small text-decoration-none">Terms</a>
                             <a href="{% url 'privacy' %}" class="text-secondary small text-decoration-none">Privacy</a>
