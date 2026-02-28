@@ -66,8 +66,9 @@
                 </a>
                 {% endif %}
 
-                {% if user.is_staff %}
-                <a href="/admin/" class="btn btn-glass w-100 text-start d-flex align-items-center gap-3 border-0">
+                {% if user.is_staff or user.role == 'admin' %}
+                <a href="{% url 'admin_dashboard' %}"
+                    class="btn btn-glass w-100 text-start d-flex align-items-center gap-3 border-0">
                     <i class="bi bi-shield-lock text-muted"></i> Admin Console
                 </a>
                 {% endif %}
