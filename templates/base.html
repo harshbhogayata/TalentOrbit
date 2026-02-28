@@ -38,73 +38,10 @@
     <!-- ═══ App Container ═══ -->
     <div class="app-container">
 
-        {% if user.is_authenticated and user.role == "company" or user.is_staff %}
-        <!-- ═══ Sidebar (Admin/Company) ═══ -->
-        <nav class="sidebar-glass">
-            <div class="d-flex align-items-center gap-2 mb-5">
-                <div class="brand-icon-wrapper"
-                    style="width: 40px; height: 40px; background: var(--electric-indigo); border-radius: 12px; display: grid; place-items: center;">
-                    <i class="bi bi-globe2 text-white"></i>
-                </div>
-                <span class="fs-4 fw-bold font-display tracking-tight text-white">TalentOrbit</span>
-            </div>
-
-            <div class="nav flex-column gap-2">
-                <a href="{% url 'dashboard' %}"
-                    class="btn btn-glass w-100 text-start d-flex align-items-center gap-3 border-0">
-                    <i class="bi bi-grid-fill text-muted"></i> Dashboard
-                </a>
-
-                {% if user.role == "company" %}
-                <a href="{% url 'company_profile' %}"
-                    class="btn btn-glass w-100 text-start d-flex align-items-center gap-3 border-0">
-                    <i class="bi bi-building text-muted"></i> Profile
-                </a>
-                <a href="{% url 'job_list' %}"
-                    class="btn btn-glass w-100 text-start d-flex align-items-center gap-3 border-0">
-                    <i class="bi bi-briefcase text-muted"></i> My Jobs
-                </a>
-                {% endif %}
-
-                {% if user.is_staff or user.role == 'admin' %}
-                <a href="{% url 'admin_dashboard' %}"
-                    class="btn btn-glass w-100 text-start d-flex align-items-center gap-3 border-0">
-                    <i class="bi bi-shield-lock text-muted"></i> Admin Console
-                </a>
-                {% endif %}
-            </div>
-
-            <div class="mt-auto">
-                <div class="d-flex align-items-center gap-3 p-3 rounded-3" style="background: rgba(255,255,255,0.03);">
-                    <div class="avatar-circle"
-                        style="width: 32px; height: 32px; background: var(--tungsten); border-radius: 50%; overflow: hidden;">
-                        {% if user.company_profile.logo %}
-                        <img src="{{ user.company_profile.logo.url }}" class="w-100 h-100 object-fit-cover">
-                        {% else %}
-                        <span class="d-flex w-100 h-100 align-items-center justify-content-center text-muted small">{{
-                            user.username|first|upper }}</span>
-                        {% endif %}
-                    </div>
-                    <div class="flex-grow-1 overflow-hidden">
-                        <div class="text-white small fw-medium text-truncate">{{ user.username }}</div>
-                        <div class="text-muted small" style="font-size: 0.75rem;">{{ user.email }}</div>
-                    </div>
-                    <form method="POST" action="{% url 'logout' %}">
-                        {% csrf_token %}
-                        <button type="submit" class="btn btn-link text-muted p-0"><i
-                                class="bi bi-box-arrow-right"></i></button>
-                    </form>
-                </div>
-            </div>
-        </nav>
-        {% endif %}
-
         <!-- ═══ Main Liquid Content ═══ -->
-        <main
-            class="content-liquid {% if user.is_authenticated and user.role == 'company' or user.is_staff %}with-sidebar{% endif %}">
+        <main class="content-liquid">
 
-            {% if not user.is_authenticated or user.role == "user" %}
-            <!-- ═══ Top Navbar (User/Public) ═══ -->
+            <!-- ═══ Top Navbar (All Users) ═══ -->
             <nav class="navbar fixed-top" id="mainNav">
                 <div class="container">
                     <div class="navbar-glass d-flex align-items-center justify-content-between w-100 p-2 ps-4 pe-2"
@@ -165,7 +102,6 @@
                 </div>
             </nav>
             <div style="padding-top: 80px;"></div> <!-- Spacer for fixed nav -->
-            {% endif %}
 
             <!-- Django Messages -->
             {% if messages %}
@@ -189,7 +125,6 @@
             {% block content %}{% endblock %}
 
             <!-- Footer -->
-            {% if not user.role == "company" and not user.is_staff %}
             {% block footer %}
             <footer class="footer mt-auto" style="border-top: 1px solid var(--tungsten);">
                 <!-- Newsletter -->
@@ -293,7 +228,6 @@
                 </div>
             </footer>
             {% endblock %}
-            {% endif %}
 
         </main>
     </div>

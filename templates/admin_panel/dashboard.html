@@ -1,6 +1,10 @@
 {% extends 'dashboard_base.html' %}
 {% block title %}Admin Dashboard{% endblock %}
 
+{% block sidebar_nav %}
+{% include 'includes/sidebar_admin.html' with current_page='dashboard' %}
+{% endblock %}
+
 {% block dashboard_content %}
 <div class="d-flex justify-content-between align-items-end mb-5">
     <div>
@@ -101,7 +105,8 @@
                     style="background: rgba(255,255,255,0.03);">
                     <div class="d-flex align-items-center gap-2">
                         <div class="avatar-circle"
-                            style="width: 24px; height: 24px; font-size: 10px; background: var(--tungsten);">{{ c.company_name|first }}</div>
+                            style="width: 24px; height: 24px; font-size: 10px; background: var(--tungsten);">{{
+                            c.company_name|first }}</div>
                         <span class="small fw-medium">{{ c.company_name|truncatechars:15 }}</span>
                     </div>
                     <div class="d-flex gap-1">
