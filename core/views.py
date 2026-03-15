@@ -5,6 +5,7 @@ Views for all three roles: Admin, Company, User.
 Covers auth, dashboards, jobs, tenders, quizzes, videos, subscriptions.
 """
 
+from django.conf import settings
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, logout, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
@@ -406,7 +407,12 @@ def resend_verification(request):
         messages.info(request, 'Your email is already verified. You can log in.')
         return redirect('login')
 
-    delivery_result = send_verification_email(request, user)
+    delivery_result = send_verification_email(
+        request,
+        user,
+        max_rounds=getattr(settings, 'VERIFICATION_EMAIL_MAX_ATTEMPTS', 1),
+        timeout_seconds=getattr(settings, 'VERIFICATION_EMAIL_TIMEOUT', 8),
+    )
     _store_verification_state(request, user, delivery_result)
     if delivery_result:
         messages.success(request, 'Verification email resent. Please check your inbox.')

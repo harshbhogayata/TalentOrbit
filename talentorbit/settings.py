@@ -145,6 +145,8 @@ EMAIL_USE_SSL = env.bool('EMAIL_USE_SSL', default=bool(globals().get('EMAIL_USE_
 EMAIL_TIMEOUT = env.int('EMAIL_TIMEOUT', default=30)
 EMAIL_SEND_MAX_ATTEMPTS = env.int('EMAIL_SEND_MAX_ATTEMPTS', default=2)
 EMAIL_RETRY_DELAY_SECONDS = env.float('EMAIL_RETRY_DELAY_SECONDS', default=1.0)
+VERIFICATION_EMAIL_TIMEOUT = env.int('VERIFICATION_EMAIL_TIMEOUT', default=8)
+VERIFICATION_EMAIL_MAX_ATTEMPTS = env.int('VERIFICATION_EMAIL_MAX_ATTEMPTS', default=1)
 _email_fallback_port_default = 465 if EMAIL_HOST.endswith('gmail.com') and EMAIL_PORT == 587 and EMAIL_USE_TLS and not EMAIL_USE_SSL else 0
 EMAIL_FALLBACK_PORT = env.int('EMAIL_FALLBACK_PORT', default=_email_fallback_port_default)
 EMAIL_FALLBACK_USE_SSL = env.bool('EMAIL_FALLBACK_USE_SSL', default=bool(EMAIL_FALLBACK_PORT == 465))

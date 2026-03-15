@@ -18,9 +18,9 @@
                 <i class="bi bi-envelope-exclamation mt-1"></i>
                 <div>
                     Your email address has not been verified. Please check your inbox.
-                    <form method="POST" action="{% url 'resend_verification' %}" class="d-inline">
+                    <form method="POST" action="{% url 'resend_verification' %}" class="d-inline" data-resend-form>
                         {% csrf_token %}
-                        <button type="submit" class="btn btn-link p-0"
+                        <button type="submit" class="btn btn-link p-0" data-resend-button
                             style="color: inherit; font-size: 0.9rem; text-decoration: underline;">
                             Resend verification email
                         </button>
@@ -62,4 +62,22 @@
         </p>
     </div>
 </div>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('[data-resend-form]').forEach(function (form) {
+        form.addEventListener('submit', function (event) {
+            const button = form.querySelector('[data-resend-button]');
+            if (!button) {
+                return;
+            }
+            if (button.disabled) {
+                event.preventDefault();
+                return;
+            }
+            button.disabled = true;
+            button.textContent = 'Sending...';
+        });
+    });
+});
+</script>
 {% endblock %}

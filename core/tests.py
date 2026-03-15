@@ -664,6 +664,7 @@ class EmailVerificationTests(TestCase):
         EMAIL_HOST_PASSWORD='app-password',
         EMAIL_USE_TLS=True,
         EMAIL_USE_SSL=False,
+        EMAIL_TIMEOUT=8,
         EMAIL_FALLBACK_PORT=465,
         EMAIL_FALLBACK_USE_SSL=True,
         EMAIL_FALLBACK_USE_TLS=False,
@@ -698,9 +699,11 @@ class EmailVerificationTests(TestCase):
         self.assertEqual(primary_kwargs['port'], 587)
         self.assertTrue(primary_kwargs['use_tls'])
         self.assertFalse(primary_kwargs['use_ssl'])
+        self.assertEqual(primary_kwargs['timeout'], 8)
         self.assertEqual(fallback_kwargs['port'], 465)
         self.assertFalse(fallback_kwargs['use_tls'])
         self.assertTrue(fallback_kwargs['use_ssl'])
+        self.assertEqual(fallback_kwargs['timeout'], 8)
 
     def test_registration_does_not_auto_login(self):
         """After registration, user should NOT be logged in."""
@@ -844,10 +847,61 @@ class EmailVerificationTests(TestCase):
         self.assertContains(resp, 'We Couldn&#39;t Reach Our Email Provider')
         self.assertContains(resp, 'resendfail@example.com')
         self.assertContains(resp, 'We could not reach the email provider right now. Please try again shortly.')
-        self.assertEqual(_mock_send_mail.call_count, 2)
+        self.assertEqual(_mock_send_mail.call_count, 1)
         verification_state = self.client.session.get('verification_email_state')
         self.assertFalse(verification_state['last_attempt_ok'])
         self.assertEqual(verification_state['last_error_code'], 'smtp_unavailable')
+
+    @patch('core.utils.get_connection')
+    @patch('core.utils.django_send_mail')
+    @override_settings(
+        EMAIL_BACKEND='django.core.mail.backends.smtp.EmailBackend',
+        EMAIL_HOST='smtp.gmail.com',
+        EMAIL_PORT=587,
+        EMAIL_HOST_USER='smtp-user@example.com',
+        EMAIL_HOST_PASSWORD='app-password',
+        EMAIL_USE_TLS=True,
+        EMAIL_USE_SSL=False,
+        EMAIL_TIMEOUT=30,
+        VERIFICATION_EMAIL_TIMEOUT=8,
+        VERIFICATION_EMAIL_MAX_ATTEMPTS=1,
+        EMAIL_FALLBACK_PORT=465,
+        EMAIL_FALLBACK_USE_SSL=True,
+        EMAIL_FALLBACK_USE_TLS=False,
+    )
+    def test_resend_verification_uses_bounded_timeout_profile(self, mock_send_mail, mock_get_connection):
+        class DummyConnection:
+            def __init__(self, **kwargs):
+                self.__dict__.update(kwargs)
+
+        mock_get_connection.side_effect = lambda backend, **kwargs: DummyConnection(**kwargs)
+
+        def _send_with_transport(subject, message, from_email, recipients, fail_silently=False, connection=None):
+            if connection.port == 587:
+                raise SMTPServerDisconnected('connection lost')
+            return 1
+
+        mock_send_mail.side_effect = _send_with_transport
+
+        user = User.objects.create_user(
+            username='resendtimeout',
+            email='resendtimeout@example.com',
+            password='C0mpl3xP@ss!',
+            email_verified=False,
+        )
+        session = self.client.session
+        session['unverified_user_pk'] = user.pk
+        session['verification_email_state'] = {'email': user.email, 'last_attempt_ok': None, 'last_error_code': ''}
+        session.save()
+
+        resp = self.client.post(reverse('resend_verification'), follow=True)
+
+        self.assertContains(resp, 'Check Your Email')
+        self.assertEqual(mock_send_mail.call_count, 2)
+        primary_kwargs = mock_get_connection.call_args_list[0].kwargs
+        fallback_kwargs = mock_get_connection.call_args_list[1].kwargs
+        self.assertEqual(primary_kwargs['timeout'], 8)
+        self.assertEqual(fallback_kwargs['timeout'], 8)
 
     @override_settings(
         DEFAULT_FROM_EMAIL='',

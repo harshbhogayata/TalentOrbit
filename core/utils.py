@@ -216,11 +216,25 @@ def _email_retry_delay_seconds():
         return 1.0
 
 
+def _verification_email_timeout_seconds():
+    try:
+        return max(1, int(getattr(settings, 'VERIFICATION_EMAIL_TIMEOUT', 8)))
+    except (TypeError, ValueError):
+        return 8
+
+
+def _verification_email_max_attempts():
+    try:
+        return max(1, int(getattr(settings, 'VERIFICATION_EMAIL_MAX_ATTEMPTS', 1)))
+    except (TypeError, ValueError):
+        return 1
+
+
 def _smtp_backend_in_use(backend):
     return backend == 'django.core.mail.backends.smtp.EmailBackend'
 
 
-def _base_email_connection_kwargs():
+def _base_email_connection_kwargs(timeout_seconds=None):
     return {
         'host': getattr(settings, 'EMAIL_HOST', ''),
         'port': int(getattr(settings, 'EMAIL_PORT', 25) or 25),
@@ -228,15 +242,15 @@ def _base_email_connection_kwargs():
         'password': getattr(settings, 'EMAIL_HOST_PASSWORD', ''),
         'use_tls': bool(getattr(settings, 'EMAIL_USE_TLS', False)),
         'use_ssl': bool(getattr(settings, 'EMAIL_USE_SSL', False)),
-        'timeout': getattr(settings, 'EMAIL_TIMEOUT', None),
+        'timeout': getattr(settings, 'EMAIL_TIMEOUT', None) if timeout_seconds is None else timeout_seconds,
     }
 
 
-def _smtp_connection_attempts(backend, require_external_delivery):
+def _smtp_connection_attempts(backend, require_external_delivery, timeout_seconds=None):
     if not require_external_delivery or not _smtp_backend_in_use(backend):
         return [('default', None)]
 
-    primary = _base_email_connection_kwargs()
+    primary = _base_email_connection_kwargs(timeout_seconds=timeout_seconds)
     attempts = [('smtp-primary', primary)]
 
     fallback_port = int(getattr(settings, 'EMAIL_FALLBACK_PORT', 0) or 0)
@@ -259,7 +273,15 @@ def _more_delivery_attempts_remaining(round_index, max_rounds, attempt_index, to
     return attempt_index < total_attempts - 1 or round_index < max_rounds
 
 
-def send_email_result(subject, message, recipient_list, from_email=None, require_external_delivery=False):
+def send_email_result(
+    subject,
+    message,
+    recipient_list,
+    from_email=None,
+    require_external_delivery=False,
+    max_rounds=None,
+    timeout_seconds=None,
+):
     """
     Send a single email and return a structured delivery result.
     """
@@ -289,8 +311,18 @@ def send_email_result(subject, message, recipient_list, from_email=None, require
             recipients,
         )
 
-    connection_attempts = _smtp_connection_attempts(backend, require_external_delivery)
-    max_rounds = _email_send_max_attempts() if require_external_delivery else 1
+    connection_attempts = _smtp_connection_attempts(
+        backend,
+        require_external_delivery,
+        timeout_seconds=timeout_seconds,
+    )
+    if max_rounds is None:
+        max_rounds = _email_send_max_attempts() if require_external_delivery else 1
+    else:
+        try:
+            max_rounds = max(1, int(max_rounds))
+        except (TypeError, ValueError):
+            max_rounds = 1
     retry_delay_seconds = _email_retry_delay_seconds()
     last_failure = EmailDeliveryResult(ok=False, error_code='smtp_unavailable', retryable=True)
 
@@ -462,7 +494,7 @@ def make_verification_url(request, user):
     return urljoin(f'{get_public_base_url(request)}/', relative_url.lstrip('/'))
 
 
-def send_verification_email(request, user):
+def send_verification_email(request, user, *, max_rounds=None, timeout_seconds=None):
     """
     Send a verification email to the given user.
     This is synchronous so registration/login flows can detect delivery issues.
@@ -498,4 +530,6 @@ def send_verification_email(request, user):
         message,
         [recipient],
         require_external_delivery=True,
+        max_rounds=max_rounds,
+        timeout_seconds=timeout_seconds,
     )
