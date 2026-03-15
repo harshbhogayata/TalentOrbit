@@ -241,8 +241,14 @@ def register_user(request):
         form = UserRegistrationForm(request.POST)
         if form.is_valid():
             user = form.save()
+            request.session['unverified_user_pk'] = user.pk
             from .utils import send_verification_email
-            send_verification_email(request, user)
+            if not send_verification_email(request, user):
+                messages.error(
+                    request,
+                    'We could not send your verification email right now. '
+                    'Please try the resend button in a moment.'
+                )
             return redirect('verification_sent')
     else:
         form = UserRegistrationForm()
@@ -257,8 +263,14 @@ def register_company(request):
         form = CompanyRegistrationForm(request.POST)
         if form.is_valid():
             user = form.save()
+            request.session['unverified_user_pk'] = user.pk
             from .utils import send_verification_email
-            send_verification_email(request, user)
+            if not send_verification_email(request, user):
+                messages.error(
+                    request,
+                    'We could not send your verification email right now. '
+                    'Please try the resend button in a moment.'
+                )
             return redirect('verification_sent')
     else:
         form = CompanyRegistrationForm()
@@ -318,7 +330,7 @@ def verify_email(request, uidb64, token):
 def resend_verification(request):
     """
     Resend verification email. POST-only, rate-limited via middleware.
-    Uses session-stored user PK from the login view.
+    Uses session-stored user PK from the login or registration flow.
     """
     if request.method != 'POST':
         return redirect('login')
@@ -339,8 +351,13 @@ def resend_verification(request):
         return redirect('login')
 
     from .utils import send_verification_email
-    send_verification_email(request, user)
-    messages.success(request, 'Verification email resent. Please check your inbox.')
+    if send_verification_email(request, user):
+        messages.success(request, 'Verification email resent. Please check your inbox.')
+    else:
+        messages.error(
+            request,
+            'We could not resend the verification email right now. Please try again shortly.'
+        )
     return redirect('verification_sent')
 
 

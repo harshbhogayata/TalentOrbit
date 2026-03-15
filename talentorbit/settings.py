@@ -131,8 +131,12 @@ if isinstance(EMAIL_CONFIG.get('OPTIONS'), dict):
     elif str(_opts.get('SSL', '')).lower() == 'true':
         EMAIL_USE_SSL = True
         EMAIL_USE_TLS = False
-DEFAULT_FROM_EMAIL = env('DEFAULT_FROM_EMAIL', default='noreply@talentorbit.com')
-SERVER_EMAIL = DEFAULT_FROM_EMAIL
+EMAIL_TIMEOUT = env.int('EMAIL_TIMEOUT', default=30)
+_default_from_email = env('DEFAULT_FROM_EMAIL', default='').strip()
+if not _default_from_email:
+    _default_from_email = EMAIL_CONFIG.get('EMAIL_HOST_USER') or 'noreply@talentorbit.com'
+DEFAULT_FROM_EMAIL = _default_from_email
+SERVER_EMAIL = env('SERVER_EMAIL', default=DEFAULT_FROM_EMAIL)
 
 # Authentication backends (support login with email or username)
 AUTHENTICATION_BACKENDS = [

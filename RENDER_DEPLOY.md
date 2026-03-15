@@ -26,7 +26,7 @@ Once the deployment finishes and your site is live, there's one critical step fo
    - `RAZORPAY_KEY_ID`: Your live Razorpay key
    - `RAZORPAY_KEY_SECRET`: Your live Razorpay secret
    - `EMAIL_URL`: Your Gmail SMTP string (e.g. `smtp://your-email@gmail.com:app-password@smtp.gmail.com:587/?tls=True`)
-   - `DEFAULT_FROM_EMAIL`: `TalentOrbit <noreply@yourdomain.com>`
+   - `DEFAULT_FROM_EMAIL`: Use the same mailbox as your SMTP account, or an alias your provider explicitly allows (example: `TalentOrbit <your-email@gmail.com>`)
    - `CLOUDINARY_CLOUD_NAME`: Your free Cloudinary cloud name
    - `CLOUDINARY_API_KEY`: Your Cloudinary API key
    - `CLOUDINARY_API_SECRET`: Your Cloudinary API secret

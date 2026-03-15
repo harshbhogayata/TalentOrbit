@@ -11,6 +11,13 @@ from django.utils.http import urlsafe_base64_encode
 
 logger = logging.getLogger(__name__)
 
+INLINE_EMAIL_BACKENDS = {
+    'django.core.mail.backends.console.EmailBackend',
+    'django.core.mail.backends.dummy.EmailBackend',
+    'django.core.mail.backends.filebased.EmailBackend',
+    'django.core.mail.backends.locmem.EmailBackend',
+}
+
 # Centralized allowed extensions — forms reference these to stay in sync
 ALLOWED_IMAGE_EXTENSIONS = ['.jpg', '.jpeg', '.png', '.webp']
 ALLOWED_DOCUMENT_EXTENSIONS = ['.pdf', '.doc', '.docx']
@@ -111,28 +118,76 @@ def validate_content_type(value):
         )
 
 
-def send_email_async(subject, message, recipient_list, from_email=None):
+def get_default_from_email():
     """
-    Sends email in a separate thread to avoid blocking the main request/response cycle.
+    Choose a sender address that matches the configured SMTP account when possible.
+    """
+    return (
+        getattr(settings, 'DEFAULT_FROM_EMAIL', '').strip()
+        or getattr(settings, 'EMAIL_HOST_USER', '').strip()
+        or 'noreply@talentorbit.com'
+    )
+
+
+def send_email(subject, message, recipient_list, from_email=None):
+    """
+    Send a single email and log failures instead of suppressing them.
     """
     if from_email is None:
-        from_email = settings.DEFAULT_FROM_EMAIL
+        from_email = get_default_from_email()
+
+    backend = getattr(settings, 'EMAIL_BACKEND', '')
+    if backend == 'django.core.mail.backends.console.EmailBackend':
+        logger.warning(
+            'Email backend is console-only; no real email will be delivered. '
+            'subject=%s recipients=%s',
+            subject,
+            recipient_list,
+        )
+
+    try:
+        sent_count = django_send_mail(
+            subject,
+            message,
+            from_email,
+            recipient_list,
+            fail_silently=False,
+        )
+    except Exception:
+        logger.exception(
+            'Error sending email. subject=%s from_email=%s recipients=%s',
+            subject,
+            from_email,
+            recipient_list,
+        )
+        return False
+
+    if sent_count == 0:
+        logger.warning(
+            'Email send returned zero. subject=%s from_email=%s recipients=%s',
+            subject,
+            from_email,
+            recipient_list,
+        )
+        return False
+
+    return True
+
+
+def send_email_async(subject, message, recipient_list, from_email=None):
+    """
+    Send email in a background thread for non-critical notifications.
+    Test and local backends run inline to keep behavior deterministic.
+    """
+    backend = getattr(settings, 'EMAIL_BACKEND', '')
+    if backend in INLINE_EMAIL_BACKENDS:
+        return send_email(subject, message, recipient_list, from_email=from_email)
 
     def _send():
-        try:
-            django_send_mail(
-                subject,
-                message,
-                from_email,
-                recipient_list,
-                fail_silently=True
-            )
-        except Exception as e:
-            logger.error(f"Error sending email: {e}")
+        send_email(subject, message, recipient_list, from_email=from_email)
 
     thread = threading.Thread(target=_send, daemon=True)
     thread.start()
-
 
 def make_verification_url(request, user):
     """
@@ -148,7 +203,8 @@ def make_verification_url(request, user):
 
 def send_verification_email(request, user):
     """
-    Send a verification email to the given user using the async email utility.
+    Send a verification email to the given user.
+    This is synchronous so registration/login flows can detect delivery issues.
     """
     verification_url = make_verification_url(request, user)
     subject = 'Verify your TalentOrbit email address'
@@ -161,4 +217,4 @@ def send_verification_email(request, user):
         f"If you didn't create an account, you can safely ignore this email.\n\n"
         f"Thanks,\nTalentOrbit Team"
     )
-    send_email_async(subject, message, [user.email])
+    return send_email(subject, message, [user.email])

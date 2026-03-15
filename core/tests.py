@@ -9,6 +9,7 @@ from datetime import timedelta
 from io import StringIO
 from unittest.mock import patch
 from django.contrib.auth.tokens import default_token_generator
+from django.core import mail
 from django.core.management import call_command
 from django.test import TestCase, Client, override_settings
 from django.urls import reverse
@@ -529,8 +530,13 @@ class AdminQuizQuestionTests(TestCase):
 #  EMAIL VERIFICATION TESTS
 # ──────────────────────────────────────────────────────────────
 
+@override_settings(EMAIL_BACKEND='django.core.mail.backends.locmem.EmailBackend')
 class EmailVerificationTests(TestCase):
     """Test email verification flow."""
+
+    def setUp(self):
+        from .middleware import RateLimitMiddleware
+        RateLimitMiddleware._requests.clear()
 
     def test_registration_redirects_to_verification_sent(self):
         """After registration, user should be redirected to verification-sent page."""
@@ -543,6 +549,31 @@ class EmailVerificationTests(TestCase):
             'password2': 'C0mpl3xP@ss!',
         })
         self.assertRedirects(resp, reverse('verification_sent'))
+
+    def test_registration_sends_verification_email(self):
+        self.client.post(reverse('register_user'), {
+            'username': 'verifymail',
+            'email': 'verifymail@example.com',
+            'first_name': 'Verify',
+            'last_name': 'Mail',
+            'password1': 'C0mpl3xP@ss!',
+            'password2': 'C0mpl3xP@ss!',
+        })
+        self.assertEqual(len(mail.outbox), 1)
+        self.assertEqual(mail.outbox[0].to, ['verifymail@example.com'])
+        self.assertIn('/verify-email/', mail.outbox[0].body)
+
+    def test_registration_stores_pending_user_for_resend(self):
+        self.client.post(reverse('register_user'), {
+            'username': 'sessionverify',
+            'email': 'sessionverify@example.com',
+            'first_name': 'Session',
+            'last_name': 'Verify',
+            'password1': 'C0mpl3xP@ss!',
+            'password2': 'C0mpl3xP@ss!',
+        })
+        user = User.objects.get(username='sessionverify')
+        self.assertEqual(self.client.session.get('unverified_user_pk'), user.pk)
 
     def test_registration_does_not_auto_login(self):
         """After registration, user should NOT be logged in."""
@@ -649,6 +680,36 @@ class EmailVerificationTests(TestCase):
         """GET to resend endpoint should redirect to login."""
         resp = self.client.get(reverse('resend_verification'))
         self.assertEqual(resp.status_code, 302)
+
+    def test_resend_verification_after_registration_sends_new_email(self):
+        self.client.post(reverse('register_user'), {
+            'username': 'resenduser',
+            'email': 'resend@example.com',
+            'first_name': 'Re',
+            'last_name': 'Send',
+            'password1': 'C0mpl3xP@ss!',
+            'password2': 'C0mpl3xP@ss!',
+        })
+        self.assertEqual(len(mail.outbox), 1)
+        resp = self.client.post(reverse('resend_verification'))
+        self.assertRedirects(resp, reverse('verification_sent'))
+        self.assertEqual(len(mail.outbox), 2)
+        self.assertEqual(mail.outbox[-1].to, ['resend@example.com'])
+
+    @override_settings(
+        DEFAULT_FROM_EMAIL='',
+        EMAIL_HOST_USER='smtp-user@example.com',
+    )
+    def test_verification_email_falls_back_to_smtp_user_as_sender(self):
+        self.client.post(reverse('register_user'), {
+            'username': 'fromfallback',
+            'email': 'fromfallback@example.com',
+            'first_name': 'From',
+            'last_name': 'Fallback',
+            'password1': 'C0mpl3xP@ss!',
+            'password2': 'C0mpl3xP@ss!',
+        })
+        self.assertEqual(mail.outbox[-1].from_email, 'smtp-user@example.com')
 
     def test_company_registration_requires_verification(self):
         """Company registration should also redirect to verification_sent."""
