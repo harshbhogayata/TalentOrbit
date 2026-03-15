@@ -6,7 +6,10 @@ Run with: python manage.py test core
 """
 
 from datetime import timedelta
+from io import StringIO
+from unittest.mock import patch
 from django.contrib.auth.tokens import default_token_generator
+from django.core.management import call_command
 from django.test import TestCase, Client, override_settings
 from django.urls import reverse
 from django.utils import timezone
@@ -258,14 +261,15 @@ class SubscriptionViewTests(TestCase):
         user.refresh_from_db()
         self.assertFalse(user.is_subscribed)
 
-    def test_subscribe_post_activates(self):
+    def test_subscribe_post_requires_checkout(self):
         user = _create_user()
         self.client.login(username='testuser', password='Str0ngP@ss!')
-        resp = self.client.post(reverse('subscribe', args=['monthly']))
-        self.assertEqual(resp.status_code, 302)
+        resp = self.client.post(reverse('subscribe', args=['monthly']), follow=True)
+        self.assertRedirects(resp, reverse('subscription_page'))
         user.refresh_from_db()
-        self.assertTrue(user.is_subscribed)
-        self.assertIsNotNone(user.subscription_expiry)
+        self.assertFalse(user.is_subscribed)
+        messages = [str(message) for message in resp.context['messages']]
+        self.assertTrue(any('checkout' in message.lower() for message in messages))
 
 
 class QuizViewTests(TestCase):
@@ -995,3 +999,137 @@ class FileUploadValidationTests(TestCase):
         # .docx has complex container format — should be skipped (no raise)
         f = SimpleUploadedFile('doc.docx', b'PK\x03\x04' + b'\x00' * 12, content_type='application/vnd.openxmlformats')
         validate_content_type(f)
+
+
+
+class SearchAndListingRegressionTests(TestCase):
+    def setUp(self):
+        self.company_user, self.profile = _create_company_user(username='orbitco', email='orbitco@example.com')
+        self.profile.company_name = 'Orbit Labs'
+        self.profile.save(update_fields=['company_name'])
+        self.category = JobCategory.objects.create(name='Engineering', slug='engineering')
+        self.open_job = Job.objects.create(
+            company=self.profile,
+            category=self.category,
+            title='Backend Engineer',
+            description='Python APIs and integrations',
+            location='Remote',
+            deadline=timezone.now().date() + timedelta(days=30),
+        )
+        self.expired_job = Job.objects.create(
+            company=self.profile,
+            category=self.category,
+            title='Expired Engineer',
+            description='Legacy maintenance',
+            location='Delhi',
+            deadline=timezone.now().date() - timedelta(days=1),
+        )
+
+    def test_job_list_search_matches_company_name(self):
+        resp = self.client.get(reverse('job_list'), {'q': 'Orbit'})
+        self.assertContains(resp, 'Backend Engineer')
+        self.assertNotContains(resp, 'Expired Engineer')
+
+    def test_search_suggestions_match_company_name(self):
+        resp = self.client.get(reverse('search_suggestions'), {'q': 'Orbit'})
+        self.assertEqual(resp.status_code, 200)
+        data = json.loads(resp.content)
+        titles = {item['title'] for item in data['results']}
+        self.assertIn('Backend Engineer', titles)
+        self.assertNotIn('Expired Engineer', titles)
+
+    def test_home_counts_only_open_jobs(self):
+        resp = self.client.get(reverse('home'))
+        self.assertContains(resp, 'Backend Engineer')
+        self.assertNotContains(resp, 'Expired Engineer')
+        self.assertEqual(resp.context['stats']['jobs'], 1)
+        self.assertEqual(list(resp.context['categories'])[0].job_count, 1)
+
+    def test_company_detail_hides_expired_jobs(self):
+        resp = self.client.get(reverse('company_detail', args=[self.profile.pk]))
+        self.assertContains(resp, 'Backend Engineer')
+        self.assertNotContains(resp, 'Expired Engineer')
+
+
+class ProfileUpdateRegressionTests(TestCase):
+    def test_user_profile_rejects_duplicate_email(self):
+        _create_user(username='otheruser', email='taken@example.com')
+        _create_user()
+        self.client.login(username='testuser', password='Str0ngP@ss!')
+        resp = self.client.post(reverse('user_profile'), {
+            'first_name': '',
+            'last_name': '',
+            'email': 'taken@example.com',
+            'phone': '',
+            'bio': '',
+        })
+        self.assertEqual(resp.status_code, 200)
+        self.assertFormError(resp.context['form'], 'email', 'An account with this email already exists.')
+
+    def test_company_profile_rejects_duplicate_email(self):
+        _create_user(username='takenuser', email='taken@example.com')
+        _create_company_user()
+        self.client.login(username='companyuser', password='Str0ngP@ss!')
+        resp = self.client.post(reverse('company_profile'), {
+            'first_name': '',
+            'last_name': '',
+            'email': 'taken@example.com',
+            'phone': '',
+            'bio': '',
+            'company_name': 'TestCorp',
+            'industry': '',
+            'website': '',
+            'description': '',
+            'address': '',
+            'city': '',
+            'state': '',
+            'country': 'India',
+            'established_year': '',
+            'employee_count': '',
+        })
+        self.assertEqual(resp.status_code, 200)
+        self.assertFormError(resp.context['user_form'], 'email', 'An account with this email already exists.')
+
+
+class BaseTemplateRegressionTests(TestCase):
+    def test_company_dashboard_does_not_link_to_user_profile(self):
+        _create_company_user()
+        self.client.login(username='companyuser', password='Str0ngP@ss!')
+        resp = self.client.get(reverse('dashboard'))
+        self.assertContains(resp, reverse('company_profile'))
+        self.assertNotContains(resp, reverse('user_profile'))
+
+    def test_admin_dashboard_does_not_link_to_user_profile(self):
+        _create_admin()
+        self.client.login(username='adminuser', password='Str0ngP@ss!')
+        resp = self.client.get(reverse('dashboard'))
+        self.assertContains(resp, reverse('admin_dashboard'))
+        self.assertNotContains(resp, reverse('user_profile'))
+
+    def test_csp_allows_cloudinary_assets(self):
+        resp = self.client.get(reverse('home'))
+        self.assertIn('https://res.cloudinary.com', resp['Content-Security-Policy'])
+
+
+class CreateSuperuserCommandTests(TestCase):
+    def test_skips_without_bootstrap_env_vars(self):
+        out = StringIO()
+        with patch.dict('os.environ', {
+            'SUPERUSER_USERNAME': '',
+            'SUPERUSER_EMAIL': '',
+            'SUPERUSER_PASSWORD': '',
+        }, clear=False):
+            call_command('createsu', stdout=out)
+        self.assertIn('Skipping superuser creation', out.getvalue())
+        self.assertFalse(User.objects.filter(is_superuser=True).exists())
+
+    def test_creates_superuser_when_env_vars_present(self):
+        out = StringIO()
+        with patch.dict('os.environ', {
+            'SUPERUSER_USERNAME': 'bootstrap-admin',
+            'SUPERUSER_EMAIL': 'bootstrap@example.com',
+            'SUPERUSER_PASSWORD': 'Sup3rSafePass!234',
+        }, clear=False):
+            call_command('createsu', stdout=out)
+        self.assertIn('Successfully created new superuser', out.getvalue())
+        self.assertTrue(User.objects.filter(username='bootstrap-admin', is_superuser=True).exists())

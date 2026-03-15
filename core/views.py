@@ -67,17 +67,31 @@ def user_required(view_func):
     return role_required('user')(view_func)
 
 
+def get_open_jobs_queryset():
+    """Public-facing jobs: active and not past their deadline."""
+    today = timezone.localdate()
+    return Job.objects.filter(is_active=True).filter(
+        Q(deadline__isnull=True) | Q(deadline__gte=today)
+    )
+
+
 # ──────────────────────────────────────────────────────────────
 #  PUBLIC VIEWS
 # ──────────────────────────────────────────────────────────────
 
 def home(request):
     """Landing page."""
-    featured_jobs = Job.objects.filter(is_active=True).select_related('company', 'category')[:6]
-    categories = JobCategory.objects.filter(is_active=True).annotate(job_count=Count('jobs'))[:8]
+    today = timezone.localdate()
+    open_job_count_filter = Q(jobs__is_active=True) & (
+        Q(jobs__deadline__isnull=True) | Q(jobs__deadline__gte=today)
+    )
+    featured_jobs = get_open_jobs_queryset().select_related('company', 'category')[:6]
+    categories = JobCategory.objects.filter(is_active=True).annotate(
+        job_count=Count('jobs', filter=open_job_count_filter)
+    )[:8]
     companies = CompanyProfile.objects.filter(status='approved')[:6]
     stats = {
-        'jobs': Job.objects.filter(is_active=True).count(),
+        'jobs': get_open_jobs_queryset().count(),
         'companies': CompanyProfile.objects.filter(status='approved').count(),
         'users': User.objects.filter(role='user').count(),
         'categories': JobCategory.objects.filter(is_active=True).count(),
@@ -92,11 +106,7 @@ def home(request):
 
 def job_list(request):
     """Public job listing with search and filters."""
-    jobs = Job.objects.filter(
-        is_active=True
-    ).filter(
-        Q(deadline__isnull=True) | Q(deadline__gte=timezone.now().date())
-    ).select_related('company', 'category')
+    jobs = get_open_jobs_queryset().select_related('company', 'category')
     categories = JobCategory.objects.filter(is_active=True)
 
     # Search (includes location)
@@ -104,7 +114,8 @@ def job_list(request):
     if q:
         jobs = jobs.filter(
             Q(title__icontains=q) | Q(description__icontains=q) |
-            Q(skills__name__icontains=q) | Q(location__icontains=q)
+            Q(skills__name__icontains=q) | Q(location__icontains=q) |
+            Q(company__company_name__icontains=q)
         ).distinct()
 
     # Filter by category
@@ -167,8 +178,8 @@ def job_detail(request, pk):
     if request.user.is_authenticated and request.user.role == 'user':
         has_applied = JobApplication.objects.filter(job=job, applicant=request.user).exists()
         is_saved = SavedJob.objects.filter(user=request.user, job=job).exists()
-    related_jobs = Job.objects.filter(
-        category=job.category, is_active=True
+    related_jobs = get_open_jobs_queryset().filter(
+        category=job.category
     ).exclude(pk=pk)[:4]
     return render(request, 'jobs/job_detail.html', {
         'job': job,
@@ -207,7 +218,7 @@ def company_list(request):
 def company_detail(request, pk):
     """Company public profile."""
     company = get_object_or_404(CompanyProfile, pk=pk, status='approved')
-    jobs = Job.objects.filter(company=company, is_active=True)
+    jobs = get_open_jobs_queryset().filter(company=company)
     return render(request, 'companies/company_detail.html', {
         'company': company,
         'jobs': jobs,
@@ -1061,7 +1072,8 @@ def subscription_page(request):
 
 @user_required
 def subscribe(request, plan):
-    """Legacy stub — real payment handled via Razorpay AJAX (create_razorpay_order + verify_razorpay_payment)."""
+    """Legacy compatibility endpoint for the Razorpay-based subscription flow."""
+    messages.info(request, 'Please complete checkout on the subscription page to activate a plan.')
     return redirect('subscription_page')
 
 
@@ -1215,9 +1227,10 @@ def search_suggestions(request):
     q = request.GET.get('q', '').strip()
     if len(q) < 2:
         return JsonResponse({'results': []})
-    jobs = Job.objects.filter(
-        Q(title__icontains=q) | Q(skills__name__icontains=q),
-        is_active=True
+    jobs = get_open_jobs_queryset().filter(
+        Q(title__icontains=q) |
+        Q(skills__name__icontains=q) |
+        Q(company__company_name__icontains=q)
     ).select_related('company').distinct().values(
         'pk', 'title', 'company__company_name', 'location'
     )[:8]
@@ -1231,7 +1244,7 @@ def search_suggestions(request):
 def about(request):
     """About Us page."""
     stats = {
-        'jobs': Job.objects.filter(is_active=True).count(),
+        'jobs': get_open_jobs_queryset().count(),
         'companies': CompanyProfile.objects.filter(status='approved').count(),
         'users': User.objects.filter(role='user').count(),
     }

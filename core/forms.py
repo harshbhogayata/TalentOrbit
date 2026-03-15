@@ -139,6 +139,12 @@ class UserProfileForm(forms.ModelForm):
             'skills': forms.SelectMultiple(attrs={'class': 'form-control'}),
         }
 
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        if email and User.objects.filter(email__iexact=email).exclude(pk=self.instance.pk).exists():
+            raise forms.ValidationError('An account with this email already exists.')
+        return email
+
     def clean_avatar(self):
         from .utils import ALLOWED_IMAGE_EXTENSIONS
         avatar = self.cleaned_data.get('avatar')

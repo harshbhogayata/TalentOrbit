@@ -6,6 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="TalentOrbit — The Modern Talent Operating System.">
+    <link rel="icon" href="{% static 'favicon.svg' %}" type="image/svg+xml">
     <title>{% block title %}TalentOrbit{% endblock %} | TalentOrbit</title>
 
     <!-- Google Fonts: Inter, Space Grotesk, JetBrains Mono -->
@@ -77,8 +78,15 @@
                                     style="background: var(--glass-surface); border: 1px solid var(--tungsten);">
                                     <li><a class="dropdown-item rounded-3 py-2 text-white"
                                             href="{% url 'dashboard' %}">Dashboard</a></li>
-                                    <li><a class="dropdown-item rounded-3 py-2 text-white"
-                                            href="{% url 'user_profile' %}">Profile</a></li>
+                                    <li>
+                                        {% if user.role == 'company' %}
+                                        <a class="dropdown-item rounded-3 py-2 text-white" href="{% url 'company_profile' %}">Profile</a>
+                                        {% elif user.role == 'admin' %}
+                                        <a class="dropdown-item rounded-3 py-2 text-white" href="{% url 'admin_dashboard' %}">Admin Panel</a>
+                                        {% else %}
+                                        <a class="dropdown-item rounded-3 py-2 text-white" href="{% url 'user_profile' %}">Profile</a>
+                                        {% endif %}
+                                    </li>
                                     <li>
                                         <hr class="dropdown-divider bg-white opacity-10">
                                     </li>
@@ -185,7 +193,7 @@
                                         class="text-secondary small text-decoration-none">Post a Job</a></li>
                                 <li><a href="{% url 'register_company' %}"
                                         class="text-secondary small text-decoration-none">Hire Talent</a></li>
-                                <li><a href="#pricing" class="text-secondary small text-decoration-none">Pricing</a>
+                                <li><a href="{% url 'home' %}#pricing" class="text-secondary small text-decoration-none">Pricing</a>
                                 </li>
                             </ul>
                         </div>
