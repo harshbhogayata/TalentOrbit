@@ -35,3 +35,5 @@ Once the deployment finishes and your site is live, there's one critical step fo
 *Note: The `SECRET_KEY` and `DATABASE_URL` are handled automatically by Render. By using Cloudinary, your media storage is now 100% free and permanent.*
 
 Your app will be live at `https://talentorbit-web.onrender.com` (you can attach a custom domain in the Render settings).
+
+After configuring email env vars, verify delivery from the deployed shell with `python manage.py check_email --recipient you@example.com`.

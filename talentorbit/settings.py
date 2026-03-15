@@ -122,7 +122,7 @@ FILE_UPLOAD_MAX_MEMORY_SIZE = 52_428_800
 # Email configuration
 EMAIL_CONFIG = env.email_url('EMAIL_URL', default='consolemail://')
 vars().update(EMAIL_CONFIG)
-# django-environ puts TLS in OPTIONS dict instead of EMAIL_USE_TLS — fix it
+# django-environ puts TLS in OPTIONS dict instead of EMAIL_USE_TLS - fix it
 if isinstance(EMAIL_CONFIG.get('OPTIONS'), dict):
     _opts = EMAIL_CONFIG['OPTIONS']
     if str(_opts.get('TLS', '')).lower() == 'true':
@@ -131,13 +131,28 @@ if isinstance(EMAIL_CONFIG.get('OPTIONS'), dict):
     elif str(_opts.get('SSL', '')).lower() == 'true':
         EMAIL_USE_SSL = True
         EMAIL_USE_TLS = False
+_explicit_email_host = env('EMAIL_HOST', default='').strip()
+_default_email_backend = EMAIL_CONFIG.get('EMAIL_BACKEND', 'django.core.mail.backends.console.EmailBackend')
+if _default_email_backend == 'django.core.mail.backends.console.EmailBackend' and _explicit_email_host:
+    _default_email_backend = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_BACKEND = env('EMAIL_BACKEND', default=_default_email_backend)
+EMAIL_HOST = _explicit_email_host or EMAIL_CONFIG.get('EMAIL_HOST', '')
+EMAIL_PORT = env.int('EMAIL_PORT', default=int(EMAIL_CONFIG.get('EMAIL_PORT', 25) or 25))
+EMAIL_HOST_USER = env('EMAIL_HOST_USER', default=EMAIL_CONFIG.get('EMAIL_HOST_USER', '')).strip()
+EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD', default=EMAIL_CONFIG.get('EMAIL_HOST_PASSWORD', ''))
+EMAIL_USE_TLS = env.bool('EMAIL_USE_TLS', default=bool(globals().get('EMAIL_USE_TLS', False)))
+EMAIL_USE_SSL = env.bool('EMAIL_USE_SSL', default=bool(globals().get('EMAIL_USE_SSL', False)))
 EMAIL_TIMEOUT = env.int('EMAIL_TIMEOUT', default=30)
 EMAIL_SEND_MAX_ATTEMPTS = env.int('EMAIL_SEND_MAX_ATTEMPTS', default=2)
 EMAIL_RETRY_DELAY_SECONDS = env.float('EMAIL_RETRY_DELAY_SECONDS', default=1.0)
+_email_fallback_port_default = 465 if EMAIL_HOST.endswith('gmail.com') and EMAIL_PORT == 587 and EMAIL_USE_TLS and not EMAIL_USE_SSL else 0
+EMAIL_FALLBACK_PORT = env.int('EMAIL_FALLBACK_PORT', default=_email_fallback_port_default)
+EMAIL_FALLBACK_USE_SSL = env.bool('EMAIL_FALLBACK_USE_SSL', default=bool(EMAIL_FALLBACK_PORT == 465))
+EMAIL_FALLBACK_USE_TLS = env.bool('EMAIL_FALLBACK_USE_TLS', default=False)
 PUBLIC_APP_URL = env('PUBLIC_APP_URL', default='').strip()
 _default_from_email = env('DEFAULT_FROM_EMAIL', default='').strip()
 if not _default_from_email:
-    _default_from_email = EMAIL_CONFIG.get('EMAIL_HOST_USER') or 'noreply@talentorbit.com'
+    _default_from_email = EMAIL_HOST_USER or 'noreply@talentorbit.com'
 DEFAULT_FROM_EMAIL = _default_from_email
 SERVER_EMAIL = env('SERVER_EMAIL', default=DEFAULT_FROM_EMAIL)
 

@@ -18,7 +18,7 @@ from urllib.parse import urljoin, urlparse
 from django.conf import settings
 from django.contrib.auth.tokens import default_token_generator
 from django.core.exceptions import DisallowedHost, ValidationError
-from django.core.mail import send_mail as django_send_mail
+from django.core.mail import get_connection, send_mail as django_send_mail
 from django.urls import reverse
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
@@ -216,6 +216,49 @@ def _email_retry_delay_seconds():
         return 1.0
 
 
+def _smtp_backend_in_use(backend):
+    return backend == 'django.core.mail.backends.smtp.EmailBackend'
+
+
+def _base_email_connection_kwargs():
+    return {
+        'host': getattr(settings, 'EMAIL_HOST', ''),
+        'port': int(getattr(settings, 'EMAIL_PORT', 25) or 25),
+        'username': getattr(settings, 'EMAIL_HOST_USER', ''),
+        'password': getattr(settings, 'EMAIL_HOST_PASSWORD', ''),
+        'use_tls': bool(getattr(settings, 'EMAIL_USE_TLS', False)),
+        'use_ssl': bool(getattr(settings, 'EMAIL_USE_SSL', False)),
+        'timeout': getattr(settings, 'EMAIL_TIMEOUT', None),
+    }
+
+
+def _smtp_connection_attempts(backend, require_external_delivery):
+    if not require_external_delivery or not _smtp_backend_in_use(backend):
+        return [('default', None)]
+
+    primary = _base_email_connection_kwargs()
+    attempts = [('smtp-primary', primary)]
+
+    fallback_port = int(getattr(settings, 'EMAIL_FALLBACK_PORT', 0) or 0)
+    fallback_use_ssl = bool(getattr(settings, 'EMAIL_FALLBACK_USE_SSL', False))
+    fallback_use_tls = bool(getattr(settings, 'EMAIL_FALLBACK_USE_TLS', False))
+    if fallback_port > 0:
+        fallback = primary.copy()
+        fallback.update({
+            'port': fallback_port,
+            'use_ssl': fallback_use_ssl,
+            'use_tls': fallback_use_tls,
+        })
+        if fallback != primary:
+            attempts.append(('smtp-fallback', fallback))
+
+    return attempts
+
+
+def _more_delivery_attempts_remaining(round_index, max_rounds, attempt_index, total_attempts):
+    return attempt_index < total_attempts - 1 or round_index < max_rounds
+
+
 def send_email_result(subject, message, recipient_list, from_email=None, require_external_delivery=False):
     """
     Send a single email and return a structured delivery result.
@@ -246,82 +289,95 @@ def send_email_result(subject, message, recipient_list, from_email=None, require
             recipients,
         )
 
-    max_attempts = _email_send_max_attempts() if require_external_delivery else 1
+    connection_attempts = _smtp_connection_attempts(backend, require_external_delivery)
+    max_rounds = _email_send_max_attempts() if require_external_delivery else 1
     retry_delay_seconds = _email_retry_delay_seconds()
+    last_failure = EmailDeliveryResult(ok=False, error_code='smtp_unavailable', retryable=True)
 
-    for attempt in range(1, max_attempts + 1):
-        try:
-            sent_count = django_send_mail(
-                subject,
-                message,
-                from_email,
-                recipients,
-                fail_silently=False,
-            )
-        except Exception as exc:
-            error_code, retryable = _classify_email_exception(exc)
-            if (
-                attempt < max_attempts
-                and retryable
-                and error_code in RETRYABLE_EMAIL_ERROR_CODES
-            ):
-                logger.warning(
-                    'Transient email send failure; retrying. subject=%s from_email=%s '
-                    'recipients=%s error_code=%s attempt=%s/%s',
+    for round_index in range(1, max_rounds + 1):
+        for attempt_index, (transport_label, connection_kwargs) in enumerate(connection_attempts):
+            try:
+                connection = None
+                if connection_kwargs is not None:
+                    connection = get_connection(backend=backend, **connection_kwargs)
+                sent_count = django_send_mail(
+                    subject,
+                    message,
+                    from_email,
+                    recipients,
+                    fail_silently=False,
+                    connection=connection,
+                )
+            except Exception as exc:
+                error_code, retryable = _classify_email_exception(exc)
+                last_failure = EmailDeliveryResult(ok=False, error_code=error_code, retryable=retryable)
+                if retryable and _more_delivery_attempts_remaining(round_index, max_rounds, attempt_index, len(connection_attempts)):
+                    logger.warning(
+                        'Transient email send failure; retrying. subject=%s from_email=%s '
+                        'recipients=%s error_code=%s transport=%s round=%s/%s',
+                        subject,
+                        from_email,
+                        recipients,
+                        error_code,
+                        transport_label,
+                        round_index,
+                        max_rounds,
+                    )
+                    if attempt_index == len(connection_attempts) - 1 and round_index < max_rounds:
+                        time.sleep(retry_delay_seconds * round_index)
+                    continue
+
+                logger.exception(
+                    'Error sending email. subject=%s from_email=%s recipients=%s '
+                    'error_code=%s transport=%s round=%s/%s',
                     subject,
                     from_email,
                     recipients,
                     error_code,
-                    attempt,
-                    max_attempts,
+                    transport_label,
+                    round_index,
+                    max_rounds,
                 )
-                time.sleep(retry_delay_seconds * attempt)
-                continue
+                return last_failure
 
-            logger.exception(
-                'Error sending email. subject=%s from_email=%s recipients=%s '
-                'error_code=%s attempt=%s/%s',
-                subject,
-                from_email,
-                recipients,
-                error_code,
-                attempt,
-                max_attempts,
-            )
-            return EmailDeliveryResult(ok=False, error_code=error_code, retryable=retryable)
+            if sent_count == 0:
+                last_failure = EmailDeliveryResult(ok=False, error_code='zero_sent', retryable=True)
+                if _more_delivery_attempts_remaining(round_index, max_rounds, attempt_index, len(connection_attempts)):
+                    logger.warning(
+                        'Email send returned zero; retrying. subject=%s from_email=%s '
+                        'recipients=%s transport=%s round=%s/%s',
+                        subject,
+                        from_email,
+                        recipients,
+                        transport_label,
+                        round_index,
+                        max_rounds,
+                    )
+                    if attempt_index == len(connection_attempts) - 1 and round_index < max_rounds:
+                        time.sleep(retry_delay_seconds * round_index)
+                    continue
 
-        if sent_count == 0:
-            if attempt < max_attempts:
                 logger.warning(
-                    'Email send returned zero; retrying. subject=%s from_email=%s '
-                    'recipients=%s attempt=%s/%s',
+                    'Email send returned zero. subject=%s from_email=%s recipients=%s '
+                    'transport=%s round=%s/%s',
                     subject,
                     from_email,
                     recipients,
-                    attempt,
-                    max_attempts,
+                    transport_label,
+                    round_index,
+                    max_rounds,
                 )
-                time.sleep(retry_delay_seconds * attempt)
-                continue
+                return last_failure
 
-            logger.warning(
-                'Email send returned zero. subject=%s from_email=%s recipients=%s attempt=%s/%s',
-                subject,
-                from_email,
-                recipients,
-                attempt,
-                max_attempts,
-            )
-            return EmailDeliveryResult(ok=False, error_code='zero_sent', retryable=True)
-
-        return EMAIL_DELIVERED
+            return EMAIL_DELIVERED
 
     logger.error(
-        'Email send exhausted retries without a terminal result. subject=%s recipients=%s',
+        'Email send exhausted retries without a terminal result. subject=%s recipients=%s error_code=%s',
         subject,
         recipients,
+        last_failure.error_code,
     )
-    return EmailDeliveryResult(ok=False, error_code='smtp_unavailable', retryable=True)
+    return last_failure
 
 
 def send_email(subject, message, recipient_list, from_email=None, require_external_delivery=False):

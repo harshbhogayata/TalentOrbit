@@ -12,12 +12,15 @@ from unittest.mock import patch
 from django.contrib.auth.tokens import default_token_generator
 from django.core import mail
 from django.core.management import call_command
+from django.core.management.base import CommandError
 from django.test import TestCase, Client, override_settings
 from django.urls import reverse
 from django.utils import timezone
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
 import json
+
+from .utils import EmailDeliveryResult
 
 from .models import (
     User, CompanyProfile, JobCategory, Job, Skill,
@@ -650,6 +653,55 @@ class EmailVerificationTests(TestCase):
         self.assertFalse(verification_state['last_attempt_ok'])
         self.assertEqual(verification_state['last_error_code'], 'public_base_url_invalid')
 
+    @patch('core.utils.time.sleep', return_value=None)
+    @patch('core.utils.get_connection')
+    @patch('core.utils.django_send_mail')
+    @override_settings(
+        EMAIL_BACKEND='django.core.mail.backends.smtp.EmailBackend',
+        EMAIL_HOST='smtp.gmail.com',
+        EMAIL_PORT=587,
+        EMAIL_HOST_USER='smtp-user@example.com',
+        EMAIL_HOST_PASSWORD='app-password',
+        EMAIL_USE_TLS=True,
+        EMAIL_USE_SSL=False,
+        EMAIL_FALLBACK_PORT=465,
+        EMAIL_FALLBACK_USE_SSL=True,
+        EMAIL_FALLBACK_USE_TLS=False,
+    )
+    def test_registration_falls_back_to_ssl_transport_when_primary_transport_fails(self, mock_send_mail, mock_get_connection, _mock_sleep):
+        class DummyConnection:
+            def __init__(self, **kwargs):
+                self.__dict__.update(kwargs)
+
+        mock_get_connection.side_effect = lambda backend, **kwargs: DummyConnection(**kwargs)
+
+        def _send_with_transport(subject, message, from_email, recipients, fail_silently=False, connection=None):
+            if connection.port == 587:
+                raise SMTPServerDisconnected('connection lost')
+            return 1
+
+        mock_send_mail.side_effect = _send_with_transport
+
+        resp = self.client.post(reverse('register_user'), {
+            'username': 'fallbackverify',
+            'email': 'fallbackverify@example.com',
+            'first_name': 'Fallback',
+            'last_name': 'Verify',
+            'password1': 'C0mpl3xP@ss!',
+            'password2': 'C0mpl3xP@ss!',
+        }, follow=True)
+
+        self.assertContains(resp, 'Check Your Email')
+        self.assertEqual(mock_send_mail.call_count, 2)
+        primary_kwargs = mock_get_connection.call_args_list[0].kwargs
+        fallback_kwargs = mock_get_connection.call_args_list[1].kwargs
+        self.assertEqual(primary_kwargs['port'], 587)
+        self.assertTrue(primary_kwargs['use_tls'])
+        self.assertFalse(primary_kwargs['use_ssl'])
+        self.assertEqual(fallback_kwargs['port'], 465)
+        self.assertFalse(fallback_kwargs['use_tls'])
+        self.assertTrue(fallback_kwargs['use_ssl'])
+
     def test_registration_does_not_auto_login(self):
         """After registration, user should NOT be logged in."""
         self.client.post(reverse('register_user'), {
@@ -843,6 +895,24 @@ class EmailVerificationTests(TestCase):
 # ──────────────────────────────────────────────────────────────
 #  PASSWORD CHANGE TESTS
 # ──────────────────────────────────────────────────────────────
+
+class CheckEmailCommandTests(TestCase):
+
+    @patch('core.management.commands.check_email.send_email_result', return_value=EmailDeliveryResult(ok=True))
+    def test_check_email_command_reports_success(self, _mock_send):
+        out = StringIO()
+        call_command('check_email', '--recipient', 'healthcheck@example.com', stdout=out)
+        self.assertIn('Email delivery check passed.', out.getvalue())
+
+    @patch(
+        'core.management.commands.check_email.send_email_result',
+        return_value=EmailDeliveryResult(ok=False, error_code='smtp_unavailable', retryable=True),
+    )
+    def test_check_email_command_raises_on_failure(self, _mock_send):
+        out = StringIO()
+        with self.assertRaises(CommandError):
+            call_command('check_email', '--recipient', 'healthcheck@example.com', stdout=out)
+
 
 class PasswordChangeTests(TestCase):
     def setUp(self):
