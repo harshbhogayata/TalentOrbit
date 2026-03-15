@@ -8,13 +8,47 @@
         <div class="text-center">
             {% if delivery_failed %}
             <i class="bi bi-envelope-x" style="font-size: 3.5rem; color: var(--warning);"></i>
+            {% if delivery_error_code == 'email_backend_not_configured' %}
+            <h2 style="font-weight: 800; margin-top: 1rem;">Verification Email Is Not Configured</h2>
+            <p style="color: var(--text-muted); margin-top: 0.5rem;">
+                TalentOrbit is not configured to send verification emails right now.
+            </p>
+            <p style="color: var(--text-muted); font-size: 0.85rem;">
+                Please contact support or try again after email delivery has been configured.
+            </p>
+            {% elif delivery_error_code == 'public_base_url_invalid' or delivery_error_code == 'public_base_url_unavailable' %}
+            <h2 style="font-weight: 800; margin-top: 1rem;">We Couldn&#39;t Build Your Verification Link</h2>
+            <p style="color: var(--text-muted); margin-top: 0.5rem;">
+                We could not generate a public verification link{% if verification_email %} for <strong>{{ verification_email }}</strong>{% endif %}.
+            </p>
+            <p style="color: var(--text-muted); font-size: 0.85rem;">
+                Try again in a moment. If this keeps happening, contact support because the site URL needs attention.
+            </p>
+            {% elif delivery_error_code == 'smtp_auth_failed' %}
+            <h2 style="font-weight: 800; margin-top: 1rem;">Our Email Provider Rejected The Send</h2>
+            <p style="color: var(--text-muted); margin-top: 0.5rem;">
+                We could not submit the verification email{% if verification_email %} to <strong>{{ verification_email }}</strong>{% endif %} because our mail provider rejected the request.
+            </p>
+            <p style="color: var(--text-muted); font-size: 0.85rem;">
+                Please try again shortly. If it keeps happening, contact support.
+            </p>
+            {% elif delivery_error_code == 'recipient_rejected' or delivery_error_code == 'smtp_data_error' %}
             <h2 style="font-weight: 800; margin-top: 1rem;">We Couldn&#39;t Deliver That Email</h2>
             <p style="color: var(--text-muted); margin-top: 0.5rem;">
                 We tried sending a verification link{% if verification_email %} to <strong>{{ verification_email }}</strong>{% endif %}, but delivery failed.
             </p>
             <p style="color: var(--text-muted); font-size: 0.85rem;">
-                Try again in a moment. If this keeps happening, make sure the address is correct and reachable.
+                Double-check that the address is correct and reachable. If it is, contact support.
             </p>
+            {% else %}
+            <h2 style="font-weight: 800; margin-top: 1rem;">We Couldn&#39;t Reach Our Email Provider</h2>
+            <p style="color: var(--text-muted); margin-top: 0.5rem;">
+                We tried sending a verification link{% if verification_email %} to <strong>{{ verification_email }}</strong>{% endif %}, but the email provider was unavailable.
+            </p>
+            <p style="color: var(--text-muted); font-size: 0.85rem;">
+                Try again in a moment. If this keeps happening, contact support.
+            </p>
+            {% endif %}
             {% else %}
             <i class="bi bi-envelope-check" style="font-size: 3.5rem; color: var(--success);"></i>
             <h2 style="font-weight: 800; margin-top: 1rem;">Check Your Email</h2>

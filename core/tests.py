@@ -603,6 +603,53 @@ class EmailVerificationTests(TestCase):
         self.assertContains(resp, 'verifypage@example.com')
         self.assertContains(resp, 'Check Your Email')
 
+    @patch('core.utils.time.sleep', return_value=None)
+    @patch('core.utils.django_send_mail', side_effect=[SMTPServerDisconnected('connection lost'), 1])
+    def test_registration_retries_transient_email_failures(self, mock_send_mail, _mock_sleep):
+        resp = self.client.post(reverse('register_user'), {
+            'username': 'retryverify',
+            'email': 'retryverify@example.com',
+            'first_name': 'Retry',
+            'last_name': 'Verify',
+            'password1': 'C0mpl3xP@ss!',
+            'password2': 'C0mpl3xP@ss!',
+        }, follow=True)
+        self.assertContains(resp, 'Check Your Email')
+        self.assertEqual(mock_send_mail.call_count, 2)
+        verification_state = self.client.session.get('verification_email_state')
+        self.assertTrue(verification_state['last_attempt_ok'])
+        self.assertEqual(verification_state['last_error_code'], '')
+
+    @override_settings(EMAIL_BACKEND='django.core.mail.backends.console.EmailBackend')
+    def test_registration_detects_non_delivering_email_backend(self):
+        resp = self.client.post(reverse('register_user'), {
+            'username': 'consoleverify',
+            'email': 'consoleverify@example.com',
+            'first_name': 'Console',
+            'last_name': 'Verify',
+            'password1': 'C0mpl3xP@ss!',
+            'password2': 'C0mpl3xP@ss!',
+        }, follow=True)
+        self.assertContains(resp, 'Verification Email Is Not Configured')
+        verification_state = self.client.session.get('verification_email_state')
+        self.assertFalse(verification_state['last_attempt_ok'])
+        self.assertEqual(verification_state['last_error_code'], 'email_backend_not_configured')
+
+    @override_settings(PUBLIC_APP_URL='not-a-valid-url')
+    def test_invalid_public_app_url_blocks_verification_email(self):
+        resp = self.client.post(reverse('register_user'), {
+            'username': 'badpublicurl',
+            'email': 'badpublicurl@example.com',
+            'first_name': 'Bad',
+            'last_name': 'Url',
+            'password1': 'C0mpl3xP@ss!',
+            'password2': 'C0mpl3xP@ss!',
+        }, follow=True)
+        self.assertContains(resp, 'We Couldn&#39;t Build Your Verification Link')
+        verification_state = self.client.session.get('verification_email_state')
+        self.assertFalse(verification_state['last_attempt_ok'])
+        self.assertEqual(verification_state['last_error_code'], 'public_base_url_invalid')
+
     def test_registration_does_not_auto_login(self):
         """After registration, user should NOT be logged in."""
         self.client.post(reverse('register_user'), {
@@ -726,8 +773,9 @@ class EmailVerificationTests(TestCase):
         verification_state = self.client.session.get('verification_email_state')
         self.assertTrue(verification_state['last_attempt_ok'])
 
+    @patch('core.utils.time.sleep', return_value=None)
     @patch('core.utils.django_send_mail', side_effect=SMTPServerDisconnected('connection lost'))
-    def test_resend_verification_failure_updates_delivery_state(self, _mock_send_mail):
+    def test_resend_verification_failure_updates_delivery_state(self, _mock_send_mail, _mock_sleep):
         user = User.objects.create_user(
             username='resendfail',
             email='resendfail@example.com',
@@ -741,9 +789,10 @@ class EmailVerificationTests(TestCase):
 
         resp = self.client.post(reverse('resend_verification'), follow=True)
 
-        self.assertContains(resp, 'We Couldn&#39;t Deliver That Email')
+        self.assertContains(resp, 'We Couldn&#39;t Reach Our Email Provider')
         self.assertContains(resp, 'resendfail@example.com')
-        self.assertContains(resp, 'We could not resend the verification email right now. Please try again shortly.')
+        self.assertContains(resp, 'We could not reach the email provider right now. Please try again shortly.')
+        self.assertEqual(_mock_send_mail.call_count, 2)
         verification_state = self.client.session.get('verification_email_state')
         self.assertFalse(verification_state['last_attempt_ok'])
         self.assertEqual(verification_state['last_error_code'], 'smtp_unavailable')

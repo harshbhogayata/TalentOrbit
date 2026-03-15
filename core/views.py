@@ -255,6 +255,15 @@ def _verification_error_message(delivery_result, resend=False):
     if delivery_result.error_code == 'missing_recipient':
         return 'We do not have a valid email address for this account. Please contact support.'
 
+    if delivery_result.error_code == 'email_backend_not_configured':
+        return 'Verification email delivery is not configured right now. Please contact support.'
+
+    if delivery_result.error_code == 'smtp_auth_failed':
+        return (
+            'Our email provider rejected the verification email request right now. '
+            'Please contact support if the problem continues.'
+        )
+
     if delivery_result.error_code in {'recipient_rejected', 'smtp_data_error'} and not delivery_result.retryable:
         return (
             'We could not deliver the verification email to that address. '
@@ -263,6 +272,12 @@ def _verification_error_message(delivery_result, resend=False):
 
     if delivery_result.error_code in {'public_base_url_invalid', 'public_base_url_unavailable'}:
         return 'We could not generate a valid verification link right now. Please try again shortly.'
+
+    if delivery_result.error_code in {'smtp_unavailable', 'smtp_response_error', 'network_error', 'zero_sent'}:
+        return (
+            'We could not reach the email provider right now. '
+            'Please try again shortly.'
+        )
 
     if resend:
         return 'We could not resend the verification email right now. Please try again shortly.'
@@ -336,6 +351,7 @@ def verification_sent(request):
     verification_state = request.session.get(VERIFICATION_STATE_SESSION_KEY, {})
     return render(request, 'auth/verification_sent.html', {
         'verification_email': verification_state.get('email', ''),
+        'delivery_error_code': verification_state.get('last_error_code', ''),
         'delivery_failed': verification_state.get('last_attempt_ok') is False,
         'can_resend': bool(request.session.get('unverified_user_pk')),
     })

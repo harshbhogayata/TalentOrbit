@@ -25,9 +25,9 @@ Once the deployment finishes and your site is live, there's one critical step fo
 3. Add the following environment variables manually (we keep these out of GitHub for security):
    - `RAZORPAY_KEY_ID`: Your live Razorpay key
    - `RAZORPAY_KEY_SECRET`: Your live Razorpay secret
-   - `EMAIL_URL`: Your Gmail SMTP string (e.g. `smtp://your-email@gmail.com:app-password@smtp.gmail.com:587/?tls=True`)
+   - `EMAIL_URL`: Your Gmail SMTP string (e.g. `smtp://your-email@gmail.com:app-password@smtp.gmail.com:587/?tls=True`). If your SMTP username or password contains reserved URL characters, URL-encode them first.
    - `DEFAULT_FROM_EMAIL`: Use the same mailbox as your SMTP account, or an alias your provider explicitly allows (example: `TalentOrbit <your-email@gmail.com>`)
-   - `PUBLIC_APP_URL`: Your canonical public site URL (for example `https://talentorbit-web.onrender.com` or your custom domain) so verification links use the correct host
+   - `PUBLIC_APP_URL`: Your canonical public site URL (for example `https://talentorbit-web.onrender.com` or your custom domain) so verification links use the correct host. The Blueprint now seeds the Onrender URL by default, but set your custom domain here if you use one.
    - `CLOUDINARY_CLOUD_NAME`: Your free Cloudinary cloud name
    - `CLOUDINARY_API_KEY`: Your Cloudinary API key
    - `CLOUDINARY_API_SECRET`: Your Cloudinary API secret

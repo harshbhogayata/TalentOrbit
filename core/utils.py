@@ -2,6 +2,7 @@ import logging
 import os
 import socket
 import threading
+import time
 from dataclasses import dataclass
 from smtplib import (
     SMTPAuthenticationError,
@@ -12,7 +13,7 @@ from smtplib import (
     SMTPResponseException,
     SMTPServerDisconnected,
 )
-from urllib.parse import urljoin
+from urllib.parse import urljoin, urlparse
 
 from django.conf import settings
 from django.contrib.auth.tokens import default_token_generator
@@ -29,6 +30,18 @@ INLINE_EMAIL_BACKENDS = {
     'django.core.mail.backends.dummy.EmailBackend',
     'django.core.mail.backends.filebased.EmailBackend',
     'django.core.mail.backends.locmem.EmailBackend',
+}
+NON_DELIVERING_EMAIL_BACKENDS = {
+    'django.core.mail.backends.console.EmailBackend',
+    'django.core.mail.backends.dummy.EmailBackend',
+    'django.core.mail.backends.filebased.EmailBackend',
+}
+RETRYABLE_EMAIL_ERROR_CODES = {
+    'network_error',
+    'smtp_data_error',
+    'smtp_response_error',
+    'smtp_unavailable',
+    'zero_sent',
 }
 
 # Centralized allowed extensions - forms reference these to stay in sync
@@ -185,7 +198,25 @@ def _classify_email_exception(exc):
     return ('unexpected_email_error', True)
 
 
-def send_email_result(subject, message, recipient_list, from_email=None):
+def _external_email_delivery_available(backend):
+    return bool(backend) and backend not in NON_DELIVERING_EMAIL_BACKENDS
+
+
+def _email_send_max_attempts():
+    try:
+        return max(1, int(getattr(settings, 'EMAIL_SEND_MAX_ATTEMPTS', 2)))
+    except (TypeError, ValueError):
+        return 2
+
+
+def _email_retry_delay_seconds():
+    try:
+        return max(0.0, float(getattr(settings, 'EMAIL_RETRY_DELAY_SECONDS', 1.0)))
+    except (TypeError, ValueError):
+        return 1.0
+
+
+def send_email_result(subject, message, recipient_list, from_email=None, require_external_delivery=False):
     """
     Send a single email and return a structured delivery result.
     """
@@ -198,6 +229,15 @@ def send_email_result(subject, message, recipient_list, from_email=None):
         return EmailDeliveryResult(ok=False, error_code='missing_recipient', retryable=False)
 
     backend = getattr(settings, 'EMAIL_BACKEND', '')
+    if require_external_delivery and not _external_email_delivery_available(backend):
+        logger.error(
+            'Email backend does not support external delivery. backend=%s subject=%s recipients=%s',
+            backend,
+            subject,
+            recipients,
+        )
+        return EmailDeliveryResult(ok=False, error_code='email_backend_not_configured', retryable=False)
+
     if backend == 'django.core.mail.backends.console.EmailBackend':
         logger.warning(
             'Email backend is console-only; no real email will be delivered. '
@@ -206,55 +246,120 @@ def send_email_result(subject, message, recipient_list, from_email=None):
             recipients,
         )
 
-    try:
-        sent_count = django_send_mail(
-            subject,
-            message,
-            from_email,
-            recipients,
-            fail_silently=False,
-        )
-    except Exception as exc:
-        error_code, retryable = _classify_email_exception(exc)
-        logger.exception(
-            'Error sending email. subject=%s from_email=%s recipients=%s error_code=%s',
-            subject,
-            from_email,
-            recipients,
-            error_code,
-        )
-        return EmailDeliveryResult(ok=False, error_code=error_code, retryable=retryable)
+    max_attempts = _email_send_max_attempts() if require_external_delivery else 1
+    retry_delay_seconds = _email_retry_delay_seconds()
 
-    if sent_count == 0:
-        logger.warning(
-            'Email send returned zero. subject=%s from_email=%s recipients=%s',
-            subject,
-            from_email,
-            recipients,
-        )
-        return EmailDeliveryResult(ok=False, error_code='zero_sent', retryable=True)
+    for attempt in range(1, max_attempts + 1):
+        try:
+            sent_count = django_send_mail(
+                subject,
+                message,
+                from_email,
+                recipients,
+                fail_silently=False,
+            )
+        except Exception as exc:
+            error_code, retryable = _classify_email_exception(exc)
+            if (
+                attempt < max_attempts
+                and retryable
+                and error_code in RETRYABLE_EMAIL_ERROR_CODES
+            ):
+                logger.warning(
+                    'Transient email send failure; retrying. subject=%s from_email=%s '
+                    'recipients=%s error_code=%s attempt=%s/%s',
+                    subject,
+                    from_email,
+                    recipients,
+                    error_code,
+                    attempt,
+                    max_attempts,
+                )
+                time.sleep(retry_delay_seconds * attempt)
+                continue
 
-    return EMAIL_DELIVERED
+            logger.exception(
+                'Error sending email. subject=%s from_email=%s recipients=%s '
+                'error_code=%s attempt=%s/%s',
+                subject,
+                from_email,
+                recipients,
+                error_code,
+                attempt,
+                max_attempts,
+            )
+            return EmailDeliveryResult(ok=False, error_code=error_code, retryable=retryable)
+
+        if sent_count == 0:
+            if attempt < max_attempts:
+                logger.warning(
+                    'Email send returned zero; retrying. subject=%s from_email=%s '
+                    'recipients=%s attempt=%s/%s',
+                    subject,
+                    from_email,
+                    recipients,
+                    attempt,
+                    max_attempts,
+                )
+                time.sleep(retry_delay_seconds * attempt)
+                continue
+
+            logger.warning(
+                'Email send returned zero. subject=%s from_email=%s recipients=%s attempt=%s/%s',
+                subject,
+                from_email,
+                recipients,
+                attempt,
+                max_attempts,
+            )
+            return EmailDeliveryResult(ok=False, error_code='zero_sent', retryable=True)
+
+        return EMAIL_DELIVERED
+
+    logger.error(
+        'Email send exhausted retries without a terminal result. subject=%s recipients=%s',
+        subject,
+        recipients,
+    )
+    return EmailDeliveryResult(ok=False, error_code='smtp_unavailable', retryable=True)
 
 
-def send_email(subject, message, recipient_list, from_email=None):
+def send_email(subject, message, recipient_list, from_email=None, require_external_delivery=False):
     """
     Send a single email and log failures instead of suppressing them.
     """
-    return send_email_result(subject, message, recipient_list, from_email=from_email).ok
+    return send_email_result(
+        subject,
+        message,
+        recipient_list,
+        from_email=from_email,
+        require_external_delivery=require_external_delivery,
+    ).ok
 
 
-def send_email_async(subject, message, recipient_list, from_email=None):
+def send_email_async(subject, message, recipient_list, from_email=None, require_external_delivery=False):
     """
     Send email in a background thread for non-critical notifications.
     Test and local backends run inline to keep behavior deterministic.
     """
     backend = getattr(settings, 'EMAIL_BACKEND', '')
     if backend in INLINE_EMAIL_BACKENDS:
-        return send_email(subject, message, recipient_list, from_email=from_email)
+        return send_email(
+            subject,
+            message,
+            recipient_list,
+            from_email=from_email,
+            require_external_delivery=require_external_delivery,
+        )
 
     def _send():
-        send_email(subject, message, recipient_list, from_email=from_email)
+        send_email(
+            subject,
+            message,
+            recipient_list,
+            from_email=from_email,
+            require_external_delivery=require_external_delivery,
+        )
 
     thread = threading.Thread(target=_send, daemon=True)
     thread.start()
@@ -267,16 +372,26 @@ def get_public_base_url(request=None):
     """
     configured_base_url = getattr(settings, 'PUBLIC_APP_URL', '').strip()
     if configured_base_url:
+        parsed_base_url = urlparse(configured_base_url)
+        if parsed_base_url.scheme not in {'http', 'https'} or not parsed_base_url.netloc:
+            logger.warning('Configured PUBLIC_APP_URL is invalid: %s', configured_base_url)
+            raise ValueError('public_base_url_invalid')
         return configured_base_url.rstrip('/')
 
     if request is None:
         raise ValueError('public_base_url_unavailable')
 
     try:
-        return request.build_absolute_uri('/').rstrip('/')
+        resolved_base_url = request.build_absolute_uri('/').rstrip('/')
     except DisallowedHost as exc:
         logger.exception('Unable to build an absolute URL for email links.')
         raise ValueError('public_base_url_invalid') from exc
+
+    parsed_base_url = urlparse(resolved_base_url)
+    if parsed_base_url.scheme not in {'http', 'https'} or not parsed_base_url.netloc:
+        logger.warning('Resolved request host did not produce a valid public URL: %s', resolved_base_url)
+        raise ValueError('public_base_url_invalid')
+    return resolved_base_url
 
 
 def make_verification_url(request, user):
@@ -322,4 +437,9 @@ def send_verification_email(request, user):
         f"If you didn't create an account, you can safely ignore this email.\n\n"
         f"Thanks,\nTalentOrbit Team"
     )
-    return send_email_result(subject, message, [recipient])
+    return send_email_result(
+        subject,
+        message,
+        [recipient],
+        require_external_delivery=True,
+    )
