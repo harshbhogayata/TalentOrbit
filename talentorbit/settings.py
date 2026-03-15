@@ -132,6 +132,7 @@ if isinstance(EMAIL_CONFIG.get('OPTIONS'), dict):
         EMAIL_USE_SSL = True
         EMAIL_USE_TLS = False
 EMAIL_TIMEOUT = env.int('EMAIL_TIMEOUT', default=30)
+PUBLIC_APP_URL = env('PUBLIC_APP_URL', default='').strip()
 _default_from_email = env('DEFAULT_FROM_EMAIL', default='').strip()
 if not _default_from_email:
     _default_from_email = EMAIL_CONFIG.get('EMAIL_HOST_USER') or 'noreply@talentorbit.com'

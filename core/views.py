@@ -35,6 +35,7 @@ from .forms import (
     QuizForm, QuizQuestionForm, ChangePasswordForm,
     DeactivateAccountForm, ContactForm
 )
+from .utils import send_verification_email
 
 
 # ──────────────────────────────────────────────────────────────
@@ -233,6 +234,45 @@ def company_detail(request, pk):
 #  AUTH VIEWS
 # ──────────────────────────────────────────────────────────────
 
+VERIFICATION_STATE_SESSION_KEY = 'verification_email_state'
+
+
+def _store_verification_state(request, user, delivery_result=None):
+    request.session['unverified_user_pk'] = user.pk
+    request.session[VERIFICATION_STATE_SESSION_KEY] = {
+        'email': user.email,
+        'last_attempt_ok': None if delivery_result is None else delivery_result.ok,
+        'last_error_code': '' if delivery_result is None else delivery_result.error_code,
+    }
+
+
+def _clear_verification_state(request):
+    request.session.pop('unverified_user_pk', None)
+    request.session.pop(VERIFICATION_STATE_SESSION_KEY, None)
+
+
+def _verification_error_message(delivery_result, resend=False):
+    if delivery_result.error_code == 'missing_recipient':
+        return 'We do not have a valid email address for this account. Please contact support.'
+
+    if delivery_result.error_code in {'recipient_rejected', 'smtp_data_error'} and not delivery_result.retryable:
+        return (
+            'We could not deliver the verification email to that address. '
+            'Please contact support if the problem continues.'
+        )
+
+    if delivery_result.error_code in {'public_base_url_invalid', 'public_base_url_unavailable'}:
+        return 'We could not generate a valid verification link right now. Please try again shortly.'
+
+    if resend:
+        return 'We could not resend the verification email right now. Please try again shortly.'
+
+    return (
+        'We could not send your verification email right now. '
+        'Please try the resend button in a moment.'
+    )
+
+
 def register_user(request):
     """User registration with email verification."""
     if request.user.is_authenticated:
@@ -241,14 +281,10 @@ def register_user(request):
         form = UserRegistrationForm(request.POST)
         if form.is_valid():
             user = form.save()
-            request.session['unverified_user_pk'] = user.pk
-            from .utils import send_verification_email
-            if not send_verification_email(request, user):
-                messages.error(
-                    request,
-                    'We could not send your verification email right now. '
-                    'Please try the resend button in a moment.'
-                )
+            delivery_result = send_verification_email(request, user)
+            _store_verification_state(request, user, delivery_result)
+            if not delivery_result:
+                messages.error(request, _verification_error_message(delivery_result))
             return redirect('verification_sent')
     else:
         form = UserRegistrationForm()
@@ -263,14 +299,10 @@ def register_company(request):
         form = CompanyRegistrationForm(request.POST)
         if form.is_valid():
             user = form.save()
-            request.session['unverified_user_pk'] = user.pk
-            from .utils import send_verification_email
-            if not send_verification_email(request, user):
-                messages.error(
-                    request,
-                    'We could not send your verification email right now. '
-                    'Please try the resend button in a moment.'
-                )
+            delivery_result = send_verification_email(request, user)
+            _store_verification_state(request, user, delivery_result)
+            if not delivery_result:
+                messages.error(request, _verification_error_message(delivery_result))
             return redirect('verification_sent')
     else:
         form = CompanyRegistrationForm()
@@ -286,8 +318,7 @@ def login_view(request):
         if form.is_valid():
             user = form.get_user()
             if not user.email_verified:
-                # Store user PK in session so resend view can find them
-                request.session['unverified_user_pk'] = user.pk
+                _store_verification_state(request, user)
                 return render(request, 'auth/login.html', {
                     'form': form,
                     'email_unverified': True,
@@ -301,8 +332,13 @@ def login_view(request):
 
 
 def verification_sent(request):
-    """Show 'check your email' page after registration or unverified login."""
-    return render(request, 'auth/verification_sent.html')
+    """Show the current verification-email delivery state."""
+    verification_state = request.session.get(VERIFICATION_STATE_SESSION_KEY, {})
+    return render(request, 'auth/verification_sent.html', {
+        'verification_email': verification_state.get('email', ''),
+        'delivery_failed': verification_state.get('last_attempt_ok') is False,
+        'can_resend': bool(request.session.get('unverified_user_pk')),
+    })
 
 
 def verify_email(request, uidb64, token):
@@ -319,6 +355,7 @@ def verify_email(request, uidb64, token):
     if user is not None and default_token_generator.check_token(user, token):
         user.email_verified = True
         user.save(update_fields=['email_verified'])
+        _clear_verification_state(request)
         login(request, user, backend='core.backends.EmailOrUsernameBackend')
         messages.success(request, 'Email verified successfully! Welcome to TalentOrbit.')
         return redirect('dashboard')
@@ -337,27 +374,28 @@ def resend_verification(request):
 
     user_pk = request.session.get('unverified_user_pk')
     if not user_pk:
+        _clear_verification_state(request)
         messages.error(request, 'No pending verification found. Please log in first.')
         return redirect('login')
 
     try:
         user = User.objects.get(pk=user_pk)
     except User.DoesNotExist:
+        _clear_verification_state(request)
         messages.error(request, 'Account not found.')
         return redirect('login')
 
     if user.email_verified:
+        _clear_verification_state(request)
         messages.info(request, 'Your email is already verified. You can log in.')
         return redirect('login')
 
-    from .utils import send_verification_email
-    if send_verification_email(request, user):
+    delivery_result = send_verification_email(request, user)
+    _store_verification_state(request, user, delivery_result)
+    if delivery_result:
         messages.success(request, 'Verification email resent. Please check your inbox.')
     else:
-        messages.error(
-            request,
-            'We could not resend the verification email right now. Please try again shortly.'
-        )
+        messages.error(request, _verification_error_message(delivery_result, resend=True))
     return redirect('verification_sent')
 
 

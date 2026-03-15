@@ -7,6 +7,7 @@ Run with: python manage.py test core
 
 from datetime import timedelta
 from io import StringIO
+from smtplib import SMTPServerDisconnected
 from unittest.mock import patch
 from django.contrib.auth.tokens import default_token_generator
 from django.core import mail
@@ -574,6 +575,33 @@ class EmailVerificationTests(TestCase):
         })
         user = User.objects.get(username='sessionverify')
         self.assertEqual(self.client.session.get('unverified_user_pk'), user.pk)
+        verification_state = self.client.session.get('verification_email_state')
+        self.assertEqual(verification_state['email'], 'sessionverify@example.com')
+        self.assertTrue(verification_state['last_attempt_ok'])
+
+    @override_settings(PUBLIC_APP_URL='https://app.talentorbit.test')
+    def test_verification_email_uses_public_app_url_when_configured(self):
+        self.client.post(reverse('register_user'), {
+            'username': 'publicurluser',
+            'email': 'publicurl@example.com',
+            'first_name': 'Public',
+            'last_name': 'Url',
+            'password1': 'C0mpl3xP@ss!',
+            'password2': 'C0mpl3xP@ss!',
+        })
+        self.assertIn('https://app.talentorbit.test/verify-email/', mail.outbox[-1].body)
+
+    def test_verification_sent_page_shows_target_email(self):
+        resp = self.client.post(reverse('register_user'), {
+            'username': 'verifypage',
+            'email': 'verifypage@example.com',
+            'first_name': 'Verify',
+            'last_name': 'Page',
+            'password1': 'C0mpl3xP@ss!',
+            'password2': 'C0mpl3xP@ss!',
+        }, follow=True)
+        self.assertContains(resp, 'verifypage@example.com')
+        self.assertContains(resp, 'Check Your Email')
 
     def test_registration_does_not_auto_login(self):
         """After registration, user should NOT be logged in."""
@@ -695,6 +723,30 @@ class EmailVerificationTests(TestCase):
         self.assertRedirects(resp, reverse('verification_sent'))
         self.assertEqual(len(mail.outbox), 2)
         self.assertEqual(mail.outbox[-1].to, ['resend@example.com'])
+        verification_state = self.client.session.get('verification_email_state')
+        self.assertTrue(verification_state['last_attempt_ok'])
+
+    @patch('core.utils.django_send_mail', side_effect=SMTPServerDisconnected('connection lost'))
+    def test_resend_verification_failure_updates_delivery_state(self, _mock_send_mail):
+        user = User.objects.create_user(
+            username='resendfail',
+            email='resendfail@example.com',
+            password='C0mpl3xP@ss!',
+            email_verified=False,
+        )
+        session = self.client.session
+        session['unverified_user_pk'] = user.pk
+        session['verification_email_state'] = {'email': user.email, 'last_attempt_ok': None, 'last_error_code': ''}
+        session.save()
+
+        resp = self.client.post(reverse('resend_verification'), follow=True)
+
+        self.assertContains(resp, 'We Couldn&#39;t Deliver That Email')
+        self.assertContains(resp, 'resendfail@example.com')
+        self.assertContains(resp, 'We could not resend the verification email right now. Please try again shortly.')
+        verification_state = self.client.session.get('verification_email_state')
+        self.assertFalse(verification_state['last_attempt_ok'])
+        self.assertEqual(verification_state['last_error_code'], 'smtp_unavailable')
 
     @override_settings(
         DEFAULT_FROM_EMAIL='',

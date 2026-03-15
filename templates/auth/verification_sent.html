@@ -6,18 +6,30 @@
 <div class="auth-page">
     <div class="auth-card fade-in" style="max-width: 500px;">
         <div class="text-center">
+            {% if delivery_failed %}
+            <i class="bi bi-envelope-x" style="font-size: 3.5rem; color: var(--warning);"></i>
+            <h2 style="font-weight: 800; margin-top: 1rem;">We Couldn&#39;t Deliver That Email</h2>
+            <p style="color: var(--text-muted); margin-top: 0.5rem;">
+                We tried sending a verification link{% if verification_email %} to <strong>{{ verification_email }}</strong>{% endif %}, but delivery failed.
+            </p>
+            <p style="color: var(--text-muted); font-size: 0.85rem;">
+                Try again in a moment. If this keeps happening, make sure the address is correct and reachable.
+            </p>
+            {% else %}
             <i class="bi bi-envelope-check" style="font-size: 3.5rem; color: var(--success);"></i>
             <h2 style="font-weight: 800; margin-top: 1rem;">Check Your Email</h2>
             <p style="color: var(--text-muted); margin-top: 0.5rem;">
-                We've sent a verification link to your email address.
+                We&#39;ve sent a verification link{% if verification_email %} to <strong>{{ verification_email }}</strong>{% else %} to your email address{% endif %}.
                 Click the link to activate your account.
             </p>
             <p style="color: var(--text-muted); font-size: 0.85rem;">
                 The link will expire in 24 hours.
             </p>
+            {% endif %}
             <hr class="divider" style="margin: 1.5rem 0;">
+            {% if can_resend %}
             <p style="color: var(--text-muted); font-size: 0.9rem;">
-                Didn't receive the email? Check your spam folder or
+                Didn&#39;t receive the email? Check your spam folder or
             </p>
             <form method="POST" action="{% url 'resend_verification' %}">
                 {% csrf_token %}
@@ -25,6 +37,11 @@
                     <i class="bi bi-arrow-repeat me-2"></i>Resend Verification Email
                 </button>
             </form>
+            {% else %}
+            <p style="color: var(--text-muted); font-size: 0.9rem;">
+                No pending verification request is stored in this browser session.
+            </p>
+            {% endif %}
             <div class="mt-3">
                 <a href="{% url 'login' %}" style="color: var(--text-muted); font-size: 0.85rem;">
                     Back to Login
