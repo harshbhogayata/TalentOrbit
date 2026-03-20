@@ -5,7 +5,7 @@ services:
     env: python
     region: ohio
     plan: free
-    buildCommand: "pip install -r requirements.txt && python manage.py collectstatic --no-input && python manage.py migrate && python manage.py createsu"
+    buildCommand: "pip install -r requirements.txt && python manage.py collectstatic --no-input && python manage.py migrate && python manage.py createsu && python manage.py bootstrap_demo"
     startCommand: "gunicorn talentorbit.wsgi:application --bind 0.0.0.0:$PORT"
     envVars:
       - key: PYTHON_VERSION
@@ -22,6 +22,8 @@ services:
         value: "talentorbit-web.onrender.com,*.onrender.com,localhost"
       - key: PUBLIC_APP_URL
         value: "https://talentorbit-web.onrender.com"
+      - key: BOOTSTRAP_DEMO_DATA
+        value: "true"
       # Razorpay and Email vars will be added manually in Render Dashboard for security
       # Cloudinary vars will be added manually in Render Dashboard for security
 

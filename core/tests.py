@@ -1793,3 +1793,39 @@ class CreateSuperuserCommandTests(TestCase):
             call_command('createsu', stdout=out)
         self.assertIn('Successfully created new superuser', out.getvalue())
         self.assertTrue(User.objects.filter(username='bootstrap-admin', is_superuser=True).exists())
+
+
+class BootstrapDemoCommandTests(TestCase):
+    def test_skips_without_bootstrap_flag(self):
+        out = StringIO()
+        with patch.dict('os.environ', {'BOOTSTRAP_DEMO_DATA': ''}, clear=False):
+            call_command('bootstrap_demo', stdout=out)
+
+        self.assertIn('Skipping demo bootstrap', out.getvalue())
+        self.assertFalse(User.objects.filter(username='admin').exists())
+        self.assertEqual(CompanyProfile.objects.count(), 0)
+        self.assertEqual(Job.objects.count(), 0)
+
+    def test_bootstraps_demo_records_when_enabled(self):
+        out = StringIO()
+        with patch.dict('os.environ', {'BOOTSTRAP_DEMO_DATA': 'true'}, clear=False):
+            call_command('bootstrap_demo', stdout=out)
+
+        self.assertIn('Demo bootstrap complete', out.getvalue())
+        self.assertTrue(User.objects.filter(username='admin', role='admin', is_superuser=True).exists())
+        self.assertEqual(User.objects.filter(role='company').count(), 3)
+        self.assertEqual(User.objects.filter(role='user').count(), 3)
+        self.assertEqual(CompanyProfile.objects.filter(status='approved').count(), 3)
+        self.assertEqual(JobCategory.objects.filter(is_active=True).count(), 4)
+        self.assertEqual(Job.objects.filter(is_active=True).count(), 4)
+
+    def test_bootstrap_demo_is_idempotent(self):
+        with patch.dict('os.environ', {'BOOTSTRAP_DEMO_DATA': 'true'}, clear=False):
+            call_command('bootstrap_demo')
+            call_command('bootstrap_demo')
+
+        self.assertEqual(User.objects.filter(username='admin').count(), 1)
+        self.assertEqual(User.objects.filter(role='company').count(), 3)
+        self.assertEqual(User.objects.filter(role='user').count(), 3)
+        self.assertEqual(CompanyProfile.objects.count(), 3)
+        self.assertEqual(Job.objects.count(), 4)
