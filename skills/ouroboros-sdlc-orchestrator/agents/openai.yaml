@@ -1,4 +1,0 @@
-interface:
-  display_name: "Ouroboros SDLC"
-  short_description: "Strict 6-gate SDLC orchestration"
-  default_prompt: "Use $ouroboros-sdlc-orchestrator to drive a project through a strict gated SDLC workflow."
