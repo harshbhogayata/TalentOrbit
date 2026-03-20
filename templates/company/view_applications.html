@@ -1,21 +1,35 @@
 {% extends 'dashboard_base.html' %}
-{% block title %}Applications — {{ job.title }}{% endblock %}
+{% block title %}Applications - {{ job.title }}{% endblock %}
 {% block sidebar_nav %}
 {% include 'includes/sidebar_company.html' with current_page='jobs' %}
 {% endblock %}
 
 {% block dashboard_content %}
-<div class="d-flex justify-content-between align-items-center mb-4">
-    <div>
-        <h2 style="font-weight: 800;"><i class="bi bi-people me-2" style="color: var(--primary-light);"></i>Applications
-        </h2>
-        <p style="color: var(--text-muted);">For: <strong>{{ job.title }}</strong></p>
+<div class="dash-page-header">
+    <div class="dash-page-title">
+        <div class="dash-page-icon">
+            <i class="bi bi-people"></i>
+        </div>
+        <div class="dash-page-heading">
+            <h2>Applications</h2>
+            <p class="dash-page-subtitle">Review candidates for <strong>{{ job.title }}</strong> and move them through the shortlist pipeline.</p>
+        </div>
     </div>
-    <a href="{% url 'company_manage_jobs' %}" class="btn btn-glass"><i class="bi bi-arrow-left me-2"></i>Back</a>
+    <a href="{% url 'company_manage_jobs' %}" class="dash-button dash-button-secondary"><i class="bi bi-arrow-left"></i>Back</a>
 </div>
 
-<div class="table-dark-custom">
-    <table class="table mb-0">
+<div class="dash-table-card">
+    <div class="table-responsive">
+    <table class="table mb-0 dash-table-fit">
+        <colgroup>
+            <col style="width: 19%;">
+            <col style="width: 20%;">
+            <col style="width: 9%;">
+            <col style="width: 20%;">
+            <col style="width: 12%;">
+            <col style="width: 8%;">
+            <col style="width: 12%;">
+        </colgroup>
         <thead>
             <tr>
                 <th>Applicant</th>
@@ -31,44 +45,46 @@
             {% for app in applications %}
             <tr>
                 <td>
-                    <div class="d-flex align-items-center gap-2">
-                        <div
-                            style="width: 32px; height: 32px; background: var(--gradient-primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 0.75rem;">
-                            {{ app.applicant.username|first|upper }}</div>
-                        <a href="{% url 'company_view_applicant' app.applicant.pk %}"
-                            style="color: var(--text-primary); font-weight: 500; text-decoration: underline;">
-                            {{ app.applicant.get_full_name|default:app.applicant.username }}
-                        </a>
+                    <div class="dash-user-cell">
+                        <div class="dash-mini-avatar">{{ app.applicant.username|first|upper }}</div>
+                        <div class="dash-user-copy">
+                            <a href="{% url 'company_view_applicant' app.applicant.pk %}"
+                                style="color: var(--text-primary); font-weight: 500; text-decoration: underline;">
+                                <span class="dash-cell-wrap">{{ app.applicant.get_full_name|default:app.applicant.username }}</span>
+                            </a>
+                        </div>
                     </div>
                 </td>
-                <td>{{ app.applicant.email }}</td>
-                <td><a href="{{ app.resume.url }}" target="_blank" class="btn btn-glass btn-sm"><i
-                            class="bi bi-download me-1"></i>Resume</a></td>
-                <td style="max-width: 200px; overflow: hidden; text-overflow: ellipsis;">{{ app.cover_letter|truncatewords:10 }}</td>
+                <td><span class="dash-cell-wrap">{{ app.applicant.email }}</span></td>
+                <td>
+                    <a href="{{ app.resume.url }}" target="_blank"
+                        class="dash-button dash-icon-button dash-icon-button-info"
+                        title="Download resume" aria-label="Download resume">
+                        <i class="bi bi-download"></i>
+                    </a>
+                </td>
+                <td><span class="dash-cell-wrap dash-cell-truncate">{{ app.cover_letter|truncatewords:10 }}</span></td>
                 <td><span class="badge-status badge-{{ app.status }}">{{ app.get_status_display }}</span></td>
                 <td>{{ app.applied_at|date:"M d" }}</td>
                 <td>
-                    <div class="d-flex gap-1">
+                    <div class="dash-table-actions">
                         <form method="POST" action="{% url 'company_update_application' app.pk 'reviewed' %}"
-                            class="d-inline">
+                            class="dash-inline-form">
                             {% csrf_token %}
-                            <button type="submit" class="btn btn-sm"
-                                style="background: var(--primary-100); color: var(--primary-light);"
-                                title="Mark Reviewed"><i class="bi bi-eye"></i></button>
+                            <button type="submit" class="dash-button dash-icon-button dash-icon-button-info"
+                                title="Mark reviewed" aria-label="Mark reviewed"><i class="bi bi-eye"></i></button>
                         </form>
                         <form method="POST" action="{% url 'company_update_application' app.pk 'shortlisted' %}"
-                            class="d-inline">
+                            class="dash-inline-form">
                             {% csrf_token %}
-                            <button type="submit" class="btn btn-sm"
-                                style="background: var(--success-light); color: var(--success);" title="Shortlist"><i
-                                    class="bi bi-star"></i></button>
+                            <button type="submit" class="dash-button dash-icon-button dash-icon-button-success"
+                                title="Shortlist" aria-label="Shortlist"><i class="bi bi-star"></i></button>
                         </form>
                         <form method="POST" action="{% url 'company_update_application' app.pk 'rejected' %}"
-                            class="d-inline" onsubmit="return confirm('Reject this application?')">
+                            class="dash-inline-form" onsubmit="return confirm('Reject this application?')">
                             {% csrf_token %}
-                            <button type="submit" class="btn btn-sm"
-                                style="background: var(--danger-light); color: var(--danger);" title="Reject"><i
-                                    class="bi bi-x"></i></button>
+                            <button type="submit" class="dash-button dash-icon-button dash-icon-button-danger"
+                                title="Reject" aria-label="Reject"><i class="bi bi-x"></i></button>
                         </form>
                     </div>
                 </td>
@@ -80,5 +96,6 @@
             {% endfor %}
         </tbody>
     </table>
+    </div>
 </div>
 {% endblock %}

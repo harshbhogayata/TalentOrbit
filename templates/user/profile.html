@@ -5,138 +5,116 @@
 {% endblock %}
 
 {% block dashboard_content %}
-<h2 style="font-weight: 800; margin-bottom: 2rem;">
-    <i class="bi bi-person-circle me-2" style="color: var(--primary-light);"></i>My Profile
-</h2>
+<div class="dash-page-header">
+    <div class="dash-page-title">
+        <div class="dash-page-icon">
+            <i class="bi bi-person-circle"></i>
+        </div>
+        <div class="dash-page-heading">
+            <h2>My Profile</h2>
+            <p class="dash-page-subtitle">Update your candidate profile, contact information, bio, and discoverability skills.</p>
+        </div>
+    </div>
+    <div class="dash-page-actions">
+        <a href="{% url 'change_password' %}" class="dash-button dash-button-secondary"><i class="bi bi-lock"></i>Password</a>
+        <a href="{% url 'deactivate_account' %}" class="dash-button dash-button-danger"><i class="bi bi-person-x"></i>Deactivate</a>
+    </div>
+</div>
 
 <form method="POST" enctype="multipart/form-data">
     {% csrf_token %}
-    <div class="row g-4">
-
-        <!-- LEFT: Avatar + account info -->
-        <div class="col-lg-4">
-            <div class="glass-card text-center" style="padding: 2.5rem 2rem;">
-                <!-- Avatar preview -->
+    <div class="dash-form-layout">
+        <div class="dash-form-aside">
+            <div class="dash-card text-center h-100">
                 <div class="position-relative d-inline-block mb-4">
-                    <div id="avatar-preview-wrap" style="width: 120px; height: 120px; border-radius: 50%; overflow: hidden;
-                           border: 3px solid var(--brand-primary); display: flex;
-                           align-items: center; justify-content: center;
-                           background: rgba(59,130,246,0.1); margin: 0 auto;">
+                    <div id="avatar-preview-wrap" class="dash-preview-box round">
                         {% if request.user.avatar %}
-                        <img id="avatar-preview" src="{{ request.user.avatar.url }}" alt="Avatar"
-                            style="width:100%; height:100%; object-fit:cover;">
+                        <img id="avatar-preview" src="{{ request.user.avatar.url }}" alt="Avatar">
+                        <i class="bi bi-person-fill" id="avatar-preview-icon" style="font-size: 3.5rem; color: var(--brand-primary); display: none;"></i>
                         {% else %}
-                        <i class="bi bi-person-fill" id="avatar-preview-icon"
-                            style="font-size: 3.5rem; color: var(--brand-primary);"></i>
-                        <img id="avatar-preview" src="" alt="Avatar"
-                            style="width:100%; height:100%; object-fit:cover; display:none;">
+                        <i class="bi bi-person-fill" id="avatar-preview-icon" style="font-size: 3.5rem; color: var(--brand-primary);"></i>
+                        <img id="avatar-preview" src="" alt="Avatar" style="display: none;">
                         {% endif %}
                     </div>
-                    <label for="{{ form.avatar.id_for_label }}"
-                        class="position-absolute bottom-0 end-0 btn btn-sm btn-primary-gradient" style="border-radius: 50%; width:32px; height:32px; padding:0;
-                              display:flex; align-items:center; justify-content:center;
-                              cursor:pointer;" title="Change photo">
-                        <i class="bi bi-camera-fill" style="font-size:.75rem;"></i>
+                    <label for="{{ form.avatar.id_for_label }}" class="dash-button dash-icon-button dash-button-primary dash-upload-trigger" title="Change photo">
+                        <i class="bi bi-camera-fill"></i>
                     </label>
                 </div>
 
-                <h5 class="text-white fw-bold mb-1">
-                    {{ request.user.get_full_name|default:request.user.username }}
-                </h5>
-                <p class="text-secondary small mb-3">@{{ request.user.username }}</p>
+                <h4 class="mb-1" style="font-weight: 700;">{{ request.user.get_full_name|default:request.user.username }}</h4>
+                <p class="dash-page-subtitle mb-3">@{{ request.user.username }}</p>
 
-                {% if request.user.subscription_active %}
-                <span class="badge rounded-pill px-3 py-2 mb-3"
-                    style="background: linear-gradient(135deg,#f59e0b,#d97706); color:#fff; font-size:.8rem;">
-                    <i class="bi bi-star-fill me-1"></i>Premium Member
-                </span>
-                {% else %}
-                <span class="badge rounded-pill px-3 py-2 mb-3"
-                    style="background: rgba(255,255,255,0.08); color: var(--text-muted); font-size:.8rem;">
-                    <i class="bi bi-person me-1"></i>Free Member
-                </span>
-                {% endif %}
+                <div class="d-flex justify-content-center mb-3">
+                    {% if request.user.subscription_active %}
+                    <span class="dash-chip" style="background: rgba(245, 158, 11, 0.14); border-color: rgba(245, 158, 11, 0.18); color: #fbbf24;">
+                        <i class="bi bi-star-fill"></i>Premium Member
+                    </span>
+                    {% else %}
+                    <span class="dash-chip"><i class="bi bi-person"></i>Free Member</span>
+                    {% endif %}
+                </div>
 
-                <!-- Hidden avatar input -->
-                <div style="display:none;">{{ form.avatar }}</div>
+                <div style="display: none;">{{ form.avatar }}</div>
                 {% if form.avatar.errors %}
                 <div class="text-danger small mt-1">{{ form.avatar.errors|striptags }}</div>
                 {% endif %}
 
-                <hr style="border-color: rgba(255,255,255,0.08); margin: 1.5rem 0;">
+                <div class="dash-card-divider"></div>
 
-                <div class="d-grid gap-2">
-                    <a href="{% url 'change_password' %}" class="btn btn-outline-custom btn-sm">
-                        <i class="bi bi-lock me-2"></i>Change Password
-                    </a>
-                    <a href="{% url 'deactivate_account' %}" class="btn btn-sm"
-                        style="color: #f87171; border: 1px solid rgba(248,113,113,0.3); border-radius: 8px; background: rgba(248,113,113,0.05);">
-                        <i class="bi bi-person-x me-2"></i>Deactivate Account
-                    </a>
+                <div class="dash-inline-meta justify-content-center">
+                    {% if request.user.email %}<span><i class="bi bi-envelope"></i>{{ request.user.email }}</span>{% endif %}
+                    {% if request.user.phone %}<span><i class="bi bi-telephone"></i>{{ request.user.phone }}</span>{% endif %}
                 </div>
             </div>
         </div>
 
-        <!-- RIGHT: Profile Fields -->
-        <div class="col-lg-8">
-            <div class="glass-card">
-                <h6 class="text-white fw-bold mb-4"
-                    style="font-size:.85rem; text-transform:uppercase; letter-spacing:.08em; color: var(--text-muted) !important;">
-                    <i class="bi bi-info-circle me-2" style="color: var(--brand-primary);"></i>Personal Information
-                </h6>
+        <div class="dash-form-main">
+            <div class="dash-card">
+                <div class="dash-form-section-label">
+                    <i class="bi bi-info-circle"></i>Personal Information
+                </div>
 
                 <div class="row g-3">
                     <div class="col-md-6">
-                        <label class="form-label small text-secondary">First Name</label>
+                        <label class="form-label" for="{{ form.first_name.id_for_label }}">First Name</label>
                         {{ form.first_name }}
-                        {% if form.first_name.errors %}<div class="text-danger small mt-1">{{
-                            form.first_name.errors|striptags }}</div>{% endif %}
+                        {% if form.first_name.errors %}<div class="text-danger small mt-1">{{ form.first_name.errors|striptags }}</div>{% endif %}
                     </div>
                     <div class="col-md-6">
-                        <label class="form-label small text-secondary">Last Name</label>
+                        <label class="form-label" for="{{ form.last_name.id_for_label }}">Last Name</label>
                         {{ form.last_name }}
-                        {% if form.last_name.errors %}<div class="text-danger small mt-1">{{
-                            form.last_name.errors|striptags }}</div>{% endif %}
+                        {% if form.last_name.errors %}<div class="text-danger small mt-1">{{ form.last_name.errors|striptags }}</div>{% endif %}
                     </div>
                     <div class="col-md-6">
-                        <label class="form-label small text-secondary">Email Address</label>
+                        <label class="form-label" for="{{ form.email.id_for_label }}">Email Address</label>
                         {{ form.email }}
-                        {% if form.email.errors %}<div class="text-danger small mt-1">{{ form.email.errors|striptags }}
-                        </div>{% endif %}
+                        {% if form.email.errors %}<div class="text-danger small mt-1">{{ form.email.errors|striptags }}</div>{% endif %}
                     </div>
                     <div class="col-md-6">
-                        <label class="form-label small text-secondary">Phone Number</label>
+                        <label class="form-label" for="{{ form.phone.id_for_label }}">Phone Number</label>
                         {{ form.phone }}
-                        {% if form.phone.errors %}<div class="text-danger small mt-1">{{ form.phone.errors|striptags }}
-                        </div>{% endif %}
+                        {% if form.phone.errors %}<div class="text-danger small mt-1">{{ form.phone.errors|striptags }}</div>{% endif %}
                     </div>
                     <div class="col-12">
-                        <label class="form-label small text-secondary">Bio / About Me</label>
+                        <label class="form-label" for="{{ form.bio.id_for_label }}">Bio / About Me</label>
                         {{ form.bio }}
-                        {% if form.bio.errors %}<div class="text-danger small mt-1">{{ form.bio.errors|striptags }}
-                        </div>{% endif %}
+                        {% if form.bio.errors %}<div class="text-danger small mt-1">{{ form.bio.errors|striptags }}</div>{% endif %}
                     </div>
                 </div>
 
-                <hr style="border-color: rgba(255,255,255,0.08); margin: 1.75rem 0;">
+                <div class="dash-card-divider"></div>
 
-                <h6 class="text-white fw-bold mb-3"
-                    style="font-size:.85rem; text-transform:uppercase; letter-spacing:.08em; color: var(--text-muted) !important;">
-                    <i class="bi bi-tools me-2" style="color: var(--brand-primary);"></i>Skills
-                </h6>
-                <p class="text-secondary small mb-2">Select all the skills you have. These help companies find you.</p>
-                <div style="max-height: 180px; overflow-y: auto; border-radius: 8px;
-                        border: 1px solid rgba(255,255,255,0.08);
-                        background: rgba(255,255,255,0.03); padding: .75rem;">
+                <div class="dash-form-section-label">
+                    <i class="bi bi-tools"></i>Skills
+                </div>
+                <p class="dash-page-subtitle mb-3">Select all the skills you have. These help companies find you.</p>
+                <div class="dash-surface-panel" style="max-height: 220px; overflow-y: auto;">
                     {{ form.skills }}
                 </div>
-                {% if form.skills.errors %}<div class="text-danger small mt-1">{{ form.skills.errors|striptags }}</div>
-                {% endif %}
+                {% if form.skills.errors %}<div class="text-danger small mt-1">{{ form.skills.errors|striptags }}</div>{% endif %}
 
                 <div class="d-flex justify-content-end mt-4">
-                    <button type="submit" class="btn btn-primary-gradient px-5">
-                        <i class="bi bi-check-circle me-2"></i>Save Profile
-                    </button>
+                    <button type="submit" class="dash-button dash-button-primary"><i class="bi bi-check-circle"></i>Save Profile</button>
                 </div>
             </div>
         </div>
@@ -144,7 +122,6 @@
 </form>
 
 <script>
-    // Live avatar preview
     document.addEventListener('DOMContentLoaded', function () {
         const input = document.getElementById('{{ form.avatar.id_for_label }}');
         if (!input) return;

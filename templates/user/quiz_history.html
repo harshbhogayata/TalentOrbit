@@ -5,15 +5,30 @@
 {% endblock %}
 
 {% block dashboard_content %}
-<div class="d-flex justify-content-between align-items-center mb-4">
-    <h2 style="font-weight: 800;"><i class="bi bi-clock-history me-2" style="color: var(--primary-light);"></i>Quiz
-        History
-    </h2>
+<div class="dash-page-header">
+    <div class="dash-page-title">
+        <div class="dash-page-icon">
+            <i class="bi bi-clock-history"></i>
+        </div>
+        <div class="dash-page-heading">
+            <h2>Quiz History</h2>
+            <p class="dash-page-subtitle">Review scores, completion dates, and pass or fail outcomes from your past attempts.</p>
+        </div>
+    </div>
+    <div class="dash-page-actions">
+        <a href="{% url 'quiz_list' %}" class="dash-button dash-button-secondary"><i class="bi bi-patch-question"></i>Available Quizzes</a>
+    </div>
 </div>
 
-<div class="glass-card">
+<div class="dash-table-card">
     <div class="table-responsive">
-        <table class="table table-hover align-middle">
+        <table class="table mb-0 dash-table-fit">
+            <colgroup>
+                <col style="width: 38%;">
+                <col style="width: 24%;">
+                <col style="width: 20%;">
+                <col style="width: 18%;">
+            </colgroup>
             <thead>
                 <tr>
                     <th>Quiz Title</th>
@@ -26,60 +41,31 @@
                 {% for attempt in page_obj %}
                 <tr>
                     <td>
-                        <div class="fw-bold">{{ attempt.quiz.title }}</div>
-                        <small class="text-muted">{{ attempt.quiz.category.name|default:"General" }}</small>
+                        <div style="font-weight: 700;">{{ attempt.quiz.title }}</div>
+                        <div style="color: var(--text-muted); font-size: 0.9rem;">{{ attempt.quiz.category.name|default:"General" }}</div>
                     </td>
                     <td>{{ attempt.completed_at|date:"M d, Y H:i" }}</td>
                     <td>
-                        <div class="fw-bold">{{ attempt.score }} / {{ attempt.total_questions }}</div>
-                        <small class="text-muted">{{ attempt.percentage }}%</small>
+                        <div style="font-weight: 700;">{{ attempt.score }} / {{ attempt.total_questions }}</div>
+                        <div style="color: var(--text-muted); font-size: 0.9rem;">{{ attempt.percentage }}%</div>
                     </td>
                     <td>
                         {% if attempt.passed %}
-                        <span class="badge bg-success">Passed</span>
+                        <span class="badge-status badge-active">Passed</span>
                         {% else %}
-                        <span class="badge bg-danger">Failed</span>
+                        <span class="badge-status badge-rejected">Failed</span>
                         {% endif %}
                     </td>
                 </tr>
                 {% empty %}
                 <tr>
-                    <td colspan="4" class="text-center py-4 text-muted">You haven't taken any quizzes yet.</td>
+                    <td colspan="4" class="text-center py-4" style="color: var(--text-muted);">You have not taken any quizzes yet.</td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
     </div>
-
-    <!-- Pagination -->
-    {% if page_obj.has_other_pages %}
-    <nav aria-label="Page navigation" class="mt-4">
-        <ul class="pagination justify-content-center">
-            {% if page_obj.has_previous %}
-            <li class="page-item">
-                <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
-                    <span aria-hidden="true">&laquo;</span>
-                </a>
-            </li>
-            {% endif %}
-
-            {% for num in page_obj.paginator.page_range %}
-            {% if page_obj.number == num %}
-            <li class="page-item active"><span class="page-link">{{ num }}</span></li>
-            {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %} <li class="page-item"><a
-                    class="page-link" href="?page={{ num }}">{{ num }}</a></li>
-                {% endif %}
-                {% endfor %}
-
-                {% if page_obj.has_next %}
-                <li class="page-item">
-                    <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                    </a>
-                </li>
-                {% endif %}
-        </ul>
-    </nav>
-    {% endif %}
 </div>
+
+{% include 'includes/pagination.html' %}
 {% endblock %}

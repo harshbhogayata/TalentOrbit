@@ -21,7 +21,7 @@ from .models import (
 class UserRegistrationForm(UserCreationForm):
     """Registration form for regular users."""
     email = forms.EmailField(required=True, widget=forms.EmailInput(attrs={
-        'class': 'form-control', 'placeholder': 'Enter your email'
+        'class': 'form-control', 'placeholder': 'harshmbhogayata+candidate@gmail.com'
     }))
     first_name = forms.CharField(max_length=50, widget=forms.TextInput(attrs={
         'class': 'form-control', 'placeholder': 'First Name'
@@ -62,7 +62,7 @@ class UserRegistrationForm(UserCreationForm):
 class CompanyRegistrationForm(UserCreationForm):
     """Registration form for companies."""
     email = forms.EmailField(required=True, widget=forms.EmailInput(attrs={
-        'class': 'form-control', 'placeholder': 'Company Email'
+        'class': 'form-control', 'placeholder': 'harshmbhogayata5623+company@gmail.com'
     }))
     company_name = forms.CharField(max_length=200, widget=forms.TextInput(attrs={
         'class': 'form-control', 'placeholder': 'Company Name'
@@ -106,6 +106,118 @@ class CompanyRegistrationForm(UserCreationForm):
                 industry=self.cleaned_data.get('industry', ''),
                 website=self.cleaned_data.get('website', ''),
                 description=self.cleaned_data.get('description', ''),
+            )
+        return user
+
+
+class AdminUserCreateForm(UserCreationForm):
+    """Admin-managed user creation form."""
+    email = forms.EmailField(required=True, widget=forms.EmailInput(attrs={
+        'class': 'form-control', 'placeholder': 'harshmbhogayata+new-user@gmail.com'
+    }))
+    first_name = forms.CharField(max_length=50, required=False, widget=forms.TextInput(attrs={
+        'class': 'form-control', 'placeholder': 'First Name'
+    }))
+    last_name = forms.CharField(max_length=50, required=False, widget=forms.TextInput(attrs={
+        'class': 'form-control', 'placeholder': 'Last Name'
+    }))
+    phone = forms.CharField(max_length=20, required=False, widget=forms.TextInput(attrs={
+        'class': 'form-control', 'placeholder': 'Phone Number'
+    }))
+    email_verified = forms.BooleanField(
+        required=False,
+        initial=True,
+        widget=forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+        help_text='Mark this account as already verified.',
+    )
+
+    class Meta:
+        model = User
+        fields = ['username', 'first_name', 'last_name', 'email', 'phone', 'password1', 'password2']
+        widgets = {
+            'username': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Choose a username'}),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['password1'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Password'})
+        self.fields['password2'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Confirm Password'})
+
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        if email and User.objects.filter(email__iexact=email).exists():
+            raise forms.ValidationError('An account with this email already exists.')
+        return email
+
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        user.role = 'user'
+        user.email_verified = self.cleaned_data.get('email_verified', True)
+        if commit:
+            user.save()
+        return user
+
+
+class AdminCompanyCreateForm(UserCreationForm):
+    """Admin-managed company creation form."""
+    email = forms.EmailField(required=True, widget=forms.EmailInput(attrs={
+        'class': 'form-control', 'placeholder': 'harshmbhogayata5623+new-company@gmail.com'
+    }))
+    company_name = forms.CharField(max_length=200, widget=forms.TextInput(attrs={
+        'class': 'form-control', 'placeholder': 'Company Name'
+    }))
+    industry = forms.CharField(max_length=100, required=False, widget=forms.TextInput(attrs={
+        'class': 'form-control', 'placeholder': 'Industry'
+    }))
+    website = forms.URLField(required=False, widget=forms.URLInput(attrs={
+        'class': 'form-control', 'placeholder': 'https://example.com'
+    }))
+    description = forms.CharField(required=False, widget=forms.Textarea(attrs={
+        'class': 'form-control', 'rows': 3, 'placeholder': 'About the company'
+    }))
+    status = forms.ChoiceField(
+        choices=CompanyProfile.STATUS_CHOICES,
+        initial='approved',
+        widget=forms.Select(attrs={'class': 'form-select'}),
+    )
+    email_verified = forms.BooleanField(
+        required=False,
+        initial=True,
+        widget=forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+        help_text='Mark this company login as already verified.',
+    )
+
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'password1', 'password2']
+        widgets = {
+            'username': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Choose a username'}),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['password1'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Password'})
+        self.fields['password2'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Confirm Password'})
+
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        if email and User.objects.filter(email__iexact=email).exists():
+            raise forms.ValidationError('An account with this email already exists.')
+        return email
+
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        user.role = 'company'
+        user.email_verified = self.cleaned_data.get('email_verified', True)
+        if commit:
+            user.save()
+            CompanyProfile.objects.create(
+                user=user,
+                company_name=self.cleaned_data['company_name'],
+                industry=self.cleaned_data.get('industry', ''),
+                website=self.cleaned_data.get('website', ''),
+                description=self.cleaned_data.get('description', ''),
+                status=self.cleaned_data['status'],
             )
         return user
 
@@ -235,6 +347,7 @@ class JobForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.fields['category'].required = False
         if self.instance.pk:
             # Pre-populate skills field from M2M
             self.fields['skills'].initial = ', '.join([s.name for s in self.instance.skills.all()])
@@ -247,8 +360,14 @@ class JobForm(forms.ModelForm):
 
     def clean(self):
         cleaned_data = super().clean()
+        category = cleaned_data.get('category')
+        new_category = cleaned_data.get('new_category', '').strip()
         salary_min = cleaned_data.get('salary_min')
         salary_max = cleaned_data.get('salary_max')
+
+        if not category and not new_category:
+            raise forms.ValidationError('Select a category or enter a new one.')
+
         if salary_min and salary_max and salary_min > salary_max:
             raise forms.ValidationError('Minimum salary cannot be greater than maximum salary.')
         return cleaned_data
@@ -459,7 +578,7 @@ class StyledPasswordResetForm(PasswordResetForm):
     """Styled password reset request form (email input)."""
     email = forms.EmailField(
         widget=forms.EmailInput(attrs={
-            'class': 'form-control', 'placeholder': 'Enter your email address',
+            'class': 'form-control', 'placeholder': 'harshmbhogayata@gmail.com',
         }),
     )
 
@@ -494,7 +613,7 @@ class ContactForm(forms.Form):
     )
     email = forms.EmailField(
         widget=forms.EmailInput(attrs={
-            'class': 'form-control', 'placeholder': 'you@example.com',
+            'class': 'form-control', 'placeholder': 'harshmbhogayata@gmail.com',
         }),
     )
     subject = forms.CharField(

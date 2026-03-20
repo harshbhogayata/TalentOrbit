@@ -5,6 +5,10 @@ Views for all three roles: Admin, Company, User.
 Covers auth, dashboards, jobs, tenders, quizzes, videos, subscriptions.
 """
 
+import csv
+import mimetypes
+import os
+
 from django.conf import settings
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, logout, update_session_auth_hash
@@ -18,10 +22,13 @@ from datetime import timedelta
 from django.utils.encoding import force_str
 from django.utils.http import urlsafe_base64_decode
 from django.utils.text import slugify
-from django.db.models import Q, Count
-from django.http import JsonResponse
+from django.db.models import Q, Count, F
+from django.http import JsonResponse, HttpResponse
 from django.urls import reverse
 from functools import wraps
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import AllowAny
+from rest_framework.response import Response
 
 from .models import (
     User, CompanyProfile, JobCategory, Job, JobApplication,
@@ -34,7 +41,13 @@ from .forms import (
     UserProfileForm, CompanyProfileForm, JobForm, JobApplicationForm,
     TenderForm, TenderBidForm, JobCategoryForm, SkillVideoForm,
     QuizForm, QuizQuestionForm, ChangePasswordForm,
-    DeactivateAccountForm, ContactForm
+    DeactivateAccountForm, ContactForm, AdminUserCreateForm,
+    AdminCompanyCreateForm,
+)
+from .serializers import (
+    NewsletterSubscribeSerializer,
+    SearchSuggestionItemSerializer,
+    SearchSuggestionQuerySerializer,
 )
 from .utils import send_verification_email
 
@@ -108,6 +121,8 @@ def home(request):
 
 def job_list(request):
     """Public job listing with search and filters."""
+    use_user_dashboard_shell = request.user.is_authenticated and request.user.role == 'user'
+    template_name = 'user/job_list.html' if use_user_dashboard_shell else 'jobs/job_list.html'
     jobs = get_open_jobs_queryset().select_related('company', 'category')
     categories = JobCategory.objects.filter(is_active=True)
 
@@ -159,7 +174,7 @@ def job_list(request):
     if request.user.is_authenticated and request.user.role == 'user':
         saved_ids = list(SavedJob.objects.filter(user=request.user).values_list('job_id', flat=True))
 
-    return render(request, 'jobs/job_list.html', {
+    return render(request, template_name, {
         'page_obj': page_obj,
         'categories': categories,
         'query': q,
@@ -175,6 +190,8 @@ def job_list(request):
 def job_detail(request, pk):
     """Job detail page."""
     job = get_object_or_404(Job, pk=pk)
+    use_user_dashboard_shell = request.user.is_authenticated and request.user.role == 'user'
+    template_name = 'user/job_detail.html' if use_user_dashboard_shell else 'jobs/job_detail.html'
     has_applied = False
     is_saved = False
     if request.user.is_authenticated and request.user.role == 'user':
@@ -183,7 +200,7 @@ def job_detail(request, pk):
     related_jobs = get_open_jobs_queryset().filter(
         category=job.category
     ).exclude(pk=pk)[:4]
-    return render(request, 'jobs/job_detail.html', {
+    return render(request, template_name, {
         'job': job,
         'has_applied': has_applied,
         'is_saved': is_saved,
@@ -462,8 +479,79 @@ def admin_dashboard(request):
         'total_quizzes': Quiz.objects.count(),
         'recent_users': User.objects.filter(role='user').order_by('-date_joined')[:5],
         'pending_company_list': CompanyProfile.objects.filter(status='pending')[:5],
+        'recent_jobs': Job.objects.select_related('company', 'category').order_by('-created_at')[:4],
     }
     return render(request, 'admin_panel/dashboard.html', context)
+
+
+@admin_required
+def admin_download_report(request):
+    """Download a CSV snapshot of key admin metrics and recent activity."""
+    today = timezone.localdate()
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = (
+        f'attachment; filename="talentorbit-admin-report-{today.isoformat()}.csv"'
+    )
+
+    writer = csv.writer(response)
+    writer.writerow(['section', 'item', 'value', 'detail_1', 'detail_2'])
+
+    writer.writerow(['meta', 'generated_on', today.isoformat(), '', ''])
+    writer.writerow(['summary', 'total_users', User.objects.filter(role='user').count(), '', ''])
+    writer.writerow(['summary', 'total_companies', CompanyProfile.objects.count(), '', ''])
+    writer.writerow(['summary', 'pending_companies', CompanyProfile.objects.filter(status='pending').count(), '', ''])
+    writer.writerow(['summary', 'active_jobs', Job.objects.filter(is_active=True).count(), '', ''])
+    writer.writerow(['summary', 'categories', JobCategory.objects.count(), '', ''])
+    writer.writerow(['summary', 'videos', SkillVideo.objects.count(), '', ''])
+    writer.writerow(['summary', 'quizzes', Quiz.objects.count(), '', ''])
+    writer.writerow(['summary', 'subscribed_users', User.objects.filter(is_subscribed=True).count(), '', ''])
+
+    for user in User.objects.filter(role='user').order_by('-date_joined')[:10]:
+        writer.writerow([
+            'recent_users',
+            user.username,
+            user.email,
+            user.date_joined.strftime('%Y-%m-%d'),
+            'premium' if user.subscription_active else 'free',
+        ])
+
+    for company in CompanyProfile.objects.filter(status='pending').select_related('user')[:10]:
+        writer.writerow([
+            'pending_companies',
+            company.company_name,
+            company.user.email,
+            company.created_at.strftime('%Y-%m-%d'),
+            company.industry or '',
+        ])
+
+    for job in Job.objects.select_related('company', 'category').order_by('-created_at')[:10]:
+        writer.writerow([
+            'recent_jobs',
+            job.title,
+            job.company.company_name,
+            job.category.name if job.category else '',
+            job.created_at.strftime('%Y-%m-%d'),
+        ])
+
+    return response
+
+
+@admin_required
+def admin_create_company(request):
+    """Admin: create a company account directly from the panel."""
+    if request.method == 'POST':
+        form = AdminCompanyCreateForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            company = user.company_profile
+            messages.success(
+                request,
+                f'Company "{company.company_name}" created with {company.get_status_display().lower()} status.',
+            )
+            return redirect('admin_manage_companies')
+    else:
+        form = AdminCompanyCreateForm()
+    return render(request, 'admin_panel/create_company.html', {'form': form})
 
 
 @admin_required
@@ -534,6 +622,20 @@ def admin_delete_company(request, pk):
     user.delete()
     messages.success(request, f'Company "{company_name}" and its user account deleted.')
     return redirect('admin_manage_companies')
+
+
+@admin_required
+def admin_create_user(request):
+    """Admin: create a regular user directly from the panel."""
+    if request.method == 'POST':
+        form = AdminUserCreateForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            messages.success(request, f'User "{user.username}" created successfully.')
+            return redirect('admin_manage_users')
+    else:
+        form = AdminUserCreateForm()
+    return render(request, 'admin_panel/create_user.html', {'form': form})
 
 
 @admin_required
@@ -713,7 +815,7 @@ def admin_delete_quiz(request, pk):
 def admin_send_subscription_notification(request):
     """Admin: notify users whose subscription is about to expire."""
     if request.method != 'POST':
-        return redirect('admin_dashboard')
+        return redirect('dashboard')
     threshold = timezone.now() + timedelta(days=3)
     expiring_users = User.objects.filter(
         is_subscribed=True,
@@ -730,7 +832,7 @@ def admin_send_subscription_notification(request):
         )
         count += 1
     messages.success(request, f'Notifications sent to {count} users.')
-    return redirect('admin_dashboard')
+    return redirect('dashboard')
 
 
 @admin_required
@@ -762,6 +864,10 @@ def company_dashboard(request):
         'total_applications': JobApplication.objects.filter(job__company=profile).count(),
         'pending_applications': JobApplication.objects.filter(job__company=profile, status='pending').count(),
         'total_tenders': profile.posted_tenders.count(),
+        'open_tenders': profile.posted_tenders.filter(status='open').count(),
+        'recent_jobs': profile.jobs.select_related('category').annotate(
+            app_count=Count('applications')
+        ).order_by('-created_at')[:4],
         'recent_applications': JobApplication.objects.filter(job__company=profile).select_related('applicant', 'job').order_by('-applied_at')[:5],
     }
     return render(request, 'company/dashboard.html', context)
@@ -837,8 +943,17 @@ def company_edit_job(request, pk):
     if request.method == 'POST':
         form = JobForm(request.POST, instance=job)
         if form.is_valid():
-            form.save()
-            # Fix: Save M2M skills
+            job = form.save(commit=False)
+
+            new_cat_name = form.cleaned_data.get('new_category', '').strip()
+            if new_cat_name and not job.category:
+                cat, created = JobCategory.objects.get_or_create(
+                    name=new_cat_name,
+                    defaults={'slug': slugify(new_cat_name)}
+                )
+                job.category = cat
+
+            job.save()
             form.save_m2m_skills(job)
             messages.success(request, 'Job updated.')
             return redirect('company_manage_jobs')
@@ -927,8 +1042,8 @@ def admin_delete_job(request, pk):
 def company_tenders(request):
     """Company: view tenders (own + others)."""
     profile = request.user.company_profile
-    my_tenders = Tender.objects.filter(posted_by=profile)
-    other_tenders = Tender.objects.exclude(posted_by=profile).filter(status='open')
+    my_tenders = Tender.objects.filter(posted_by=profile).prefetch_related('bids')
+    other_tenders = Tender.objects.exclude(posted_by=profile).filter(status='open').select_related('posted_by')
     return render(request, 'company/tenders.html', {
         'my_tenders': my_tenders,
         'other_tenders': other_tenders,
@@ -990,6 +1105,18 @@ def company_tender_detail(request, pk):
 
 
 @company_required
+def company_delete_tender(request, pk):
+    """Delete a tender owned by the current company."""
+    if request.method != 'POST':
+        return redirect('company_tenders')
+    tender = get_object_or_404(Tender, pk=pk, posted_by=request.user.company_profile)
+    title = tender.title
+    tender.delete()
+    messages.success(request, f'Tender "{title}" deleted.')
+    return redirect('company_tenders')
+
+
+@company_required
 def company_accept_bid(request, pk):
     """Accept a tender bid."""
     if request.method != 'POST':
@@ -1025,11 +1152,17 @@ def company_accept_bid(request, pk):
 @user_required
 def user_dashboard(request):
     """User dashboard."""
+    recent_applications = request.user.applications.all().select_related('job', 'job__company').order_by('-applied_at')[:5]
+    recent_quiz_attempts = request.user.quiz_attempts.all().select_related('quiz').order_by('-completed_at')[:4]
+    unread_notifications = request.user.notifications.filter(is_read=False).order_by('-created_at')[:5]
     context = {
-        'applications': request.user.applications.all().select_related('job', 'job__company')[:5],
+        'applications': recent_applications,
         'total_applications': request.user.applications.count(),
-        'quiz_attempts': request.user.quiz_attempts.all()[:5],
-        'notifications': request.user.notifications.filter(is_read=False)[:5],
+        'quiz_attempts': recent_quiz_attempts,
+        'quiz_attempt_count': request.user.quiz_attempts.count(),
+        'saved_jobs_count': request.user.saved_jobs.count(),
+        'notifications': unread_notifications,
+        'unread_notification_count': request.user.notifications.filter(is_read=False).count(),
         'subscription_active': request.user.subscription_active,
     }
     return render(request, 'user/dashboard.html', context)
@@ -1063,17 +1196,28 @@ def apply_job(request, pk):
     if request.method == 'POST':
         form = JobApplicationForm(request.POST, request.FILES)
         if form.is_valid():
+            resume_upload = form.cleaned_data['resume']
+            resume_name = os.path.basename(resume_upload.name)
+            resume_content_type = (
+                getattr(resume_upload, 'content_type', None)
+                or mimetypes.guess_type(resume_name)[0]
+                or 'application/octet-stream'
+            )
+            resume_upload.seek(0)
+            resume_content = resume_upload.read()
+            resume_upload.seek(0)
             application = form.save(commit=False)
             application.job = job
             application.applicant = request.user
             application.save()
 
-            # Send email notification to company (Async)
+            # Forward the applicant's resume to the company email.
             from .utils import send_email_async
             send_email_async(
                 subject=f'New Application: {job.title}',
                 message=f'{request.user.get_full_name()} has applied for {job.title}.\n\nCover Letter:\n{application.cover_letter}',
-                recipient_list=[job.company.user.email]
+                recipient_list=[job.company.user.email],
+                attachments=[(resume_name, resume_content, resume_content_type)],
             )
 
             Notification.objects.create(
@@ -1299,19 +1443,32 @@ def mark_all_read(request):
 #  SEARCH SUGGESTIONS API
 # ──────────────────────────────────────────────────────────────
 
+@api_view(['GET'])
+@permission_classes([AllowAny])
 def search_suggestions(request):
-    """JSON endpoint for job search autocomplete."""
-    q = request.GET.get('q', '').strip()
+    """DRF endpoint for job search autocomplete."""
+    query_serializer = SearchSuggestionQuerySerializer(data=request.query_params)
+    if not query_serializer.is_valid():
+        return Response({'results': []})
+
+    q = query_serializer.validated_data.get('q', '')
     if len(q) < 2:
-        return JsonResponse({'results': []})
-    jobs = get_open_jobs_queryset().filter(
-        Q(title__icontains=q) |
-        Q(skills__name__icontains=q) |
-        Q(company__company_name__icontains=q)
-    ).select_related('company').distinct().values(
-        'pk', 'title', 'company__company_name', 'location'
-    )[:8]
-    return JsonResponse({'results': list(jobs)})
+        return Response({'results': []})
+
+    jobs = list(
+        get_open_jobs_queryset().filter(
+            Q(title__icontains=q) |
+            Q(skills__name__icontains=q) |
+            Q(company__company_name__icontains=q)
+        ).select_related('company').distinct().values(
+            'id',
+            'title',
+            'location',
+            company_name=F('company__company_name'),
+        )[:8]
+    )
+    result_serializer = SearchSuggestionItemSerializer(jobs, many=True)
+    return Response({'results': result_serializer.data})
 
 
 # ──────────────────────────────────────────────────────────────
@@ -1368,24 +1525,19 @@ def terms(request):
 #  NEWSLETTER
 # ──────────────────────────────────────────────────────────────
 
+@api_view(['POST'])
+@permission_classes([AllowAny])
 def newsletter_subscribe(request):
-    """AJAX newsletter subscription."""
-    if request.method == 'POST':
-        email = request.POST.get('email', '').strip()
-        if email:
-            from django.core.validators import validate_email
-            from django.core.exceptions import ValidationError
-            try:
-                validate_email(email)
-            except ValidationError:
-                return JsonResponse({'success': False, 'message': 'Please enter a valid email address.'})
+    """DRF endpoint for newsletter subscription."""
+    serializer = NewsletterSubscribeSerializer(data=request.data)
+    if not serializer.is_valid():
+        return Response({'success': False, 'message': 'Please enter a valid email address.'})
 
-            _, created = NewsletterSubscription.objects.get_or_create(email=email)
-            if created:
-                return JsonResponse({'success': True, 'message': 'Subscribed successfully!'})
-            return JsonResponse({'success': True, 'message': 'You\'re already subscribed!'})
-        return JsonResponse({'success': False, 'message': 'Please enter a valid email.'})
-    return JsonResponse({'success': False}, status=405)
+    email = serializer.validated_data['email']
+    _, created = NewsletterSubscription.objects.get_or_create(email=email)
+    if created:
+        return Response({'success': True, 'message': 'Subscribed successfully!'})
+    return Response({'success': True, 'message': 'You\'re already subscribed!'})
 
 
 
@@ -1405,7 +1557,7 @@ def change_password(request):
             if user.role == 'company':
                 return redirect('company_profile')
             elif user.role == 'admin':
-                return redirect('admin_dashboard')
+                return redirect('dashboard')
             return redirect('user_profile')
     else:
         form = ChangePasswordForm(request.user)

@@ -5,62 +5,96 @@
 {% endblock %}
 
 {% block dashboard_content %}
-<div class="d-flex justify-content-between align-items-center mb-4">
-    <h2 style="font-weight: 800;"><i class="bi bi-file-earmark-text me-2"
-            style="color: var(--primary-light);"></i>Tenders</h2>
-    <a href="{% url 'company_create_tender' %}" class="btn btn-primary-gradient"><i
-            class="bi bi-plus-circle me-2"></i>Create Tender</a>
+<div class="dash-page-header">
+    <div class="dash-page-title">
+        <div class="dash-page-icon">
+            <i class="bi bi-file-earmark-text"></i>
+        </div>
+        <div class="dash-page-heading">
+            <h2>Tenders</h2>
+            <p class="dash-page-subtitle">Manage your open procurement work and review tenders posted by other companies.</p>
+        </div>
+    </div>
+    <div class="dash-page-actions">
+        <a href="{% url 'company_create_tender' %}" class="dash-button dash-button-primary"><i class="bi bi-plus-circle"></i>Create Tender</a>
+    </div>
 </div>
 
-<!-- My Tenders -->
-<h5 style="font-weight: 700; margin-bottom: 1rem;">My Tenders</h5>
-<div class="row g-4 mb-4">
-    {% for t in my_tenders %}
-    <div class="col-lg-4 col-md-6">
-        <a href="{% url 'company_tender_detail' t.pk %}" class="text-decoration-none">
-            <div class="tender-card">
-                <div class="d-flex justify-content-between mb-2">
-                    <h6 style="font-weight: 600; color: var(--text-primary);">{{ t.title|truncatewords:6 }}</h6>
-                    <span
-                        class="badge-status badge-{% if t.status == 'open' %}active{% elif t.status == 'awarded' %}shortlisted{% else %}rejected{% endif %}">{{ t.status }}</span>
+<section class="mb-5">
+    <div class="d-flex align-items-center justify-content-between mb-3">
+        <h4 class="mb-0" style="font-weight: 700;">My Tenders</h4>
+        <span class="dash-meta-pill"><i class="bi bi-folder2-open"></i>{{ my_tenders|length }} active records</span>
+    </div>
+    <div class="tender-grid">
+        {% for t in my_tenders %}
+        <div class="dash-card tender-surface">
+            <div class="d-flex justify-content-between align-items-start gap-3 mb-3">
+                <div>
+                    <h5 class="mb-2" style="font-weight: 700;">{{ t.title }}</h5>
+                    <span class="badge-status badge-{% if t.status == 'open' %}active{% elif t.status == 'awarded' %}shortlisted{% else %}rejected{% endif %}">{{ t.get_status_display }}</span>
                 </div>
-                <p style="color: var(--text-muted); font-size: 0.85rem;">{{ t.description|truncatewords:15 }}</p>
-                <div class="d-flex gap-3" style="color: var(--text-secondary); font-size: 0.85rem;">
-                    {% if t.budget %}<span><i class="bi bi-currency-rupee"></i> ₹{{ t.budget|floatformat:0 }}</span>{% endif %}
-                    <span><i class="bi bi-calendar"></i> {{ t.deadline|date:"M d" }}</span>
-                    <span><i class="bi bi-chat-dots"></i> {{ t.bids.count }} bids</span>
+                <div class="dash-table-actions">
+                    <a href="{% url 'company_tender_detail' t.pk %}" class="dash-button dash-icon-button dash-icon-button-info" title="View tender" aria-label="View tender">
+                        <i class="bi bi-eye"></i>
+                    </a>
+                    <form method="POST" action="{% url 'company_delete_tender' t.pk %}" class="dash-inline-form" onsubmit="return confirm('Delete this tender? This will also remove its bids.')">
+                        {% csrf_token %}
+                        <button type="submit" class="dash-button dash-icon-button dash-icon-button-danger" title="Delete tender" aria-label="Delete tender">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </form>
                 </div>
             </div>
-        </a>
+            <p class="tender-summary">{{ t.description|truncatewords:24 }}</p>
+            <div class="tender-meta-row">
+                {% if t.budget %}<span><i class="bi bi-cash-stack"></i>Rs {{ t.budget|floatformat:0 }}</span>{% endif %}
+                <span><i class="bi bi-calendar-event"></i>{{ t.deadline|date:"M d" }}</span>
+                <span><i class="bi bi-chat-dots"></i>{{ t.bids.count }} bids</span>
+            </div>
+            <div class="mt-4">
+                <a href="{% url 'company_tender_detail' t.pk %}" class="dash-button dash-button-secondary w-100 justify-content-center"><i class="bi bi-arrow-right-circle"></i>Open Tender</a>
+            </div>
+        </div>
+        {% empty %}
+        <div class="dash-card">
+            <h5 class="mb-2" style="font-weight: 700;">No tenders yet</h5>
+            <p class="dash-page-subtitle mb-4">Create your first tender to invite bids from other companies.</p>
+            <a href="{% url 'company_create_tender' %}" class="dash-button dash-button-primary"><i class="bi bi-plus-circle"></i>Create Tender</a>
+        </div>
+        {% endfor %}
     </div>
-    {% empty %}
-    <div class="col-12">
-        <p style="color: var(--text-muted);">You haven't created any tenders yet.</p>
-    </div>
-    {% endfor %}
-</div>
+</section>
 
-<!-- Other Tenders -->
-<h5 style="font-weight: 700; margin-bottom: 1rem;">Open Tenders from Other Companies</h5>
-<div class="row g-4">
-    {% for t in other_tenders %}
-    <div class="col-lg-4 col-md-6">
-        <a href="{% url 'company_tender_detail' t.pk %}" class="text-decoration-none">
-            <div class="tender-card">
-                <h6 style="font-weight: 600; color: var(--text-primary);">{{ t.title|truncatewords:6 }}</h6>
-                <small style="color: var(--text-muted);">by {{ t.posted_by.company_name }}</small>
-                <p class="mt-2" style="color: var(--text-muted); font-size: 0.85rem;">{{ t.description|truncatewords:15 }}</p>
-                <div class="d-flex gap-3" style="color: var(--text-secondary); font-size: 0.85rem;">
-                    {% if t.budget %}<span><i class="bi bi-currency-rupee"></i> ₹{{ t.budget|floatformat:0 }}</span>{% endif %}
-                    <span><i class="bi bi-calendar"></i> {{ t.deadline|date:"M d" }}</span>
+<section>
+    <div class="d-flex align-items-center justify-content-between mb-3">
+        <h4 class="mb-0" style="font-weight: 700;">Open Tenders from Other Companies</h4>
+        <span class="dash-meta-pill"><i class="bi bi-buildings"></i>{{ other_tenders|length }} open opportunities</span>
+    </div>
+    <div class="tender-grid">
+        {% for t in other_tenders %}
+        <div class="dash-card tender-surface">
+            <div class="d-flex justify-content-between align-items-start gap-3 mb-3">
+                <div>
+                    <h5 class="mb-2" style="font-weight: 700;">{{ t.title }}</h5>
+                    <div class="tender-poster">by {{ t.posted_by.company_name }}</div>
                 </div>
+                <span class="badge-status badge-active">{{ t.get_status_display }}</span>
             </div>
-        </a>
+            <p class="tender-summary">{{ t.description|truncatewords:24 }}</p>
+            <div class="tender-meta-row">
+                {% if t.budget %}<span><i class="bi bi-cash-stack"></i>Rs {{ t.budget|floatformat:0 }}</span>{% endif %}
+                <span><i class="bi bi-calendar-event"></i>{{ t.deadline|date:"M d" }}</span>
+            </div>
+            <div class="mt-4">
+                <a href="{% url 'company_tender_detail' t.pk %}" class="dash-button dash-button-secondary w-100 justify-content-center"><i class="bi bi-send"></i>View & Bid</a>
+            </div>
+        </div>
+        {% empty %}
+        <div class="dash-card">
+            <h5 class="mb-2" style="font-weight: 700;">No open tenders right now</h5>
+            <p class="dash-page-subtitle mb-0">When other approved companies publish open procurement requests, they will appear here.</p>
+        </div>
+        {% endfor %}
     </div>
-    {% empty %}
-    <div class="col-12">
-        <p style="color: var(--text-muted);">No open tenders from other companies.</p>
-    </div>
-    {% endfor %}
-</div>
+</section>
 {% endblock %}

@@ -1,0 +1,44 @@
+{% extends 'dashboard_base.html' %}
+{% block title %}Create User{% endblock %}
+{% block sidebar_nav %}
+{% include 'includes/sidebar_admin.html' with current_page='users' %}
+{% endblock %}
+
+{% block dashboard_content %}
+<div class="dash-page-header">
+    <div class="dash-page-title">
+        <div class="dash-page-icon">
+            <i class="bi bi-person-plus"></i>
+        </div>
+        <div class="dash-page-heading">
+            <h2>Create User</h2>
+            <p class="dash-page-subtitle">Add a new candidate account with the correct access and verification state.</p>
+        </div>
+    </div>
+    <a href="{% url 'admin_manage_users' %}" class="dash-button dash-button-secondary"><i class="bi bi-arrow-left"></i>Back</a>
+</div>
+
+<div class="dash-card" style="max-width: 720px;">
+    <form method="POST" class="dash-form-grid">
+        {% csrf_token %}
+        {% for field in form %}
+        <div class="mb-3">
+            {% if field.name == 'email_verified' %}
+            <div class="form-check form-switch">
+                {{ field }}
+                <label class="form-check-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+            </div>
+            {% else %}
+            <label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+            {{ field }}
+            {% endif %}
+            {% if field.help_text %}<small class="dash-form-help">{{ field.help_text }}</small>{% endif %}
+            {% for error in field.errors %}<div class="text-danger small mt-1">{{ error }}</div>{% endfor %}
+        </div>
+        {% endfor %}
+        {% for error in form.non_field_errors %}<div class="alert alert-danger">{{ error }}</div>{% endfor %}
+        <button type="submit" class="dash-button dash-button-primary w-100"><i class="bi bi-plus-circle"></i>Create
+            User</button>
+    </form>
+</div>
+{% endblock %}

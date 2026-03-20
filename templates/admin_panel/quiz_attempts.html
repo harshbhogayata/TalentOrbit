@@ -5,15 +5,29 @@
 {% endblock %}
 
 {% block dashboard_content %}
-<div class="mb-4">
-    <a href="{% url 'admin_manage_quizzes' %}" class="btn btn-outline-light mb-3"><i
-            class="bi bi-arrow-left me-2"></i>Back to Quizzes</a>
-    <h2 style="font-weight: 800;"><i class="bi bi-bar-chart me-2" style="color: var(--primary-light);"></i>Attempts: {{ quiz.title }}</h2>
+<div class="dash-page-header">
+    <div class="dash-page-title">
+        <div class="dash-page-icon">
+            <i class="bi bi-bar-chart"></i>
+        </div>
+        <div class="dash-page-heading">
+            <h2>Attempts: {{ quiz.title }}</h2>
+            <p class="dash-page-subtitle">Review pass rates, timing, and score distribution for this quiz.</p>
+        </div>
+    </div>
+    <a href="{% url 'admin_manage_quizzes' %}" class="dash-button dash-button-secondary"><i
+            class="bi bi-arrow-left"></i>Back to Quizzes</a>
 </div>
 
-<div class="glass-card">
+<div class="dash-table-card">
     <div class="table-responsive">
-        <table class="table table-hover align-middle">
+        <table class="table table-hover align-middle mb-0 dash-table-fit">
+            <colgroup>
+                <col style="width: 36%;">
+                <col style="width: 24%;">
+                <col style="width: 20%;">
+                <col style="width: 20%;">
+            </colgroup>
             <thead>
                 <tr>
                     <th>User</th>
@@ -36,9 +50,9 @@
                     </td>
                     <td>
                         {% if attempt.passed %}
-                        <span class="badge bg-success">Passed</span>
+                        <span class="badge-status badge-active">Passed</span>
                         {% else %}
-                        <span class="badge bg-danger">Failed</span>
+                        <span class="badge-status badge-rejected">Failed</span>
                         {% endif %}
                     </td>
                 </tr>
@@ -51,7 +65,6 @@
         </table>
     </div>
 
-    <!-- Pagination -->
     {% if page_obj.has_other_pages %}
     <nav aria-label="Page navigation" class="mt-4">
         <ul class="pagination justify-content-center">
@@ -66,18 +79,18 @@
             {% for num in page_obj.paginator.page_range %}
             {% if page_obj.number == num %}
             <li class="page-item active"><span class="page-link">{{ num }}</span></li>
-            {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %} <li class="page-item"><a
-                    class="page-link" href="?page={{ num }}">{{ num }}</a></li>
-                {% endif %}
-                {% endfor %}
+            {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+            <li class="page-item"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
+            {% endif %}
+            {% endfor %}
 
-                {% if page_obj.has_next %}
-                <li class="page-item">
-                    <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                    </a>
-                </li>
-                {% endif %}
+            {% if page_obj.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+            {% endif %}
         </ul>
     </nav>
     {% endif %}

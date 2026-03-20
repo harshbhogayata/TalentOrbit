@@ -34,7 +34,7 @@
     {% block extra_css %}{% endblock %}
 </head>
 
-<body class="d-flex flex-column min-vh-100">
+<body class="d-flex flex-column min-vh-100 {% block body_class %}{% endblock %}">
 
     <!-- ═══ App Container ═══ -->
     <div class="app-container">
@@ -56,37 +56,41 @@
                         </a>
 
                         <!-- Desktop Menu -->
+                        {% block navbar_center %}
                         <div class="d-none d-lg-flex align-items-center gap-1">
                             <a class="nav-link px-3 py-2 rounded-pill {% if request.resolver_match.url_name == 'home' %}text-white bg-white bg-opacity-10{% endif %}"
                                 href="{% url 'home' %}">Home</a>
                             <a class="nav-link px-3 py-2 rounded-pill" href="{% url 'job_list' %}">Jobs</a>
                             <a class="nav-link px-3 py-2 rounded-pill" href="{% url 'company_list' %}">Companies</a>
                         </div>
+                        {% endblock %}
 
                         <!-- Auth Actions -->
-                        <div class="d-flex align-items-center gap-3">
+                        <div class="d-flex align-items-center gap-3 navbar-actions">
+                            {% block navbar_action_prefix %}{% endblock %}
                             {% if user.is_authenticated %}
                             <div class="dropdown">
-                                <a href="#" class="d-flex align-items-center gap-2 text-decoration-none"
-                                    data-bs-toggle="dropdown">
+                                <button type="button"
+                                    class="d-flex align-items-center gap-2 text-decoration-none btn p-0 border-0 bg-transparent"
+                                    data-bs-toggle="dropdown" aria-label="Open account menu">
                                     <div class="avatar-circle"
                                         style="width: 36px; height: 36px; background: var(--electric-indigo); border-radius: 50%; display: grid; place-items: center; color: white; font-weight: 600;">
                                         {{ user.username|first|upper }}
                                     </div>
-                                </a>
+                                </button>
                                 <ul class="dropdown-menu dropdown-menu-end mt-3 p-2 border-0 shadow-lg"
                                     style="background: var(--glass-surface); border: 1px solid var(--tungsten);">
                                     <li><a class="dropdown-item rounded-3 py-2 text-white"
                                             href="{% url 'dashboard' %}">Dashboard</a></li>
+                                    {% if user.role == 'company' %}
                                     <li>
-                                        {% if user.role == 'company' %}
                                         <a class="dropdown-item rounded-3 py-2 text-white" href="{% url 'company_profile' %}">Profile</a>
-                                        {% elif user.role == 'admin' %}
-                                        <a class="dropdown-item rounded-3 py-2 text-white" href="{% url 'admin_dashboard' %}">Admin Panel</a>
-                                        {% else %}
-                                        <a class="dropdown-item rounded-3 py-2 text-white" href="{% url 'user_profile' %}">Profile</a>
-                                        {% endif %}
                                     </li>
+                                    {% elif user.role != 'admin' %}
+                                    <li>
+                                        <a class="dropdown-item rounded-3 py-2 text-white" href="{% url 'user_profile' %}">Profile</a>
+                                    </li>
+                                    {% endif %}
                                     <li>
                                         <hr class="dropdown-divider bg-white opacity-10">
                                     </li>
@@ -109,11 +113,11 @@
                     </div>
                 </div>
             </nav>
-            <div style="padding-top: 80px;"></div> <!-- Spacer for fixed nav -->
+            <div class="nav-spacer"></div> <!-- Spacer for fixed nav -->
 
             <!-- Django Messages -->
             {% if messages %}
-            <div class="message-container position-fixed top-0 end-0 p-3" style="z-index: 9999; margin-top: 80px;">
+            <div class="message-container position-fixed top-0 end-0 p-3" style="z-index: 9999; margin-top: calc(var(--nav-offset) + 0.5rem);">
                 {% for message in messages %}
                 <div class="toast show align-items-center border-0 mb-2 glass-card" role="alert" aria-live="assertive"
                     aria-atomic="true" style="background: var(--glass-surface); color: var(--titanium-white);">
@@ -144,7 +148,7 @@
                         <form id="newsletterForm" class="d-flex gap-2 justify-content-center flex-wrap"
                             style="max-width: 480px; margin: 0 auto;">
                             {% csrf_token %}
-                            <input type="email" class="form-control" placeholder="you@example.com" required
+                            <input type="email" class="form-control" placeholder="harshmbhogayata@gmail.com" required
                                 style="max-width: 300px;">
                             <button type="submit" class="btn btn-primary-gradient rounded-pill px-4">Subscribe</button>
                         </form>
@@ -215,10 +219,10 @@
                             <h6 class="text-white fw-bold mb-3 small text-uppercase" style="letter-spacing: 0.05em;">
                                 Connect</h6>
                             <div class="d-flex gap-3 social-links">
-                                <a href="#" class="text-secondary fs-5"><i class="bi bi-twitter-x"></i></a>
-                                <a href="#" class="text-secondary fs-5"><i class="bi bi-linkedin"></i></a>
-                                <a href="#" class="text-secondary fs-5"><i class="bi bi-github"></i></a>
-                                <a href="#" class="text-secondary fs-5"><i class="bi bi-instagram"></i></a>
+                                <a href="https://x.com" target="_blank" rel="noreferrer" aria-label="TalentOrbit on X" class="text-secondary fs-5"><i class="bi bi-twitter-x"></i></a>
+                                <a href="https://www.linkedin.com" target="_blank" rel="noreferrer" aria-label="TalentOrbit on LinkedIn" class="text-secondary fs-5"><i class="bi bi-linkedin"></i></a>
+                                <a href="https://github.com/harshbhogayata/TalentOrbit" target="_blank" rel="noreferrer" aria-label="TalentOrbit on GitHub" class="text-secondary fs-5"><i class="bi bi-github"></i></a>
+                                <a href="https://www.instagram.com" target="_blank" rel="noreferrer" aria-label="TalentOrbit on Instagram" class="text-secondary fs-5"><i class="bi bi-instagram"></i></a>
                             </div>
                         </div>
                     </div>

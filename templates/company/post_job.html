@@ -5,29 +5,92 @@
 {% endblock %}
 
 {% block dashboard_content %}
-<h2 style="font-weight: 800; margin-bottom: 2rem;"><i class="bi bi-plus-circle me-2"
-        style="color: var(--primary-light);"></i>Post a New Job</h2>
-
-<div class="glass-card" style="max-width: 800px;">
-    <form method="POST">
-        {% csrf_token %}
-        <div class="row g-3">
-            <div class="col-md-8"><label class="form-label">Job Title</label>{{ form.title }}</div>
-            <div class="col-md-4"><label class="form-label">Category</label>{{ form.category }}</div>
-            <div class="col-12"><label class="form-label">New Category (optional)</label>{{ form.new_category }}<small
-                    style="color: var(--text-muted);">If your category isn't listed, type a new one here.</small></div>
-            <div class="col-12"><label class="form-label">Description</label>{{ form.description }}</div>
-            <div class="col-12"><label class="form-label">Requirements</label>{{ form.requirements }}</div>
-            <div class="col-md-4"><label class="form-label">Job Type</label>{{ form.job_type }}</div>
-            <div class="col-md-4"><label class="form-label">Experience</label>{{ form.experience }}</div>
-            <div class="col-md-4"><label class="form-label">Deadline</label>{{ form.deadline }}</div>
-            <div class="col-md-4"><label class="form-label">Min Salary (₹)</label>{{ form.salary_min }}</div>
-            <div class="col-md-4"><label class="form-label">Max Salary (₹)</label>{{ form.salary_max }}</div>
-            <div class="col-md-4"><label class="form-label">Location</label>{{ form.location }}</div>
-            <div class="col-12"><label class="form-label">Skills</label>{{ form.skills }}<small
-                    style="color: var(--text-muted);">Comma-separated (e.g., Python, Django, React)</small></div>
+<div class="dash-page-header">
+    <div class="dash-page-title">
+        <div class="dash-page-icon">
+            <i class="bi bi-plus-circle"></i>
         </div>
-        <button type="submit" class="btn btn-primary-gradient mt-4"><i class="bi bi-send me-2"></i>Post Job</button>
+        <div class="dash-page-heading">
+            <h2>Post a New Job</h2>
+            <p class="dash-page-subtitle">Publish a hiring opening with the right role details, category, budget, and deadline.</p>
+        </div>
+    </div>
+    <a href="{% url 'company_manage_jobs' %}" class="dash-button dash-button-secondary"><i class="bi bi-arrow-left"></i>Back to Jobs</a>
+</div>
+
+<div class="dash-card" style="max-width: 800px;">
+    <form method="POST" class="dash-form-grid">
+        {% csrf_token %}
+        {% if form.non_field_errors %}
+        <div class="alert alert-danger mb-4">
+            {% for error in form.non_field_errors %}<div>{{ error }}</div>{% endfor %}
+        </div>
+        {% endif %}
+        <div class="row g-3">
+            <div class="col-md-8">
+                <label class="form-label" for="{{ form.title.id_for_label }}">Job Title</label>
+                {{ form.title }}
+                {% for error in form.title.errors %}<div class="text-danger small mt-1">{{ error }}</div>{% endfor %}
+            </div>
+            <div class="col-md-4">
+                <label class="form-label" for="{{ form.category.id_for_label }}">Category</label>
+                {{ form.category }}
+                {% for error in form.category.errors %}<div class="text-danger small mt-1">{{ error }}</div>{% endfor %}
+            </div>
+            <div class="col-12">
+                <label class="form-label" for="{{ form.new_category.id_for_label }}">New Category</label>
+                {{ form.new_category }}
+                <small class="dash-form-help">Leave the select blank and type here if you need a brand-new category.</small>
+                {% for error in form.new_category.errors %}<div class="text-danger small mt-1">{{ error }}</div>{% endfor %}
+            </div>
+            <div class="col-12">
+                <label class="form-label" for="{{ form.description.id_for_label }}">Description</label>
+                {{ form.description }}
+                {% for error in form.description.errors %}<div class="text-danger small mt-1">{{ error }}</div>{% endfor %}
+            </div>
+            <div class="col-12">
+                <label class="form-label" for="{{ form.requirements.id_for_label }}">Requirements</label>
+                {{ form.requirements }}
+                {% for error in form.requirements.errors %}<div class="text-danger small mt-1">{{ error }}</div>{% endfor %}
+            </div>
+            <div class="col-md-4">
+                <label class="form-label" for="{{ form.job_type.id_for_label }}">Job Type</label>
+                {{ form.job_type }}
+                {% for error in form.job_type.errors %}<div class="text-danger small mt-1">{{ error }}</div>{% endfor %}
+            </div>
+            <div class="col-md-4">
+                <label class="form-label" for="{{ form.experience.id_for_label }}">Experience</label>
+                {{ form.experience }}
+                {% for error in form.experience.errors %}<div class="text-danger small mt-1">{{ error }}</div>{% endfor %}
+            </div>
+            <div class="col-md-4">
+                <label class="form-label" for="{{ form.deadline.id_for_label }}">Deadline</label>
+                {{ form.deadline }}
+                {% for error in form.deadline.errors %}<div class="text-danger small mt-1">{{ error }}</div>{% endfor %}
+            </div>
+            <div class="col-md-4">
+                <label class="form-label" for="{{ form.salary_min.id_for_label }}">Min Salary (Rs)</label>
+                {{ form.salary_min }}
+                {% for error in form.salary_min.errors %}<div class="text-danger small mt-1">{{ error }}</div>{% endfor %}
+            </div>
+            <div class="col-md-4">
+                <label class="form-label" for="{{ form.salary_max.id_for_label }}">Max Salary (Rs)</label>
+                {{ form.salary_max }}
+                {% for error in form.salary_max.errors %}<div class="text-danger small mt-1">{{ error }}</div>{% endfor %}
+            </div>
+            <div class="col-md-4">
+                <label class="form-label" for="{{ form.location.id_for_label }}">Location</label>
+                {{ form.location }}
+                {% for error in form.location.errors %}<div class="text-danger small mt-1">{{ error }}</div>{% endfor %}
+            </div>
+            <div class="col-12">
+                <label class="form-label" for="{{ form.skills.id_for_label }}">Skills</label>
+                {{ form.skills }}
+                <small class="dash-form-help">Comma-separated, for example: Python, Django, React.</small>
+                {% for error in form.skills.errors %}<div class="text-danger small mt-1">{{ error }}</div>{% endfor %}
+            </div>
+        </div>
+        <button type="submit" class="dash-button dash-button-primary mt-4"><i class="bi bi-send"></i>Post Job</button>
     </form>
 </div>
 {% endblock %}

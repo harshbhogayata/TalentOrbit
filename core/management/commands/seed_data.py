@@ -13,10 +13,19 @@ from core.models import (
     User, CompanyProfile, JobCategory, Job, Skill, Notification,
     JobApplication, SavedJob, Tender, TenderBid,
     Quiz, QuizQuestion, QuizAttempt, Subscription, NewsletterSubscription,
+    SkillVideo,
 )
 import os
 from django.conf import settings
 from django.core.files.base import ContentFile
+
+PRIMARY_DEMO_INBOX = 'harshmbhogayata@gmail.com'
+SECONDARY_DEMO_INBOX = 'harshmbhogayata5623@gmail.com'
+
+
+def _gmail_alias(base_email, label):
+    local, domain = base_email.split('@', 1)
+    return f'{local}+{slugify(label)}@{domain}'
 
 
 class Command(BaseCommand):
@@ -66,42 +75,42 @@ class Command(BaseCommand):
         # ── Companies ───────────────────────────────────────
         companies_data = [
             {
-                'username': 'techcorp', 'email': 'hr@techcorp.io',
+                'username': 'techcorp', 'email': _gmail_alias(SECONDARY_DEMO_INBOX, 'techcorp'),
                 'company_name': 'TechCorp Solutions', 'industry': 'Technology',
                 'city': 'Bangalore', 'state': 'Karnataka',
                 'description': 'Leading enterprise software company specializing in cloud-native solutions and digital transformation.',
                 'employee_count': '500-1000', 'established_year': 2015,
             },
             {
-                'username': 'designhub', 'email': 'jobs@designhub.co',
+                'username': 'designhub', 'email': _gmail_alias(SECONDARY_DEMO_INBOX, 'designhub'),
                 'company_name': 'DesignHub Studio', 'industry': 'Design',
                 'city': 'Mumbai', 'state': 'Maharashtra',
                 'description': 'Award-winning design agency creating beautiful digital experiences for global brands.',
                 'employee_count': '50-200', 'established_year': 2018,
             },
             {
-                'username': 'datawave', 'email': 'careers@datawave.ai',
+                'username': 'datawave', 'email': _gmail_alias(SECONDARY_DEMO_INBOX, 'datawave'),
                 'company_name': 'DataWave AI', 'industry': 'Artificial Intelligence',
                 'city': 'Hyderabad', 'state': 'Telangana',
                 'description': 'Pioneering AI research lab building next-generation machine learning platforms.',
                 'employee_count': '200-500', 'established_year': 2019,
             },
             {
-                'username': 'cloudnine', 'email': 'team@cloudnine.dev',
+                'username': 'cloudnine', 'email': _gmail_alias(SECONDARY_DEMO_INBOX, 'cloudnine'),
                 'company_name': 'CloudNine Infra', 'industry': 'Cloud Computing',
                 'city': 'Pune', 'state': 'Maharashtra',
                 'description': 'Multi-cloud infrastructure provider offering scalable DevOps and managed services.',
                 'employee_count': '100-500', 'established_year': 2017,
             },
             {
-                'username': 'nexasoft', 'email': 'hr@nexasoft.in',
+                'username': 'nexasoft', 'email': _gmail_alias(SECONDARY_DEMO_INBOX, 'nexasoft'),
                 'company_name': 'NexaSoft Technologies', 'industry': 'Fintech',
                 'city': 'Chennai', 'state': 'Tamil Nadu',
                 'description': 'Fintech innovator building secure payment systems and digital banking solutions.',
                 'employee_count': '1000+', 'established_year': 2012,
             },
             {
-                'username': 'greenleaf', 'email': 'jobs@greenleaf.org',
+                'username': 'greenleaf', 'email': _gmail_alias(SECONDARY_DEMO_INBOX, 'greenleaf'),
                 'company_name': 'GreenLeaf Digital', 'industry': 'Digital Marketing',
                 'city': 'Delhi', 'state': 'Delhi',
                 'description': 'Full-service digital marketing agency helping startups scale with data-driven strategies.',
@@ -120,9 +129,12 @@ class Command(BaseCommand):
                     'first_name': cd['company_name'].split()[0],
                 }
             )
-            if created:
-                user.set_password('demo1234')
-                user.save()
+            user.email = cd['email']
+            user.role = 'company'
+            user.email_verified = True
+            user.first_name = cd['company_name'].split()[0]
+            user.set_password('demo1234')
+            user.save()
 
             profile, _ = CompanyProfile.objects.get_or_create(
                 user=user,
@@ -138,6 +150,16 @@ class Command(BaseCommand):
                     'status': 'approved',
                 }
             )
+            profile.company_name = cd['company_name']
+            profile.industry = cd['industry']
+            profile.city = cd['city']
+            profile.state = cd['state']
+            profile.country = 'India'
+            profile.description = cd['description']
+            profile.employee_count = cd['employee_count']
+            profile.established_year = cd['established_year']
+            profile.status = 'approved'
+            profile.save()
             company_profiles[cd['company_name']] = profile
         self.stdout.write(f'  Created {len(companies_data)} companies')
 
@@ -305,9 +327,9 @@ class Command(BaseCommand):
 
         # ── Demo Users ──────────────────────────────────────
         demo_users = [
-            {'username': 'john_doe', 'email': 'john@example.com', 'first_name': 'John', 'last_name': 'Doe'},
-            {'username': 'priya_sharma', 'email': 'priya@example.com', 'first_name': 'Priya', 'last_name': 'Sharma'},
-            {'username': 'alex_kumar', 'email': 'alex@example.com', 'first_name': 'Alex', 'last_name': 'Kumar'},
+            {'username': 'john_doe', 'email': _gmail_alias(PRIMARY_DEMO_INBOX, 'john-doe'), 'first_name': 'John', 'last_name': 'Doe'},
+            {'username': 'priya_sharma', 'email': _gmail_alias(PRIMARY_DEMO_INBOX, 'priya-sharma'), 'first_name': 'Priya', 'last_name': 'Sharma'},
+            {'username': 'alex_kumar', 'email': _gmail_alias(PRIMARY_DEMO_INBOX, 'alex-kumar'), 'first_name': 'Alex', 'last_name': 'Kumar'},
         ]
         for ud in demo_users:
             user, created = User.objects.get_or_create(
@@ -321,31 +343,47 @@ class Command(BaseCommand):
                     'bio': f"Passionate developer looking for exciting opportunities.",
                 }
             )
+            user.email = ud['email']
+            user.first_name = ud['first_name']
+            user.last_name = ud['last_name']
+            user.role = 'user'
+            user.email_verified = True
+            user.bio = "Passionate developer looking for exciting opportunities."
+            user.set_password('demo1234')
+            user.save()
             if created:
-                user.set_password('demo1234')
-                user.save()
                 user.skills.add(skills['Python'], skills['JavaScript'], skills['React'])
 
         self.stdout.write(f'  Created {len(demo_users)} demo users')
 
         # ── Admin User ──────────────────────────────────────
-        if not User.objects.filter(username='admin').exists():
+        admin = User.objects.filter(username='admin').first()
+        if not admin:
             admin = User.objects.create_superuser(
                 username='admin',
-                email='admin@talentorbit.com',
+                email=_gmail_alias(PRIMARY_DEMO_INBOX, 'admin'),
                 password='demo1234',
                 role='admin',
                 email_verified=True
             )
             self.stdout.write('  Created Admin user: admin / demo1234')
+        else:
+            admin.email = _gmail_alias(PRIMARY_DEMO_INBOX, 'admin')
+            admin.role = 'admin'
+            admin.email_verified = True
+            admin.is_staff = True
+            admin.is_superuser = True
+            admin.set_password('demo1234')
+            admin.save()
+            self.stdout.write('  Reset Admin user credentials: admin / demo1234')
 
         # ── Additional Candidates ───────────────────────────
         new_candidates = [
-            {'username': 'rahul_verma', 'email': 'rahul@example.com', 'first_name': 'Rahul', 'last_name': 'Verma', 'skills': ['Python', 'Django', 'PostgreSQL']},
-            {'username': 'sneha_patel', 'email': 'sneha@example.com', 'first_name': 'Sneha', 'last_name': 'Patel', 'skills': ['Figma', 'UI/UX Design']},
-            {'username': 'arjun_singh', 'email': 'arjun@example.com', 'first_name': 'Arjun', 'last_name': 'Singh', 'skills': ['JavaScript', 'React', 'TypeScript']},
-            {'username': 'kavya_nair', 'email': 'kavya@example.com', 'first_name': 'Kavya', 'last_name': 'Nair', 'skills': ['Machine Learning', 'Data Science', 'Python']},
-            {'username': 'vikram_mehta', 'email': 'vikram@example.com', 'first_name': 'Vikram', 'last_name': 'Mehta', 'skills': ['Docker', 'Kubernetes', 'AWS', 'DevOps']},
+            {'username': 'rahul_verma', 'email': _gmail_alias(PRIMARY_DEMO_INBOX, 'rahul-verma'), 'first_name': 'Rahul', 'last_name': 'Verma', 'skills': ['Python', 'Django', 'PostgreSQL']},
+            {'username': 'sneha_patel', 'email': _gmail_alias(PRIMARY_DEMO_INBOX, 'sneha-patel'), 'first_name': 'Sneha', 'last_name': 'Patel', 'skills': ['Figma', 'UI/UX Design']},
+            {'username': 'arjun_singh', 'email': _gmail_alias(PRIMARY_DEMO_INBOX, 'arjun-singh'), 'first_name': 'Arjun', 'last_name': 'Singh', 'skills': ['JavaScript', 'React', 'TypeScript']},
+            {'username': 'kavya_nair', 'email': _gmail_alias(PRIMARY_DEMO_INBOX, 'kavya-nair'), 'first_name': 'Kavya', 'last_name': 'Nair', 'skills': ['Machine Learning', 'Data Science', 'Python']},
+            {'username': 'vikram_mehta', 'email': _gmail_alias(PRIMARY_DEMO_INBOX, 'vikram-mehta'), 'first_name': 'Vikram', 'last_name': 'Mehta', 'skills': ['Docker', 'Kubernetes', 'AWS', 'DevOps']},
         ]
         
         for cand in new_candidates:
@@ -360,9 +398,15 @@ class Command(BaseCommand):
                     'bio': f"Experienced professional specializing in {', '.join(cand['skills'])}.",
                 }
             )
+            user.email = cand['email']
+            user.first_name = cand['first_name']
+            user.last_name = cand['last_name']
+            user.role = 'user'
+            user.email_verified = True
+            user.bio = f"Experienced professional specializing in {', '.join(cand['skills'])}."
+            user.set_password('demo1234')
+            user.save()
             if created:
-                user.set_password('demo1234')
-                user.save()
                 for s in cand['skills']:
                      if s in skills:
                          user.skills.add(skills[s])
@@ -524,6 +568,49 @@ class Command(BaseCommand):
                         )
         self.stdout.write(f'  Created {len(quizzes_data)} quizzes')
 
+        # ── Skill Videos ─────────────────────────────────────
+        fake_mp4_content = b'\x00\x00\x00\x18ftypmp42\x00\x00\x00\x00mp42isom'
+        video_seed = [
+            {
+                'title': 'Python Interview Basics',
+                'description': 'Introductory guidance for Python interview preparation.',
+                'category': cats.get('Software Development'),
+                'duration': '08:12',
+                'is_premium': True,
+                'filename': 'python-interview-basics.mp4',
+            },
+            {
+                'title': 'Design Portfolio Review Tips',
+                'description': 'How to present case studies and improve your portfolio walkthrough.',
+                'category': cats.get('Design & Creative'),
+                'duration': '06:40',
+                'is_premium': False,
+                'filename': 'design-portfolio-review.mp4',
+            },
+        ]
+        video_count = 0
+        for vd in video_seed:
+            video, created = SkillVideo.objects.get_or_create(
+                title=vd['title'],
+                defaults={
+                    'description': vd['description'],
+                    'category': vd['category'],
+                    'duration': vd['duration'],
+                    'is_premium': vd['is_premium'],
+                    'uploaded_by': admin,
+                }
+            )
+            if created or not video.video_file:
+                video.description = vd['description']
+                video.category = vd['category']
+                video.duration = vd['duration']
+                video.is_premium = vd['is_premium']
+                video.uploaded_by = admin
+                video.video_file.save(vd['filename'], ContentFile(fake_mp4_content), save=False)
+                video.save()
+                video_count += 1
+        self.stdout.write(f'  Created {len(video_seed)} skill videos ({video_count} new files)')
+
         # Quiz Attempts
         if all_users.exists():
             u = all_users.first()
@@ -547,16 +634,15 @@ class Command(BaseCommand):
                 plan, amt, days = random.choice(sub_plans)
                 Subscription.objects.create(
                     user=u,
-                    plan_type=plan,
+                    plan=plan,
                     amount=amt,
+                    expires_at=now + timedelta(days=days),
                     is_active=True,
-                    start_date=now,
-                    end_date=now + timedelta(days=days),
                     razorpay_payment_id=f'pay_fake_{random.randint(1000,9999)}'
                 )
-                u.subscription_active = True
+                u.is_subscribed = True
                 u.subscription_expiry = now + timedelta(days=days)
-                u.save()
+                u.save(update_fields=['is_subscribed', 'subscription_expiry'])
         self.stdout.write('  Created Subscriptions')
 
         # ── Notifications ───────────────────────────────────
@@ -571,7 +657,11 @@ class Command(BaseCommand):
         self.stdout.write('  Created Notifications')
 
         # ── Newsletter ──────────────────────────────────────
-        emails = ['news1@example.com', 'subscriber@test.com', 'hello@world.com']
+        emails = [
+            _gmail_alias(PRIMARY_DEMO_INBOX, 'newsletter-news-1'),
+            _gmail_alias(PRIMARY_DEMO_INBOX, 'newsletter-subscriber'),
+            _gmail_alias(PRIMARY_DEMO_INBOX, 'newsletter-hello'),
+        ]
         for e in emails:
             NewsletterSubscription.objects.get_or_create(email=e)
         self.stdout.write('  Created Newsletter Subscriptions')

@@ -1,0 +1,418 @@
+
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="TalentOrbit — The Modern Talent Operating System.">
+    <link rel="icon" href="http://127.0.0.1:8000/static/favicon.svg" type="image/svg+xml">
+    <title>Admin Dashboard | TalentOrbit</title>
+
+    <!-- Google Fonts: Inter, Space Grotesk, JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="http://127.0.0.1:8000/static/css/variables.css">
+    <link rel="stylesheet" href="http://127.0.0.1:8000/static/css/style.css">
+
+    <!-- GSAP & Lenis -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>
+
+    
+</head>
+
+<body class="d-flex flex-column min-vh-100 dashboard-layout">
+
+    <!-- ═══ App Container ═══ -->
+    <div class="app-container">
+
+        <!-- ═══ Main Liquid Content ═══ -->
+        <main class="content-liquid">
+
+            <!-- ═══ Top Navbar (All Users) ═══ -->
+            <nav class="navbar fixed-top" id="mainNav">
+                <div class="container">
+                    <div class="navbar-glass d-flex align-items-center justify-content-between w-100 p-2 ps-4 pe-2"
+                        style="background: var(--glass-overlay); backdrop-filter: blur(20px);">
+                        <!-- Brand -->
+                        <a class="navbar-brand d-flex align-items-center gap-2 m-0" href="http://127.0.0.1:8000/">
+                            <div class="brand-icon-wrapper text-indigo">
+                                <i class="bi bi-globe2"></i>
+                            </div>
+                            <span class="brand-text text-white">TalentOrbit</span>
+                        </a>
+
+                        <!-- Desktop Menu -->
+                        
+
+                        <!-- Auth Actions -->
+                        <div class="d-flex align-items-center gap-3 navbar-actions">
+                            
+                            
+                            <div class="dropdown">
+                                <button type="button"
+                                    class="d-flex align-items-center gap-2 text-decoration-none btn p-0 border-0 bg-transparent"
+                                    data-bs-toggle="dropdown" aria-label="Open account menu">
+                                    <div class="avatar-circle"
+                                        style="width: 36px; height: 36px; background: var(--electric-indigo); border-radius: 50%; display: grid; place-items: center; color: white; font-weight: 600;">
+                                        A
+                                    </div>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-end mt-3 p-2 border-0 shadow-lg"
+                                    style="background: var(--glass-surface); border: 1px solid var(--tungsten);">
+                                    <li><a class="dropdown-item rounded-3 py-2 text-white"
+                                            href="http://127.0.0.1:8000/dashboard/">Dashboard</a></li>
+                                    
+                                    <li>
+                                        <hr class="dropdown-divider bg-white opacity-10">
+                                    </li>
+                                    <li>
+                                        <form method="POST" action="http://127.0.0.1:8000/logout/">
+                                            <input type="hidden" name="csrfmiddlewaretoken" value="rq02CEvyjZwAVeehBjRO67GnBHXWBulgS1qJyWRytO7V02GRKUhwg1k5xXbpf5Po">
+                                            <button type="submit"
+                                                class="dropdown-item rounded-3 py-2 text-danger w-100 text-start bg-transparent">Logout</button>
+                                        </form>
+                                    </li>
+                                </ul>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </nav>
+            <div class="nav-spacer"></div> <!-- Spacer for fixed nav -->
+
+            <!-- Django Messages -->
+            
+
+            <!-- Block Content -->
+            
+<div class="d-flex dashboard-shell">
+    <nav class="sidebar-dash">
+        <ul class="dash-nav-list">
+<li class="dash-nav-group">Overview</li>
+<li class="dash-nav-item">
+    <a class="dash-nav-link active" href="http://127.0.0.1:8000/dashboard/">
+        <i class="bi bi-grid-1x2"></i> Dashboard
+    </a>
+</li>
+
+<li class="dash-nav-group">Management</li>
+<li class="dash-nav-item">
+    <a class="dash-nav-link " href="http://127.0.0.1:8000/dashboard/admin/companies/">
+        <i class="bi bi-building"></i> Companies
+    </a>
+</li>
+<li class="dash-nav-item">
+    <a class="dash-nav-link " href="http://127.0.0.1:8000/dashboard/admin/users/">
+        <i class="bi bi-people"></i> Users
+    </a>
+</li>
+<li class="dash-nav-item">
+    <a class="dash-nav-link " href="http://127.0.0.1:8000/dashboard/admin/categories/">
+        <i class="bi bi-tags"></i> Categories
+    </a>
+</li>
+<li class="dash-nav-item">
+    <a class="dash-nav-link " href="http://127.0.0.1:8000/dashboard/admin/jobs/">
+        <i class="bi bi-briefcase"></i> Jobs
+    </a>
+</li>
+
+<li class="dash-nav-group">Content</li>
+<li class="dash-nav-item">
+    <a class="dash-nav-link " href="http://127.0.0.1:8000/dashboard/admin/videos/">
+        <i class="bi bi-play-circle"></i> Skill Videos
+    </a>
+</li>
+<li class="dash-nav-item">
+    <a class="dash-nav-link " href="http://127.0.0.1:8000/dashboard/admin/quizzes/">
+        <i class="bi bi-patch-question"></i> Quizzes
+    </a>
+</li>
+
+<li class="dash-nav-group">Actions</li>
+<li class="dash-nav-item">
+    <form method="POST" action="http://127.0.0.1:8000/dashboard/admin/send-notifications/" class="dash-nav-form"
+        onsubmit="return confirm('Send subscription expiry notifications?')">
+        <input type="hidden" name="csrfmiddlewaretoken" value="rq02CEvyjZwAVeehBjRO67GnBHXWBulgS1qJyWRytO7V02GRKUhwg1k5xXbpf5Po">
+        <button type="submit" class="dash-nav-link dash-nav-btn ">
+            <i class="bi bi-bell"></i> Send Alerts
+        </button>
+    </form>
+</li>
+<li class="dash-nav-item">
+    <a class="dash-nav-link " href="http://127.0.0.1:8000/notifications/">
+        <i class="bi bi-envelope"></i> Notifications
+    </a>
+</li>
+
+</ul>
+    </nav>
+    <div class="dashboard-content-shell">
+        
+<div class="dash-page-header">
+    <div class="dash-page-title">
+        <div class="dash-page-icon">
+            <i class="bi bi-grid-1x2"></i>
+        </div>
+        <div class="dash-page-heading">
+            <h2>Total Situational Awareness</h2>
+            <p class="dash-page-subtitle">Overview of system health and performance across talent, companies, jobs, and content.</p>
+        </div>
+    </div>
+    <div class="dash-page-actions">
+        <a href="http://127.0.0.1:8000/dashboard/" class="dash-button dash-button-secondary"><i class="bi bi-arrow-clockwise"></i>Refresh</a>
+        <a href="http://127.0.0.1:8000/dashboard/admin/report/download/" class="dash-button dash-button-primary"><i class="bi bi-download"></i>Report</a>
+    </div>
+</div>
+
+<div class="row g-4 mb-4">
+    <div class="col-xxl-4 col-md-6">
+        <div class="dash-card h-100">
+            <div class="dash-stat-card">
+                <div class="dash-stat-icon dash-tone-indigo"><i class="bi bi-people"></i></div>
+                <div class="dash-stat-copy">
+                    <div class="dash-stat-value">8</div>
+                    <div class="dash-stat-label">Total Talent</div>
+                    <div class="dash-stat-meta">Candidate accounts currently available for hiring.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xxl-4 col-md-6">
+        <div class="dash-card h-100">
+            <div class="dash-stat-card">
+                <div class="dash-stat-icon dash-tone-green"><i class="bi bi-building"></i></div>
+                <div class="dash-stat-copy">
+                    <div class="dash-stat-value">6</div>
+                    <div class="dash-stat-label">Companies</div>
+                    <div class="dash-stat-meta">0 pending approval right now.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xxl-4 col-md-6">
+        <div class="dash-card h-100">
+            <div class="dash-stat-card">
+                <div class="dash-stat-icon dash-tone-blue"><i class="bi bi-briefcase"></i></div>
+                <div class="dash-stat-copy">
+                    <div class="dash-stat-value">14</div>
+                    <div class="dash-stat-label">Jobs</div>
+                    <div class="dash-stat-meta">Published openings across all approved employers.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-4 col-md-6">
+        <div class="dash-card h-100">
+            <div class="dash-stat-card">
+                <div class="dash-stat-icon dash-tone-amber"><i class="bi bi-tags"></i></div>
+                <div class="dash-stat-copy">
+                    <div class="dash-stat-value">8</div>
+                    <div class="dash-stat-label">Categories</div>
+                    <div class="dash-stat-meta">Taxonomy used by jobs, quizzes, and reporting.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-4 col-md-6">
+        <div class="dash-card h-100">
+            <div class="dash-stat-card">
+                <div class="dash-stat-icon dash-tone-red"><i class="bi bi-play-circle"></i></div>
+                <div class="dash-stat-copy">
+                    <div class="dash-stat-value">2</div>
+                    <div class="dash-stat-label">Videos</div>
+                    <div class="dash-stat-meta">Skill content currently available in the learning hub.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-4 col-md-12">
+        <div class="dash-card h-100">
+            <div class="dash-stat-card">
+                <div class="dash-stat-icon dash-tone-indigo"><i class="bi bi-patch-question"></i></div>
+                <div class="dash-stat-copy">
+                    <div class="dash-stat-value">4</div>
+                    <div class="dash-stat-label">Quizzes</div>
+                    <div class="dash-stat-meta">Assessments admins can manage from the content workspace.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4">
+    <div class="col-xl-4">
+        <div class="dash-card h-100">
+            <div class="dash-page-header mb-3">
+                <div class="dash-page-title">
+                    <div class="dash-page-heading">
+                        <h3 class="dash-card-title mb-0">Pending Approvals</h3>
+                        <p class="dash-page-subtitle">Companies waiting on an admin decision.</p>
+                    </div>
+                </div>
+                <span class="badge-status badge-pending">0</span>
+            </div>
+
+            
+            <div class="dash-surface-panel text-center">
+                <strong class="d-block mb-2">All caught up</strong>
+                <span class="dash-page-subtitle">There are no companies waiting for approval.</span>
+            </div>
+            
+        </div>
+    </div>
+
+    <div class="col-xl-8">
+        <div class="dash-table-card h-100">
+            <div class="dash-table-card-header">
+                <div>
+                    <h3 class="dash-card-title mb-0">Recent Registrations</h3>
+                    <p class="dash-page-subtitle mb-0">Latest candidate accounts joining the platform.</p>
+                </div>
+                <a href="http://127.0.0.1:8000/dashboard/admin/users/" class="dash-button dash-button-secondary">
+                    <i class="bi bi-arrow-right-circle"></i>View All
+                </a>
+            </div>
+            <div class="table-responsive">
+                <table class="table mb-0">
+                    <thead>
+                        <tr>
+                            <th>User</th>
+                            <th>Email</th>
+                            <th>Joined</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                        <tr>
+                            <td>
+                                <div class="d-flex align-items-center gap-3">
+                                    <div class="dash-mini-avatar">V</div>
+                                    <strong>vikram_mehta</strong>
+                                </div>
+                            </td>
+                            <td>harshmbhogayata+vikram-mehta@gmail.com</td>
+                            <td>Mar 19, 2026</td>
+                            <td>
+                                
+                                <span class="badge-status badge-active">Premium</span>
+                                
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                            <td>
+                                <div class="d-flex align-items-center gap-3">
+                                    <div class="dash-mini-avatar">K</div>
+                                    <strong>kavya_nair</strong>
+                                </div>
+                            </td>
+                            <td>harshmbhogayata+kavya-nair@gmail.com</td>
+                            <td>Mar 19, 2026</td>
+                            <td>
+                                
+                                <span class="badge-status badge-active">Premium</span>
+                                
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                            <td>
+                                <div class="d-flex align-items-center gap-3">
+                                    <div class="dash-mini-avatar">A</div>
+                                    <strong>arjun_singh</strong>
+                                </div>
+                            </td>
+                            <td>harshmbhogayata+arjun-singh@gmail.com</td>
+                            <td>Mar 19, 2026</td>
+                            <td>
+                                
+                                <span class="badge-status badge-active">Premium</span>
+                                
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                            <td>
+                                <div class="d-flex align-items-center gap-3">
+                                    <div class="dash-mini-avatar">S</div>
+                                    <strong>sneha_patel</strong>
+                                </div>
+                            </td>
+                            <td>harshmbhogayata+sneha-patel@gmail.com</td>
+                            <td>Mar 19, 2026</td>
+                            <td>
+                                
+                                <span class="badge-status badge-active">Premium</span>
+                                
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                            <td>
+                                <div class="d-flex align-items-center gap-3">
+                                    <div class="dash-mini-avatar">R</div>
+                                    <strong>rahul_verma</strong>
+                                </div>
+                            </td>
+                            <td>harshmbhogayata+rahul-verma@gmail.com</td>
+                            <td>Mar 19, 2026</td>
+                            <td>
+                                
+                                <span class="badge-status badge-pending">Free</span>
+                                
+                            </td>
+                        </tr>
+                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+    </div>
+</div>
+
+
+            <!-- Footer -->
+            
+
+        </main>
+    </div>
+
+    <!-- Toast Container -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <!-- Back to Top -->
+    <button id="backToTop" class="back-to-top" aria-label="Back to top">
+        <i class="bi bi-chevron-up"></i>
+    </button>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- App Scripts -->
+    <script src="http://127.0.0.1:8000/static/js/main.js"></script>
+    <script src="http://127.0.0.1:8000/static/js/app.js"></script>
+
+    
+</body>
+
+</html>

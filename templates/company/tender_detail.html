@@ -5,36 +5,62 @@
 {% endblock %}
 
 {% block dashboard_content %}
-<a href="{% url 'company_tenders' %}" style="color: var(--text-muted); font-size: 0.9rem;"><i
-        class="bi bi-arrow-left me-1"></i>Back to Tenders</a>
-
-<div class="glass-card mt-3 mb-4">
-    <div class="d-flex justify-content-between align-items-start mb-3">
-        <div>
-            <h2 style="font-weight: 800;">{{ tender.title }}</h2>
-            <p style="color: var(--text-muted);">Posted by <strong>{{ tender.posted_by.company_name }}</strong></p>
+<div class="dash-page-header">
+    <div class="dash-page-title">
+        <div class="dash-page-icon">
+            <i class="bi bi-file-earmark-richtext"></i>
         </div>
-        <span
-            class="badge-status badge-{% if tender.status == 'open' %}active{% elif tender.status == 'awarded' %}shortlisted{% else %}rejected{% endif %}">{{ tender.status }}</span>
+        <div class="dash-page-heading">
+            <h2>{{ tender.title }}</h2>
+            <p class="dash-page-subtitle">Posted by <strong>{{ tender.posted_by.company_name }}</strong></p>
+        </div>
     </div>
-    <div style="color: var(--text-secondary); white-space: pre-wrap; margin-bottom: 1.5rem;">{{ tender.description }}
-    </div>
-    {% if tender.requirements %}
-    <h6 style="font-weight: 700;">Requirements</h6>
-    <div style="color: var(--text-secondary); white-space: pre-wrap; margin-bottom: 1rem;">{{ tender.requirements }}
-    </div>
-    {% endif %}
-    <div class="d-flex gap-4" style="color: var(--text-secondary);">
-        {% if tender.budget %}<span><i class="bi bi-currency-rupee me-1"></i>Budget: ₹{{ tender.budget|floatformat:0 }}</span>{% endif %}
-        <span><i class="bi bi-calendar me-1"></i>Deadline: {{ tender.deadline|date:"M d, Y" }}</span>
+    <div class="dash-page-actions">
+        <a href="{% url 'company_tenders' %}" class="dash-button dash-button-secondary"><i class="bi bi-arrow-left"></i>Back</a>
+        {% if is_owner %}
+        <form method="POST" action="{% url 'company_delete_tender' tender.pk %}" class="dash-inline-form" onsubmit="return confirm('Delete this tender? This will also remove its bids.')">
+            {% csrf_token %}
+            <button type="submit" class="dash-button dash-button-danger"><i class="bi bi-trash"></i>Delete Tender</button>
+        </form>
+        {% endif %}
     </div>
 </div>
 
-{% if is_owner and bids %}
-<!-- Owner: View Bids -->
-<h4 style="font-weight: 700; margin-bottom: 1rem;">Bids Received ({{ bids.count }})</h4>
-<div class="table-dark-custom">
-    <table class="table mb-0">
+<div class="dash-card mb-4">
+    <div class="d-flex justify-content-between align-items-start gap-3 mb-3 flex-wrap">
+        <span class="badge-status badge-{% if tender.status == 'open' %}active{% elif tender.status == 'awarded' %}shortlisted{% else %}rejected{% endif %}">{{ tender.get_status_display }}</span>
+        <div class="tender-meta-row">
+            {% if tender.budget %}<span><i class="bi bi-cash-stack"></i>Budget: Rs {{ tender.budget|floatformat:0 }}</span>{% endif %}
+            <span><i class="bi bi-calendar-event"></i>Deadline: {{ tender.deadline|date:"M d, Y" }}</span>
+        </div>
+    </div>
+    <div class="tender-detail-copy">{{ tender.description }}</div>
+    {% if tender.requirements %}
+    <div class="divider"></div>
+    <h5 class="mb-3" style="font-weight: 700;">Requirements</h5>
+    <div class="tender-detail-copy">{{ tender.requirements }}</div>
+    {% endif %}
+</div>
+
+{% if is_owner %}
+<div class="dash-page-header mb-3">
+    <div class="dash-page-title">
+        <div class="dash-page-heading">
+            <h3 style="font-weight: 700; margin: 0;">Bids Received</h3>
+            <p class="dash-page-subtitle">{{ bids.count }} bid{{ bids.count|pluralize }} on this tender.</p>
+        </div>
+    </div>
+</div>
+<div class="dash-table-card">
+    <div class="table-responsive">
+    <table class="table mb-0 dash-table-fit">
+        <colgroup>
+            <col style="width: 20%;">
+            <col style="width: 14%;">
+            <col style="width: 34%;">
+            <col style="width: 14%;">
+            <col style="width: 18%;">
+        </colgroup>
         <thead>
             <tr>
                 <th>Company</th>
@@ -47,55 +73,77 @@
         <tbody>
             {% for bid in bids %}
             <tr>
-                <td><strong>{{ bid.bidder.company_name }}</strong></td>
-                <td>₹{{ bid.amount|floatformat:0 }}</td>
-                <td>{{ bid.proposal|truncatewords:15 }}</td>
-                <td>{% if bid.is_accepted %}<span class="badge-status badge-active">Accepted</span>{% else %}<span
-                        class="badge-status badge-pending">Pending</span>{% endif %}</td>
+                <td><strong class="dash-cell-wrap">{{ bid.bidder.company_name }}</strong></td>
+                <td>Rs {{ bid.amount|floatformat:0 }}</td>
+                <td><span class="dash-cell-wrap dash-cell-truncate">{{ bid.proposal|truncatewords:18 }}</span></td>
                 <td>
-                    {% if not bid.is_accepted and tender.status == 'open' %}
-                    <form method="POST" action="{% url 'company_accept_bid' bid.pk %}" class="d-inline"
-                        onsubmit="return confirm('Accept this bid? Other bids will be rejected.')">
-                        {% csrf_token %}
-                        <button type="submit" class="btn btn-sm"
-                            style="background: var(--success-light); color: var(--success);"><i class="bi bi-check-lg me-1"></i>Accept</button>
-                    </form>
+                    {% if bid.is_accepted %}
+                    <span class="badge-status badge-active">Accepted</span>
+                    {% else %}
+                    <span class="badge-status badge-pending">Pending</span>
                     {% endif %}
                 </td>
+                <td>
+                    {% if not bid.is_accepted and tender.status == 'open' %}
+                    <form method="POST" action="{% url 'company_accept_bid' bid.pk %}" class="dash-inline-form"
+                        onsubmit="return confirm('Accept this bid? Other bids will be marked not selected.')">
+                        {% csrf_token %}
+                        <button type="submit" class="dash-button dash-button-primary"><i class="bi bi-check-lg"></i>Accept</button>
+                    </form>
+                    {% else %}
+                    <span class="dash-meta-pill">No action</span>
+                    {% endif %}
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5" class="text-center py-4" style="color: var(--text-muted);">No bids received yet.</td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
+    </div>
 </div>
-{% endif %}
-
-{% if not is_owner %}
-{% if my_bid %}
-<div class="glass-card">
-    <h5 style="font-weight: 700;"><i class="bi bi-check-circle me-2" style="color: var(--success);"></i>Your Bid</h5>
-    <p style="color: var(--text-secondary);">Amount: <strong>₹{{ my_bid.amount|floatformat:0 }}</strong></p>
-    <p style="color: var(--text-secondary);">{{ my_bid.proposal }}</p>
-    {% if my_bid.is_accepted %}
-    <span class="badge-status badge-active">Accepted!</span>
-    {% else %}
-    <span class="badge-status badge-pending">Under Review</span>
-    {% endif %}
-</div>
-{% elif form and tender.status == 'open' %}
-<div class="glass-card" style="max-width: 600px;">
-    <h5 style="font-weight: 700; margin-bottom: 1.5rem;"><i class="bi bi-send me-2"
-            style="color: var(--primary-light);"></i>Submit Your Bid</h5>
-    <form method="POST">
-        {% csrf_token %}
-        {% for field in form %}
-        <div class="mb-3">
-            <label class="form-label">{{ field.label }}</label>
-            {{ field }}
+{% else %}
+    {% if my_bid %}
+    <div class="dash-card">
+        <h4 class="mb-3" style="font-weight: 700;"><i class="bi bi-check-circle me-2" style="color: var(--success);"></i>Your Bid</h4>
+        <div class="tender-meta-row mb-3">
+            <span><i class="bi bi-cash-stack"></i>Rs {{ my_bid.amount|floatformat:0 }}</span>
+            {% if my_bid.is_accepted %}
+            <span class="badge-status badge-active">Accepted</span>
+            {% else %}
+            <span class="badge-status badge-pending">Under Review</span>
+            {% endif %}
         </div>
-        {% endfor %}
-        <button type="submit" class="btn btn-primary-gradient w-100"><i class="bi bi-send me-2"></i>Submit Bid</button>
-    </form>
-</div>
-{% endif %}
+        <div class="tender-detail-copy">{{ my_bid.proposal }}</div>
+    </div>
+    {% elif form and tender.status == 'open' %}
+    <div class="dash-card" style="max-width: 720px;">
+        <h4 class="mb-3" style="font-weight: 700;"><i class="bi bi-send me-2" style="color: var(--primary-light);"></i>Submit Your Bid</h4>
+        {% if form.non_field_errors %}
+        <div class="alert alert-danger mb-4">
+            {% for error in form.non_field_errors %}<div>{{ error }}</div>{% endfor %}
+        </div>
+        {% endif %}
+        <form method="POST" class="dash-form-grid">
+            {% csrf_token %}
+            {% for field in form %}
+            <div class="mb-3">
+                <label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {{ field }}
+                {% if field.help_text %}<small class="dash-form-help">{{ field.help_text }}</small>{% endif %}
+                {% for error in field.errors %}<div class="text-danger small mt-1">{{ error }}</div>{% endfor %}
+            </div>
+            {% endfor %}
+            <button type="submit" class="dash-button dash-button-primary w-100"><i class="bi bi-send"></i>Submit Bid</button>
+        </form>
+    </div>
+    {% else %}
+    <div class="dash-card">
+        <h4 class="mb-2" style="font-weight: 700;">Bidding unavailable</h4>
+        <p class="dash-page-subtitle mb-0">This tender is no longer open for new bids.</p>
+    </div>
+    {% endif %}
 {% endif %}
 {% endblock %}

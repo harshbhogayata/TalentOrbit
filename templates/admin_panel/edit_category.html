@@ -5,26 +5,33 @@
 {% endblock %}
 
 {% block dashboard_content %}
-<div class="d-flex justify-content-between align-items-center mb-4">
-    <h2 style="font-weight: 800;"><i class="bi bi-pencil-square me-2"
-            style="color: var(--primary-light);"></i>Edit Category</h2>
-    <a href="{% url 'admin_manage_categories' %}" class="btn btn-glass"><i class="bi bi-arrow-left me-2"></i>Back</a>
+<div class="dash-page-header">
+    <div class="dash-page-title">
+        <div class="dash-page-icon">
+            <i class="bi bi-pencil-square"></i>
+        </div>
+        <div class="dash-page-heading">
+            <h2>Edit Category</h2>
+            <p class="dash-page-subtitle">Update the category label, slug, icon, and descriptive metadata.</p>
+        </div>
+    </div>
+    <a href="{% url 'admin_manage_categories' %}" class="dash-button dash-button-secondary"><i class="bi bi-arrow-left"></i>Back</a>
 </div>
 
-<div class="glass-card" style="max-width: 600px;">
-    <form method="POST">
+<div class="dash-card" style="max-width: 600px;">
+    <form method="POST" class="dash-form-grid">
         {% csrf_token %}
         {% for field in form %}
         <div class="mb-3">
             <label class="form-label">{{ field.label }}</label>
             {{ field }}
-            {% if field.help_text %}<small style="color: var(--text-muted);">{{ field.help_text }}</small>{% endif %}
+            {% if field.help_text %}<small class="dash-form-help">{{ field.help_text }}</small>{% endif %}
             {% for error in field.errors %}
             <div class="text-danger small">{{ error }}</div>
             {% endfor %}
         </div>
         {% endfor %}
-        <button type="submit" class="btn btn-primary-gradient w-100"><i class="bi bi-check-circle me-2"></i>Save
+        <button type="submit" class="dash-button dash-button-primary w-100"><i class="bi bi-check-circle"></i>Save
             Changes</button>
     </form>
 </div>

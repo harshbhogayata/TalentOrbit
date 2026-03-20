@@ -5,20 +5,31 @@
 {% endblock %}
 
 {% block dashboard_content %}
-<a href="{% url 'video_list' %}" style="color: var(--text-muted); font-size: 0.9rem;"><i
-        class="bi bi-arrow-left me-1"></i>Back to Videos</a>
+<div class="dash-page-header">
+    <div class="dash-page-title">
+        <div class="dash-page-icon">
+            <i class="bi bi-play-btn"></i>
+        </div>
+        <div class="dash-page-heading">
+            <h2>{{ video.title }}</h2>
+            <p class="dash-page-subtitle">Focused learning content inside your career development workspace.</p>
+        </div>
+    </div>
+    <div class="dash-page-actions">
+        <a href="{% url 'video_list' %}" class="dash-button dash-button-secondary"><i class="bi bi-arrow-left"></i>Back</a>
+    </div>
+</div>
 
-<div class="glass-card mt-3">
-    <div class="video-player"
-        style="background: #000; border-radius: var(--radius); overflow: hidden; margin-bottom: 1.5rem;">
+<div class="dash-card">
+    <div class="video-player mb-4">
         {% if video.video_url %}
         <div style="position: relative; padding-bottom: 56.25%; height: 0;">
             <iframe src="{{ video.video_url }}"
-                style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;"
+                style="position: absolute; inset: 0; width: 100%; height: 100%; border: 0;"
                 allowfullscreen></iframe>
         </div>
         {% elif video.video_file %}
-        <video controls style="width: 100%; display: block;">
+        <video controls>
             <source src="{{ video.video_file.url }}" type="video/mp4">
             Your browser does not support the video tag.
         </video>
@@ -30,12 +41,14 @@
         {% endif %}
     </div>
 
-    <h3 style="font-weight: 800; margin-bottom: 0.5rem;">{{ video.title }}</h3>
-    {% if video.description %}<p style="color: var(--text-secondary);">{{ video.description }}</p>{% endif %}
-    <div class="d-flex gap-3" style="color: var(--text-muted); font-size: 0.85rem;">
-        {% if video.duration %}<span><i class="bi bi-clock me-1"></i>{{ video.duration }}</span>{% endif %}
-        <span><i class="bi bi-calendar me-1"></i>{{ video.created_at|date:"M d, Y" }}</span>
-        {% if video.is_premium %}<span class="premium-badge">Premium</span>{% endif %}
+    {% if video.description %}
+    <p class="dash-detail-copy mb-3">{{ video.description }}</p>
+    {% endif %}
+
+    <div class="dash-inline-meta">
+        {% if video.duration %}<span><i class="bi bi-clock"></i>{{ video.duration }}</span>{% endif %}
+        <span><i class="bi bi-calendar-event"></i>{{ video.created_at|date:"M d, Y" }}</span>
+        {% if video.is_premium %}<span class="dash-chip"><i class="bi bi-star-fill"></i>Premium</span>{% endif %}
     </div>
 </div>
 {% endblock %}

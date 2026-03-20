@@ -5,30 +5,47 @@
 {% endblock %}
 
 {% block dashboard_content %}
-<h2 style="font-weight: 800; margin-bottom: 2rem;"><i class="bi bi-tags me-2"
-        style="color: var(--primary-light);"></i>Job Categories</h2>
+<div class="dash-page-header">
+    <div class="dash-page-title">
+        <div class="dash-page-icon">
+            <i class="bi bi-tags"></i>
+        </div>
+        <div class="dash-page-heading">
+            <h2>Job Categories</h2>
+            <p class="dash-page-subtitle">Keep taxonomy clean so jobs, quizzes, and reports stay aligned.</p>
+        </div>
+    </div>
+</div>
 
 <div class="row g-4">
-    <div class="col-lg-5">
-        <div class="glass-card">
-            <h5 style="font-weight: 700; margin-bottom: 1.5rem;">Add New Category</h5>
-            <form method="POST">
+    <div class="col-xxl-5 col-12">
+        <div class="dash-card">
+            <h5 class="dash-card-title">Add New Category</h5>
+            <form method="POST" class="dash-form-grid">
                 {% csrf_token %}
                 {% for field in form %}
                 <div class="mb-3">
                     <label class="form-label">{{ field.label }}</label>
                     {{ field }}
-                    {% if field.help_text %}<small style="color: var(--text-muted);">{{ field.help_text }}</small>{% endif %}
+                    {% if field.help_text %}<small class="dash-form-help">{{ field.help_text }}</small>{% endif %}
                 </div>
                 {% endfor %}
-                <button type="submit" class="btn btn-primary-gradient w-100"><i class="bi bi-plus-circle me-2"></i>Add
+                <button type="submit" class="dash-button dash-button-primary w-100"><i class="bi bi-plus-circle"></i>Add
                     Category</button>
             </form>
         </div>
     </div>
-    <div class="col-lg-7">
-        <div class="table-dark-custom">
-            <table class="table mb-0">
+    <div class="col-xxl-7 col-12">
+        <div class="dash-table-card">
+            <div class="table-responsive">
+            <table class="table mb-0 dash-table-fit">
+                <colgroup>
+                    <col style="width: 30%;">
+                    <col style="width: 28%;">
+                    <col style="width: 10%;">
+                    <col style="width: 14%;">
+                    <col style="width: 18%;">
+                </colgroup>
                 <thead>
                     <tr>
                         <th>Category</th>
@@ -41,21 +58,21 @@
                 <tbody>
                     {% for cat in categories %}
                     <tr>
-                        <td><i class="bi {{ cat.icon|default:'bi-briefcase' }} me-2"
-                                style="color: var(--primary-light);"></i>{{ cat.name }}</td>
-                        <td style="color: var(--text-muted);">{{ cat.slug }}</td>
+                        <td><span class="dash-cell-wrap"><i class="bi {{ cat.icon|default:'bi-briefcase' }} me-2"
+                                style="color: var(--primary-light);"></i>{{ cat.name }}</span></td>
+                        <td style="color: var(--text-muted);"><span class="dash-cell-wrap">{{ cat.slug }}</span></td>
                         <td>{{ cat.job_count }}</td>
                         <td>{% if cat.is_active %}<span class="badge-status badge-active">Active</span>{% else %}<span
                                 class="badge-status badge-rejected">Inactive</span>{% endif %}</td>
                         <td>
-                            <a href="{% url 'admin_edit_category' cat.pk %}" class="btn btn-sm me-1"
-                                style="background: rgba(59,130,246,0.15); color: var(--primary-light);"><i class="bi bi-pencil"></i></a>
-                            <form method="POST" action="{% url 'admin_delete_category' cat.pk %}" class="d-inline"
-                                onsubmit="return confirm('Delete?')">
-                                {% csrf_token %}
-                                <button type="submit" class="btn btn-sm"
-                                    style="background: var(--danger-light); color: var(--danger);"><i class="bi bi-trash"></i></button>
-                            </form>
+                            <div class="dash-table-actions">
+                                <a href="{% url 'admin_edit_category' cat.pk %}" class="dash-button dash-icon-button dash-icon-button-info"><i class="bi bi-pencil"></i></a>
+                                <form method="POST" action="{% url 'admin_delete_category' cat.pk %}" class="dash-inline-form"
+                                    onsubmit="return confirm('Delete?')">
+                                    {% csrf_token %}
+                                    <button type="submit" class="dash-button dash-icon-button dash-icon-button-danger"><i class="bi bi-trash"></i></button>
+                                </form>
+                            </div>
                         </td>
                     </tr>
                     {% empty %}
@@ -66,6 +83,7 @@
                     {% endfor %}
                 </tbody>
             </table>
+            </div>
         </div>
     </div>
 </div>

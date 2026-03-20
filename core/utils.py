@@ -18,7 +18,7 @@ from urllib.parse import urljoin, urlparse
 from django.conf import settings
 from django.contrib.auth.tokens import default_token_generator
 from django.core.exceptions import DisallowedHost, ValidationError
-from django.core.mail import get_connection, send_mail as django_send_mail
+from django.core.mail import EmailMessage, get_connection, send_mail as django_send_mail
 from django.urls import reverse
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
@@ -166,7 +166,7 @@ def get_default_from_email():
     return (
         getattr(settings, 'DEFAULT_FROM_EMAIL', '').strip()
         or getattr(settings, 'EMAIL_HOST_USER', '').strip()
-        or 'noreply@talentorbit.com'
+        or 'harshmbhogayata@gmail.com'
     )
 
 
@@ -273,6 +273,39 @@ def _more_delivery_attempts_remaining(round_index, max_rounds, attempt_index, to
     return attempt_index < total_attempts - 1 or round_index < max_rounds
 
 
+def _send_message_with_optional_attachments(
+    subject,
+    message,
+    from_email,
+    recipients,
+    connection=None,
+    attachments=None,
+):
+    if not attachments:
+        return django_send_mail(
+            subject,
+            message,
+            from_email,
+            recipients,
+            fail_silently=False,
+            connection=connection,
+        )
+
+    email_message = EmailMessage(
+        subject=subject,
+        body=message,
+        from_email=from_email,
+        to=recipients,
+        connection=connection,
+    )
+    for filename, content, mimetype in attachments:
+        if mimetype:
+            email_message.attach(filename, content, mimetype)
+        else:
+            email_message.attach(filename, content)
+    return email_message.send(fail_silently=False)
+
+
 def send_email_result(
     subject,
     message,
@@ -281,6 +314,7 @@ def send_email_result(
     require_external_delivery=False,
     max_rounds=None,
     timeout_seconds=None,
+    attachments=None,
 ):
     """
     Send a single email and return a structured delivery result.
@@ -332,13 +366,13 @@ def send_email_result(
                 connection = None
                 if connection_kwargs is not None:
                     connection = get_connection(backend=backend, **connection_kwargs)
-                sent_count = django_send_mail(
+                sent_count = _send_message_with_optional_attachments(
                     subject,
                     message,
                     from_email,
                     recipients,
-                    fail_silently=False,
                     connection=connection,
+                    attachments=attachments,
                 )
             except Exception as exc:
                 error_code, retryable = _classify_email_exception(exc)
@@ -412,7 +446,7 @@ def send_email_result(
     return last_failure
 
 
-def send_email(subject, message, recipient_list, from_email=None, require_external_delivery=False):
+def send_email(subject, message, recipient_list, from_email=None, require_external_delivery=False, attachments=None):
     """
     Send a single email and log failures instead of suppressing them.
     """
@@ -422,10 +456,11 @@ def send_email(subject, message, recipient_list, from_email=None, require_extern
         recipient_list,
         from_email=from_email,
         require_external_delivery=require_external_delivery,
+        attachments=attachments,
     ).ok
 
 
-def send_email_async(subject, message, recipient_list, from_email=None, require_external_delivery=False):
+def send_email_async(subject, message, recipient_list, from_email=None, require_external_delivery=False, attachments=None):
     """
     Send email in a background thread for non-critical notifications.
     Test and local backends run inline to keep behavior deterministic.
@@ -438,6 +473,7 @@ def send_email_async(subject, message, recipient_list, from_email=None, require_
             recipient_list,
             from_email=from_email,
             require_external_delivery=require_external_delivery,
+            attachments=attachments,
         )
 
     def _send():
@@ -447,6 +483,7 @@ def send_email_async(subject, message, recipient_list, from_email=None, require_
             recipient_list,
             from_email=from_email,
             require_external_delivery=require_external_delivery,
+            attachments=attachments,
         )
 
     thread = threading.Thread(target=_send, daemon=True)

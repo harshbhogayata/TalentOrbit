@@ -7,10 +7,13 @@ Run with: python manage.py test core
 
 from datetime import timedelta
 from io import StringIO
+from pathlib import Path
 from smtplib import SMTPServerDisconnected
 from unittest.mock import patch
+from django.conf import settings
 from django.contrib.auth.tokens import default_token_generator
 from django.core import mail
+from django.core.files.uploadedfile import SimpleUploadedFile
 from django.core.management import call_command
 from django.core.management.base import CommandError
 from django.test import TestCase, Client, override_settings
@@ -23,7 +26,7 @@ import json
 from .utils import EmailDeliveryResult
 
 from .models import (
-    User, CompanyProfile, JobCategory, Job, Skill,
+    User, CompanyProfile, JobCategory, Job, JobApplication, Skill, Tender, TenderBid,
     Subscription, Notification, Quiz, QuizQuestion, QuizAttempt,
     SavedJob, NewsletterSubscription,
 )
@@ -222,6 +225,12 @@ class AccessControlTests(TestCase):
         resp = self.client.get(reverse('admin_dashboard'))
         self.assertEqual(resp.status_code, 200)
 
+    def test_user_cannot_download_admin_report(self):
+        _create_user()
+        self.client.login(username='testuser', password='Str0ngP@ss!')
+        resp = self.client.get(reverse('admin_download_report'))
+        self.assertEqual(resp.status_code, 302)
+
     def test_company_can_access_company_dashboard(self):
         user, _ = _create_company_user()
         self.client.login(username='companyuser', password='Str0ngP@ss!')
@@ -229,11 +238,189 @@ class AccessControlTests(TestCase):
         self.assertEqual(resp.status_code, 200)
 
 
+class AdminPanelCreateTests(TestCase):
+    def setUp(self):
+        _create_admin()
+        self.client.login(username='adminuser', password='Str0ngP@ss!')
+
+    def test_admin_create_user_page_loads(self):
+        resp = self.client.get(reverse('admin_create_user'))
+        self.assertEqual(resp.status_code, 200)
+
+    def test_admin_create_user_post(self):
+        resp = self.client.post(reverse('admin_create_user'), {
+            'username': 'paneluser',
+            'first_name': 'Panel',
+            'last_name': 'User',
+            'email': 'paneluser@example.com',
+            'phone': '9999999999',
+            'password1': 'C0mpl3xP@ss!',
+            'password2': 'C0mpl3xP@ss!',
+            'email_verified': 'on',
+        })
+        self.assertEqual(resp.status_code, 302)
+        user = User.objects.get(username='paneluser')
+        self.assertEqual(user.role, 'user')
+        self.assertTrue(user.email_verified)
+
+    def test_admin_create_company_page_loads(self):
+        resp = self.client.get(reverse('admin_create_company'))
+        self.assertEqual(resp.status_code, 200)
+
+    def test_admin_create_company_post(self):
+        resp = self.client.post(reverse('admin_create_company'), {
+            'username': 'panelcompany',
+            'email': 'panelcompany@example.com',
+            'company_name': 'Panel Company',
+            'industry': 'IT',
+            'website': 'https://panel.example.com',
+            'description': 'Created by admin.',
+            'status': 'approved',
+            'password1': 'C0mpl3xP@ss!',
+            'password2': 'C0mpl3xP@ss!',
+            'email_verified': 'on',
+        })
+        self.assertEqual(resp.status_code, 302)
+        user = User.objects.get(username='panelcompany')
+        self.assertEqual(user.role, 'company')
+        self.assertTrue(user.email_verified)
+        self.assertEqual(user.company_profile.company_name, 'Panel Company')
+        self.assertEqual(user.company_profile.status, 'approved')
+
+
 # ──────────────────────────────────────────────────────────────
 #  VIEW TESTS
 # ──────────────────────────────────────────────────────────────
 
+class CompanyJobManagementTests(TestCase):
+    def setUp(self):
+        self.user, self.profile = _create_company_user()
+        self.category = JobCategory.objects.create(name='Engineering', slug='engineering')
+        self.client.login(username='companyuser', password='Str0ngP@ss!')
+
+    def test_company_can_post_job_with_existing_category(self):
+        resp = self.client.post(reverse('company_post_job'), {
+            'title': 'Backend Engineer',
+            'category': self.category.pk,
+            'description': 'Build APIs',
+            'requirements': 'Django experience',
+            'job_type': 'full_time',
+            'experience': '3-5',
+            'salary_min': '80000',
+            'salary_max': '120000',
+            'location': 'Remote',
+            'skills': 'Python, Django',
+            'deadline': (timezone.now().date() + timedelta(days=30)).isoformat(),
+        })
+        self.assertRedirects(resp, reverse('company_manage_jobs'))
+        job = Job.objects.get(title='Backend Engineer')
+        self.assertEqual(job.company, self.profile)
+        self.assertEqual(job.category, self.category)
+        self.assertSetEqual(set(job.skills.values_list('name', flat=True)), {'Python', 'Django'})
+
+    def test_company_can_post_job_with_new_category(self):
+        resp = self.client.post(reverse('company_post_job'), {
+            'title': 'Platform Engineer',
+            'category': '',
+            'new_category': 'Platform Engineering',
+            'description': 'Own deployment platform',
+            'requirements': 'CI/CD experience',
+            'job_type': 'full_time',
+            'experience': '3-5',
+            'salary_min': '100000',
+            'salary_max': '150000',
+            'location': 'Bengaluru',
+            'skills': 'Kubernetes, Terraform',
+            'deadline': (timezone.now().date() + timedelta(days=45)).isoformat(),
+        })
+        self.assertRedirects(resp, reverse('company_manage_jobs'))
+        job = Job.objects.get(title='Platform Engineer')
+        self.assertEqual(job.company, self.profile)
+        self.assertEqual(job.category.name, 'Platform Engineering')
+
+    def test_company_post_job_requires_category_or_new_category(self):
+        resp = self.client.post(reverse('company_post_job'), {
+            'title': 'Uncategorized Job',
+            'category': '',
+            'new_category': '',
+            'description': 'Missing category',
+            'requirements': 'None',
+            'job_type': 'full_time',
+            'experience': '1-2',
+            'salary_min': '50000',
+            'salary_max': '80000',
+            'location': 'Remote',
+            'skills': 'SQL',
+            'deadline': (timezone.now().date() + timedelta(days=20)).isoformat(),
+        })
+        self.assertEqual(resp.status_code, 200)
+        self.assertContains(resp, 'Select a category or enter a new one.')
+        self.assertFalse(Job.objects.filter(title='Uncategorized Job').exists())
+
+
+class CompanyTenderManagementTests(TestCase):
+    def setUp(self):
+        self.user, self.profile = _create_company_user()
+        self.other_user, self.other_profile = _create_company_user(
+            username='othercompany',
+            email='othercompany@example.com',
+        )
+        self.client.login(username='companyuser', password='Str0ngP@ss!')
+
+    def test_company_can_create_tender(self):
+        resp = self.client.post(reverse('company_create_tender'), {
+            'title': 'Infrastructure Refresh',
+            'description': 'Modernize our cloud stack.',
+            'budget': '500000',
+            'deadline': (timezone.now().date() + timedelta(days=21)).isoformat(),
+            'requirements': 'Cloud migration experience',
+        })
+        self.assertRedirects(resp, reverse('company_tenders'))
+        tender = Tender.objects.get(title='Infrastructure Refresh')
+        self.assertEqual(tender.posted_by, self.profile)
+
+    def test_company_can_delete_own_tender(self):
+        tender = Tender.objects.create(
+            posted_by=self.profile,
+            title='Delete Me',
+            description='Disposable tender',
+            deadline=timezone.now().date() + timedelta(days=10),
+        )
+        TenderBid.objects.create(
+            tender=tender,
+            bidder=self.other_profile,
+            amount='12345',
+            proposal='Bid proposal',
+        )
+        resp = self.client.post(reverse('company_delete_tender', args=[tender.pk]))
+        self.assertRedirects(resp, reverse('company_tenders'))
+        self.assertFalse(Tender.objects.filter(pk=tender.pk).exists())
+        self.assertFalse(TenderBid.objects.filter(tender_id=tender.pk).exists())
+
+    def test_company_cannot_delete_other_company_tender(self):
+        tender = Tender.objects.create(
+            posted_by=self.other_profile,
+            title='Protected Tender',
+            description='Owned by another company',
+            deadline=timezone.now().date() + timedelta(days=10),
+        )
+        resp = self.client.post(reverse('company_delete_tender', args=[tender.pk]))
+        self.assertEqual(resp.status_code, 404)
+        self.assertTrue(Tender.objects.filter(pk=tender.pk).exists())
+
+
 class PublicViewTests(TestCase):
+    def setUp(self):
+        company_user, company_profile = _create_company_user()
+        category = JobCategory.objects.create(name='Engineering', slug='engineering')
+        self.job = Job.objects.create(
+            company=company_profile,
+            category=category,
+            title='Platform Engineer',
+            description='Build platform features',
+            is_active=True,
+            deadline=timezone.now().date() + timedelta(days=14),
+        )
 
     def test_home_page(self):
         resp = self.client.get(reverse('home'))
@@ -242,6 +429,11 @@ class PublicViewTests(TestCase):
     def test_job_list_page(self):
         resp = self.client.get(reverse('job_list'))
         self.assertEqual(resp.status_code, 200)
+
+    def test_job_detail_page(self):
+        resp = self.client.get(reverse('job_detail', args=[self.job.pk]))
+        self.assertEqual(resp.status_code, 200)
+        self.assertTemplateUsed(resp, 'jobs/job_detail.html')
 
     def test_company_list_page(self):
         resp = self.client.get(reverse('company_list'))
@@ -254,6 +446,67 @@ class PublicViewTests(TestCase):
     def test_contact_page(self):
         resp = self.client.get(reverse('contact'))
         self.assertEqual(resp.status_code, 200)
+
+
+class UserJobWorkspaceTests(TestCase):
+    def setUp(self):
+        self.user = _create_user()
+        company_user, company_profile = _create_company_user(
+            username='jobscompany',
+            email='jobscompany@example.com',
+        )
+        category = JobCategory.objects.create(name='Product', slug='product')
+        self.job = Job.objects.create(
+            company=company_profile,
+            category=category,
+            title='Product Analyst',
+            description='Analyze customer journeys',
+            is_active=True,
+            deadline=timezone.now().date() + timedelta(days=21),
+        )
+        self.client.login(username='testuser', password='Str0ngP@ss!')
+
+    def test_authenticated_user_job_list_uses_workspace_template(self):
+        resp = self.client.get(reverse('job_list'))
+        self.assertEqual(resp.status_code, 200)
+        self.assertTemplateUsed(resp, 'user/job_list.html')
+
+    def test_authenticated_user_job_detail_uses_workspace_template(self):
+        resp = self.client.get(reverse('job_detail', args=[self.job.pk]))
+        self.assertEqual(resp.status_code, 200)
+        self.assertTemplateUsed(resp, 'user/job_detail.html')
+
+
+@override_settings(EMAIL_BACKEND='django.core.mail.backends.locmem.EmailBackend')
+class PasswordResetEmailTemplateTests(TestCase):
+    def test_password_reset_email_uses_full_name_and_renders_html(self):
+        user = _create_user(username='grace', email='grace@example.com')
+        user.first_name = 'Grace'
+        user.last_name = 'Hopper'
+        user.save(update_fields=['first_name', 'last_name'])
+
+        resp = self.client.post(reverse('password_reset'), {'email': user.email})
+
+        self.assertEqual(resp.status_code, 302)
+        self.assertEqual(len(mail.outbox), 1)
+        self.assertIn('Hi Grace Hopper,', mail.outbox[0].body)
+        self.assertNotIn('{{ user.get_full_name', mail.outbox[0].body)
+        self.assertEqual(len(mail.outbox[0].alternatives), 1)
+        html_body = mail.outbox[0].alternatives[0][0]
+        self.assertIn('Hi Grace Hopper,', html_body)
+        self.assertNotIn('{{ user.get_full_name', html_body)
+
+    def test_password_reset_email_falls_back_to_generic_greeting(self):
+        user = _create_user(username='nogreeting', email='nogreeting@example.com')
+
+        self.client.post(reverse('password_reset'), {'email': user.email})
+
+        self.assertEqual(len(mail.outbox), 1)
+        self.assertIn('Hi there,', mail.outbox[0].body)
+        self.assertNotIn(f'Hi {user.username},', mail.outbox[0].body)
+        html_body = mail.outbox[0].alternatives[0][0]
+        self.assertIn('Hi there,', html_body)
+        self.assertNotIn(f'Hi {user.username},', html_body)
 
 
 class SubscriptionViewTests(TestCase):
@@ -381,6 +634,36 @@ class SecurityTests(TestCase):
         self.assertEqual(
             Notification.objects.filter(recipient=self.user, is_read=False).count(), 1,
         )
+
+    def test_notifications_uses_user_sidebar_for_users(self):
+        self.client.login(username='secuser', password='Str0ngP@ss!')
+        resp = self.client.get(reverse('notifications'))
+        self.assertContains(resp, 'Subscription')
+        self.assertNotContains(resp, 'Create Tender')
+
+    def test_notifications_uses_company_sidebar_for_companies(self):
+        company_user = _create_user(
+            username='notifcompany',
+            email='notifcompany@example.com',
+            role='company',
+        )
+        CompanyProfile.objects.create(
+            user=company_user,
+            company_name='Notif Company',
+            status='approved',
+        )
+        self.client.login(username='notifcompany', password='Str0ngP@ss!')
+        resp = self.client.get(reverse('notifications'))
+        self.assertContains(resp, 'Create Tender')
+        self.assertNotContains(resp, 'Subscription')
+
+    def test_notifications_uses_admin_sidebar_for_admins(self):
+        _create_admin(username='notifadmin', email='notifadmin@example.com')
+        self.client.login(username='notifadmin', password='Str0ngP@ss!')
+        resp = self.client.get(reverse('notifications'))
+        self.assertContains(resp, 'Send Alerts')
+        self.assertContains(resp, 'Companies')
+        self.assertNotContains(resp, 'Create Tender')
 
     def test_csp_header_present(self):
         resp = self.client.get(reverse('home'))
@@ -1012,6 +1295,47 @@ class PasswordChangeTests(TestCase):
 #  APPLICATION WITHDRAWAL TESTS
 # ──────────────────────────────────────────────────────────────
 
+@override_settings(EMAIL_BACKEND='django.core.mail.backends.locmem.EmailBackend')
+class ApplicationSubmissionEmailTests(TestCase):
+    def setUp(self):
+        self.user = _create_user()
+        self.company_user, self.profile = _create_company_user()
+        self.cat = JobCategory.objects.create(name='Engineering', slug='engineering')
+        self.job = Job.objects.create(
+            company=self.profile,
+            title='Backend Engineer',
+            category=self.cat,
+            description='Build APIs',
+            location='Remote',
+            deadline=timezone.now().date() + timedelta(days=30),
+        )
+        self.client.login(username='testuser', password='Str0ngP@ss!')
+
+    def test_apply_job_forwards_resume_attachment(self):
+        resume = SimpleUploadedFile(
+            'resume.pdf',
+            b'%PDF-1.4 test resume',
+            content_type='application/pdf',
+        )
+        resp = self.client.post(reverse('apply_job', args=[self.job.pk]), {
+            'resume': resume,
+            'cover_letter': 'Please review my resume.',
+        })
+
+        self.assertEqual(resp.status_code, 302)
+        self.assertTrue(JobApplication.objects.filter(job=self.job, applicant=self.user).exists())
+        self.assertEqual(len(mail.outbox), 1)
+        self.assertEqual(mail.outbox[0].to, ['company@example.com'])
+
+        attachment = mail.outbox[0].attachments[0]
+        attachment_name = getattr(attachment, 'filename', attachment[0])
+        attachment_content = getattr(attachment, 'content', attachment[1])
+        attachment_type = getattr(attachment, 'mimetype', attachment[2])
+        self.assertEqual(attachment_name, 'resume.pdf')
+        self.assertEqual(attachment_type, 'application/pdf')
+        self.assertIn(b'%PDF-1.4', attachment_content)
+
+
 class WithdrawApplicationTests(TestCase):
     def setUp(self):
         from django.core.files.uploadedfile import SimpleUploadedFile
@@ -1324,6 +1648,13 @@ class SearchAndListingRegressionTests(TestCase):
         self.assertIn('Backend Engineer', titles)
         self.assertNotIn('Expired Engineer', titles)
 
+    def test_search_suggestions_keep_frontend_payload_keys(self):
+        resp = self.client.get(reverse('search_suggestions'), {'q': 'Orbit'})
+        self.assertEqual(resp.status_code, 200)
+        data = json.loads(resp.content)
+        self.assertIn('pk', data['results'][0])
+        self.assertIn('company__company_name', data['results'][0])
+
     def test_home_counts_only_open_jobs(self):
         resp = self.client.get(reverse('home'))
         self.assertContains(resp, 'Backend Engineer')
@@ -1378,6 +1709,28 @@ class ProfileUpdateRegressionTests(TestCase):
 
 
 class BaseTemplateRegressionTests(TestCase):
+    def test_dashboard_templates_use_shared_dash_markup(self):
+        template_root = Path(settings.BASE_DIR) / 'templates'
+        legacy_markers = (
+            'btn btn-primary-gradient',
+            'btn btn-glass',
+            'glass-card',
+            'table-dark-custom',
+            'd-flex justify-content-between align-items-center mb-4',
+        )
+
+        dashboard_templates = []
+        for template_path in template_root.rglob('*.html'):
+            content = template_path.read_text(encoding='utf-8')
+            if "extends 'dashboard_base.html'" in content:
+                dashboard_templates.append((template_path, content))
+
+        self.assertTrue(dashboard_templates)
+        for template_path, content in dashboard_templates:
+            self.assertIn('dash-page-header', content, msg=str(template_path))
+            for marker in legacy_markers:
+                self.assertNotIn(marker, content, msg=f'{template_path} still contains {marker!r}')
+
     def test_company_dashboard_does_not_link_to_user_profile(self):
         _create_company_user()
         self.client.login(username='companyuser', password='Str0ngP@ss!')
@@ -1389,12 +1742,33 @@ class BaseTemplateRegressionTests(TestCase):
         _create_admin()
         self.client.login(username='adminuser', password='Str0ngP@ss!')
         resp = self.client.get(reverse('dashboard'))
-        self.assertContains(resp, reverse('admin_dashboard'))
+        self.assertContains(resp, reverse('dashboard'))
         self.assertNotContains(resp, reverse('user_profile'))
+        self.assertNotContains(resp, 'Admin Panel')
 
     def test_csp_allows_cloudinary_assets(self):
         resp = self.client.get(reverse('home'))
         self.assertIn('https://res.cloudinary.com', resp['Content-Security-Policy'])
+
+    def test_base_template_does_not_render_placeholder_footer_links(self):
+        resp = self.client.get(reverse('home'))
+        self.assertNotContains(resp, 'href="#" class="text-secondary fs-5"')
+        self.assertContains(resp, 'https://github.com/harshbhogayata/TalentOrbit')
+
+
+class AdminReportTests(TestCase):
+    def setUp(self):
+        _create_admin()
+        self.client.login(username='adminuser', password='Str0ngP@ss!')
+
+    def test_admin_report_download_returns_csv(self):
+        resp = self.client.get(reverse('admin_download_report'))
+        self.assertEqual(resp.status_code, 200)
+        self.assertEqual(resp['Content-Type'], 'text/csv')
+        self.assertIn('attachment; filename="talentorbit-admin-report-', resp['Content-Disposition'])
+        content = resp.content.decode('utf-8')
+        self.assertIn('section,item,value,detail_1,detail_2', content)
+        self.assertIn('summary,total_users', content)
 
 
 class CreateSuperuserCommandTests(TestCase):

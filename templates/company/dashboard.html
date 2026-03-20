@@ -5,96 +5,205 @@
 {% endblock %}
 
 {% block dashboard_content %}
-<h2 style="font-weight: 800; margin-bottom: 0.5rem;">
-    <i class="bi bi-building me-2" style="color: var(--primary-light);"></i>{{ profile.company_name }}
-</h2>
-<p style="color: var(--text-muted); margin-bottom: 2rem;">
-    Status: <span class="badge-status badge-{{ profile.status }}">{{ profile.get_status_display }}</span>
-</p>
+<div class="dash-page-header dash-page-header-compact">
+    <div class="dash-page-title">
+        <div class="dash-page-icon">
+            <i class="bi bi-building"></i>
+        </div>
+        <div class="dash-page-heading">
+            <h2>Dashboard</h2>
+            <p class="dash-page-subtitle">Hiring overview, tender activity, and recent candidate movement in one workspace.</p>
+        </div>
+    </div>
+    <div class="dash-page-actions">
+        <span class="badge-status badge-{{ profile.status }}">{{ profile.get_status_display }}</span>
+        <a href="{% url 'company_manage_jobs' %}" class="dash-button dash-button-secondary"><i class="bi bi-briefcase"></i>Manage Jobs</a>
+    </div>
+</div>
 
 {% if profile.status == 'pending' %}
 <div class="alert alert-custom alert-warning mb-4">
     <i class="bi bi-clock-history"></i>
-    Your company is pending admin approval. You'll be able to post jobs once approved.
+    Your company is pending admin approval. You will be able to post jobs once approved.
 </div>
 {% endif %}
 
-<div class="row g-3 mb-4 fade-up">
-    <div class="col-lg-3 col-md-6">
-        <div class="glass-card p-3 h-100 d-flex flex-column justify-content-center align-items-center text-center">
-            <div class="rounded-circle d-flex align-items-center justify-content-center mb-3"
-                style="width: 56px; height: 56px; background: rgba(59, 130, 246, 0.1); color: var(--brand-primary); font-size: 1.5rem;">
-                <i class="bi bi-briefcase"></i>
+<div class="dash-card dash-dashboard-hero mb-4">
+    <div class="dash-hero-grid">
+        <div class="dash-hero-copy">
+            <span class="dash-dashboard-kicker"><i class="bi bi-building-gear"></i>Company Workspace</span>
+            <h3>{{ profile.company_name }}</h3>
+            <p>Use this view to track where hiring is moving, how many roles are live, and whether your tender pipeline needs attention.</p>
+            <div class="dash-hero-metrics">
+                <div class="dash-hero-metric">
+                    <strong>{{ total_jobs }}</strong>
+                    <span>roles owned by your company</span>
+                </div>
+                <div class="dash-hero-metric">
+                    <strong>{{ total_applications }}</strong>
+                    <span>candidate submissions received</span>
+                </div>
+                <div class="dash-hero-metric">
+                    <strong>{{ open_tenders }}</strong>
+                    <span>open tenders awaiting bids or review</span>
+                </div>
             </div>
-            <div class="display-6 fw-bold text-white mb-1">{{ total_jobs }}</div>
-            <div class="text-secondary small text-uppercase tracking-wider">Total Jobs</div>
         </div>
-    </div>
-    <div class="col-lg-3 col-md-6">
-        <div class="glass-card p-3 h-100 d-flex flex-column justify-content-center align-items-center text-center">
-            <div class="rounded-circle d-flex align-items-center justify-content-center mb-3"
-                style="width: 56px; height: 56px; background: rgba(16, 185, 129, 0.1); color: #34d399; font-size: 1.5rem;">
-                <i class="bi bi-check-circle"></i>
-            </div>
-            <div class="display-6 fw-bold text-white mb-1">{{ active_jobs }}</div>
-            <div class="text-secondary small text-uppercase tracking-wider">Active Jobs</div>
-        </div>
-    </div>
-    <div class="col-lg-3 col-md-6">
-        <div class="glass-card p-3 h-100 d-flex flex-column justify-content-center align-items-center text-center">
-            <div class="rounded-circle d-flex align-items-center justify-content-center mb-3"
-                style="width: 56px; height: 56px; background: rgba(59, 130, 246, 0.1); color: #60a5fa; font-size: 1.5rem;">
-                <i class="bi bi-people"></i>
-            </div>
-            <div class="display-6 fw-bold text-white mb-1">{{ total_applications }}</div>
-            <div class="text-secondary small text-uppercase tracking-wider">Applications</div>
-        </div>
-    </div>
-    <div class="col-lg-3 col-md-6">
-        <div class="glass-card p-3 h-100 d-flex flex-column justify-content-center align-items-center text-center">
-            <div class="rounded-circle d-flex align-items-center justify-content-center mb-3"
-                style="width: 56px; height: 56px; background: rgba(245, 158, 11, 0.1); color: #fbbf24; font-size: 1.5rem;">
-                <i class="bi bi-clock"></i>
-            </div>
-            <div class="display-6 fw-bold text-white mb-1">{{ pending_applications }}</div>
-            <div class="text-secondary small text-uppercase tracking-wider">Pending Review</div>
+        <div class="dash-action-grid">
+            <a href="{% url 'company_post_job' %}" class="dash-action-card">
+                <div class="dash-action-icon"><i class="bi bi-plus-circle"></i></div>
+                <div class="dash-action-copy">
+                    <strong>Post Job</strong>
+                    <span>Create a new opening for candidates to apply.</span>
+                </div>
+            </a>
+            <a href="{% url 'company_manage_jobs' %}" class="dash-action-card">
+                <div class="dash-action-icon"><i class="bi bi-briefcase"></i></div>
+                <div class="dash-action-copy">
+                    <strong>Manage Jobs</strong>
+                    <span>Edit listings, pause roles, and review applicants.</span>
+                </div>
+            </a>
+            <a href="{% url 'company_tenders' %}" class="dash-action-card">
+                <div class="dash-action-icon"><i class="bi bi-file-earmark-richtext"></i></div>
+                <div class="dash-action-copy">
+                    <strong>Tenders</strong>
+                    <span>Track your tenders and respond to market bids.</span>
+                </div>
+            </a>
+            <a href="{% url 'company_profile' %}" class="dash-action-card">
+                <div class="dash-action-icon"><i class="bi bi-person-vcard"></i></div>
+                <div class="dash-action-copy">
+                    <strong>Profile</strong>
+                    <span>Update branding, bio, and hiring contact details.</span>
+                </div>
+            </a>
         </div>
     </div>
 </div>
 
-<!-- Recent Applications -->
-<div class="glass-card fade-up">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h5 class="fw-bold text-white mb-0"><i class="bi bi-inbox me-2 text-primary"></i>Recent Applications</h5>
+<div class="row g-4 mb-4">
+    <div class="col-xl-3 col-md-6">
+        <div class="dash-card h-100">
+            <div class="dash-stat-card">
+                <div class="dash-stat-icon dash-tone-blue"><i class="bi bi-briefcase"></i></div>
+                <div class="dash-stat-copy">
+                    <div class="dash-stat-value">{{ total_jobs }}</div>
+                    <div class="dash-stat-label">Total Jobs</div>
+                    <div class="dash-stat-meta">All roles published by your company.</div>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="table-responsive">
-        <table class="table table-dark-custom align-middle">
-            <thead>
-                <tr>
-                    <th>Applicant</th>
-                    <th>Position</th>
-                    <th>Status</th>
-                    <th>Applied</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for app in recent_applications %}
-                <tr>
-                    <td class="fw-bold text-white">{{ app.applicant.get_full_name|default:app.applicant.username }}</td>
-                    <td class="text-secondary">{{ app.job.title }}</td>
-                    <td><span class="badge badge-status badge-{{ app.status }}">{{ app.get_status_display }}</span></td>
-                    <td class="text-secondary">{{ app.applied_at|date:"M d, Y" }}</td>
-                </tr>
-                {% empty %}
-                <tr>
-                    <td colspan="4" class="text-center py-5 text-secondary">
-                        <i class="bi bi-inbox d-block fs-2 mb-2 opacity-50"></i>
-                        No applications yet.
-                    </td>
-                </tr>
+    <div class="col-xl-3 col-md-6">
+        <div class="dash-card h-100">
+            <div class="dash-stat-card">
+                <div class="dash-stat-icon dash-tone-green"><i class="bi bi-check-circle"></i></div>
+                <div class="dash-stat-copy">
+                    <div class="dash-stat-value">{{ active_jobs }}</div>
+                    <div class="dash-stat-label">Active Jobs</div>
+                    <div class="dash-stat-meta">Open listings currently visible to candidates.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-3 col-md-6">
+        <div class="dash-card h-100">
+            <div class="dash-stat-card">
+                <div class="dash-stat-icon dash-tone-indigo"><i class="bi bi-people"></i></div>
+                <div class="dash-stat-copy">
+                    <div class="dash-stat-value">{{ total_applications }}</div>
+                    <div class="dash-stat-label">Applications</div>
+                    <div class="dash-stat-meta">Candidate submissions across all jobs.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-3 col-md-6">
+        <div class="dash-card h-100">
+            <div class="dash-stat-card">
+                <div class="dash-stat-icon dash-tone-red"><i class="bi bi-file-earmark-richtext"></i></div>
+                <div class="dash-stat-copy">
+                    <div class="dash-stat-value">{{ open_tenders }}</div>
+                    <div class="dash-stat-label">Open Tenders</div>
+                    <div class="dash-stat-meta">{{ total_tenders }} total tender records owned by your company.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4">
+    <div class="col-xl-5">
+        <div class="dash-card h-100">
+            <div class="dash-section-header">
+                <div class="dash-section-copy">
+                    <h3 class="dash-section-title">Recent Jobs</h3>
+                    <p class="dash-section-subtitle">Latest roles your team has published.</p>
+                </div>
+                <a href="{% url 'company_manage_jobs' %}" class="dash-button dash-button-secondary"><i class="bi bi-arrow-right-circle"></i>Open</a>
+            </div>
+            {% if recent_jobs %}
+            <div class="dash-stack-list">
+                {% for job in recent_jobs %}
+                <div class="dash-list-item">
+                    <div class="dash-mini-avatar"><i class="bi bi-briefcase"></i></div>
+                    <div class="dash-list-copy">
+                        <strong class="dash-cell-wrap">{{ job.title }}</strong>
+                        <span class="dash-cell-wrap">{% if job.category %}{{ job.category.name }}{% else %}Uncategorized{% endif %} · {{ job.app_count }} applicant{{ job.app_count|pluralize }}</span>
+                    </div>
+                    <div class="dash-list-meta">
+                        {% if job.is_active %}
+                        <span class="badge-status badge-active">Active</span>
+                        {% else %}
+                        <span class="badge-status badge-rejected">Inactive</span>
+                        {% endif %}
+                        <span>{{ job.created_at|date:"M d, Y" }}</span>
+                    </div>
+                </div>
                 {% endfor %}
-            </tbody>
-        </table>
+            </div>
+            {% else %}
+            <div class="dash-surface-panel text-center">
+                <strong class="d-block mb-2">No jobs posted yet</strong>
+                <span class="dash-page-subtitle">Create your first role to start receiving applications.</span>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="col-xl-7">
+        <div class="dash-card h-100">
+            <div class="dash-section-header">
+                <div class="dash-section-copy">
+                    <h3 class="dash-section-title">Recent Applications</h3>
+                    <p class="dash-section-subtitle">Latest candidate activity across your published roles.</p>
+                </div>
+                <a href="{% url 'company_manage_jobs' %}" class="dash-button dash-button-secondary"><i class="bi bi-arrow-right-circle"></i>Open Jobs</a>
+            </div>
+            {% if recent_applications %}
+            <div class="dash-stack-list">
+                {% for app in recent_applications %}
+                <div class="dash-list-item">
+                    <div class="dash-mini-avatar">{{ app.applicant.username|first|upper }}</div>
+                    <div class="dash-list-copy">
+                        <strong class="dash-cell-wrap">{{ app.applicant.get_full_name|default:app.applicant.username }}</strong>
+                        <span class="dash-cell-wrap">{{ app.job.title }}</span>
+                    </div>
+                    <div class="dash-list-meta">
+                        <span class="badge-status badge-{{ app.status }}">{{ app.get_status_display }}</span>
+                        <span>{{ app.applied_at|date:"M d, Y" }}</span>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <div class="dash-surface-panel text-center">
+                <strong class="d-block mb-2">No applications yet</strong>
+                <span class="dash-page-subtitle">Candidate activity will appear here once people start applying.</span>
+            </div>
+            {% endif %}
+        </div>
     </div>
 </div>
 {% endblock %}

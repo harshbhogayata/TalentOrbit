@@ -5,23 +5,44 @@
 {% endblock %}
 
 {% block dashboard_content %}
-<div class="d-flex justify-content-between align-items-center mb-4">
-    <h2 style="font-weight: 800;"><i class="bi bi-building me-2" style="color: var(--primary-light);"></i>Manage
-        Companies</h2>
-    <div class="d-flex gap-2">
-        <a href="?status=pending"
-            class="btn btn-glass btn-sm {% if status_filter == 'pending' %}active{% endif %}">Pending</a>
-        <a href="?status=approved"
-            class="btn btn-glass btn-sm {% if status_filter == 'approved' %}active{% endif %}">Approved</a>
-        <a href="?status=rejected"
-            class="btn btn-glass btn-sm {% if status_filter == 'rejected' %}active{% endif %}">Rejected</a>
-        <a href="{% url 'admin_manage_companies' %}"
-            class="btn btn-glass btn-sm {% if not status_filter %}active{% endif %}">All</a>
+<div class="dash-page-header">
+    <div class="dash-page-title">
+        <div class="dash-page-icon">
+            <i class="bi bi-building"></i>
+        </div>
+        <div class="dash-page-heading">
+            <h2>Manage Companies</h2>
+            <p class="dash-page-subtitle">Review employer accounts, approve onboarding, and remove stale records.</p>
+        </div>
+    </div>
+    <div class="dash-page-actions">
+        <a href="{% url 'admin_create_company' %}" class="dash-button dash-button-primary">
+            <i class="bi bi-plus-circle"></i>Add Company
+        </a>
+        <div class="dash-filter-group">
+            <a href="?status=pending"
+                class="dash-button dash-button-secondary {% if status_filter == 'pending' %}active{% endif %}">Pending</a>
+            <a href="?status=approved"
+                class="dash-button dash-button-secondary {% if status_filter == 'approved' %}active{% endif %}">Approved</a>
+            <a href="?status=rejected"
+                class="dash-button dash-button-secondary {% if status_filter == 'rejected' %}active{% endif %}">Rejected</a>
+            <a href="{% url 'admin_manage_companies' %}"
+                class="dash-button dash-button-secondary {% if not status_filter %}active{% endif %}">All</a>
+        </div>
     </div>
 </div>
 
-<div class="table-dark-custom">
-    <table class="table mb-0">
+<div class="dash-table-card">
+    <div class="table-responsive">
+    <table class="table mb-0 dash-table-fit">
+        <colgroup>
+            <col style="width: 18%;">
+            <col style="width: 22%;">
+            <col style="width: 14%;">
+            <col style="width: 12%;">
+            <col style="width: 16%;">
+            <col style="width: 18%;">
+        </colgroup>
         <thead>
             <tr>
                 <th>Company</th>
@@ -36,41 +57,40 @@
             {% for c in page_obj %}
             <tr>
                 <td>
-                    <div class="d-flex align-items-center gap-2">
-                        <div
-                            style="width: 36px; height: 36px; background: var(--gradient-primary); border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 0.8rem;">
-                            {{ c.company_name|first }}</div>
-                        <strong>{{ c.company_name }}</strong>
+                    <div class="dash-company-cell">
+                        <div class="dash-mini-avatar">{{ c.company_name|first|upper }}</div>
+                        <div class="dash-company-copy">
+                            <strong class="dash-cell-wrap">{{ c.company_name }}</strong>
+                        </div>
                     </div>
                 </td>
-                <td>{{ c.user.email }}</td>
-                <td>{{ c.industry|default:"—" }}</td>
+                <td><span class="dash-cell-wrap">{{ c.user.email }}</span></td>
+                <td><span class="dash-cell-wrap">{{ c.industry|default:"—" }}</span></td>
                 <td>
                     <span class="badge-status badge-{{ c.status }}">{{ c.get_status_display }}</span>
                 </td>
                 <td>{{ c.created_at|date:"M d, Y" }}</td>
                 <td>
-                    {% if c.status == 'pending' %}
-                    <form method="POST" action="{% url 'admin_approve_company' c.pk %}" class="d-inline">
-                        {% csrf_token %}
-                        <button type="submit" class="btn btn-sm"
-                            style="background: var(--success-light); color: var(--success);" title="Approve"><i
-                                class="bi bi-check-lg"></i></button>
-                    </form>
-                    <form method="POST" action="{% url 'admin_reject_company' c.pk %}" class="d-inline"
-                        onsubmit="return confirm('Reject this company?')">
-                        {% csrf_token %}
-                        <button type="submit" class="btn btn-sm"
-                            style="background: var(--danger-light); color: var(--danger);" title="Reject"><i
-                                class="bi bi-x-lg"></i></button>
-                    </form>
-                    {% endif %}
-                    <form method="POST" action="{% url 'admin_delete_company' c.pk %}" class="d-inline"
-                        onsubmit="return confirm('Delete this company?')">
-                        {% csrf_token %}
-                        <button type="submit" class="btn btn-sm"
-                            style="background: var(--danger-light); color: var(--danger);" title="Delete"><i class="bi bi-trash"></i></button>
-                    </form>
+                    <div class="dash-table-actions">
+                        {% if c.status == 'pending' %}
+                        <form method="POST" action="{% url 'admin_approve_company' c.pk %}" class="dash-inline-form">
+                            {% csrf_token %}
+                            <button type="submit" class="dash-button dash-icon-button dash-icon-button-success" title="Approve"><i
+                                    class="bi bi-check-lg"></i></button>
+                        </form>
+                        <form method="POST" action="{% url 'admin_reject_company' c.pk %}" class="dash-inline-form"
+                            onsubmit="return confirm('Reject this company?')">
+                            {% csrf_token %}
+                            <button type="submit" class="dash-button dash-icon-button dash-icon-button-danger" title="Reject"><i
+                                    class="bi bi-x-lg"></i></button>
+                        </form>
+                        {% endif %}
+                        <form method="POST" action="{% url 'admin_delete_company' c.pk %}" class="dash-inline-form"
+                            onsubmit="return confirm('Delete this company?')">
+                            {% csrf_token %}
+                            <button type="submit" class="dash-button dash-icon-button dash-icon-button-danger" title="Delete"><i class="bi bi-trash"></i></button>
+                        </form>
+                    </div>
                 </td>
             </tr>
             {% empty %}
@@ -80,6 +100,7 @@
             {% endfor %}
         </tbody>
     </table>
+    </div>
 </div>
 
 {% include 'includes/pagination.html' %}

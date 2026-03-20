@@ -2,7 +2,8 @@
 TalentOrbit URL Configuration (core app)
 """
 
-from django.urls import path
+from django.urls import path, re_path
+from django.views.generic.base import RedirectView
 from . import views
 
 urlpatterns = [
@@ -27,29 +28,32 @@ urlpatterns = [
     # ── Dashboard ────────────────────────────────────────────
     path('dashboard/', views.dashboard, name='dashboard'),
 
-    # ── Admin Panel ──────────────────────────────────────────
-    path('admin-panel/', views.admin_dashboard, name='admin_dashboard'),
-    path('admin-panel/companies/', views.admin_manage_companies, name='admin_manage_companies'),
-    path('admin-panel/companies/<int:pk>/approve/', views.admin_approve_company, name='admin_approve_company'),
-    path('admin-panel/companies/<int:pk>/reject/', views.admin_reject_company, name='admin_reject_company'),
-    path('admin-panel/companies/<int:pk>/delete/', views.admin_delete_company, name='admin_delete_company'),
-    path('admin-panel/users/', views.admin_manage_users, name='admin_manage_users'),
-    path('admin-panel/users/<int:pk>/delete/', views.admin_delete_user, name='admin_delete_user'),
-    path('admin-panel/jobs/', views.admin_manage_jobs, name='admin_manage_jobs'),
-    path('admin-panel/jobs/<int:pk>/delete/', views.admin_delete_job, name='admin_delete_job'),
-    path('admin-panel/categories/', views.admin_manage_categories, name='admin_manage_categories'),
-    path('admin-panel/categories/<int:pk>/edit/', views.admin_edit_category, name='admin_edit_category'),
-    path('admin-panel/categories/<int:pk>/delete/', views.admin_delete_category, name='admin_delete_category'),
-    path('admin-panel/videos/', views.admin_manage_videos, name='admin_manage_videos'),
-    path('admin-panel/videos/<int:pk>/delete/', views.admin_delete_video, name='admin_delete_video'),
-    path('admin-panel/quizzes/', views.admin_manage_quizzes, name='admin_manage_quizzes'),
-    path('admin-panel/quizzes/create/', views.admin_create_quiz, name='admin_create_quiz'),
-    path('admin-panel/quizzes/<int:pk>/questions/', views.admin_quiz_questions, name='admin_quiz_questions'),
-    path('admin-panel/quizzes/questions/<int:pk>/edit/', views.admin_edit_question, name='admin_edit_question'),
-    path('admin-panel/quizzes/questions/<int:pk>/delete/', views.admin_delete_question, name='admin_delete_question'),
-    path('admin-panel/quizzes/<int:pk>/delete/', views.admin_delete_quiz, name='admin_delete_quiz'),
-    path('admin-panel/quizzes/<int:pk>/attempts/', views.admin_quiz_attempts, name='admin_quiz_attempts'),
-    path('admin-panel/send-notifications/', views.admin_send_subscription_notification, name='admin_send_notifications'),
+    # ── Admin Dashboard ──────────────────────────────────────
+    path('dashboard/admin/', views.admin_dashboard, name='admin_dashboard'),
+    path('dashboard/admin/companies/create/', views.admin_create_company, name='admin_create_company'),
+    path('dashboard/admin/companies/', views.admin_manage_companies, name='admin_manage_companies'),
+    path('dashboard/admin/companies/<int:pk>/approve/', views.admin_approve_company, name='admin_approve_company'),
+    path('dashboard/admin/companies/<int:pk>/reject/', views.admin_reject_company, name='admin_reject_company'),
+    path('dashboard/admin/companies/<int:pk>/delete/', views.admin_delete_company, name='admin_delete_company'),
+    path('dashboard/admin/users/create/', views.admin_create_user, name='admin_create_user'),
+    path('dashboard/admin/users/', views.admin_manage_users, name='admin_manage_users'),
+    path('dashboard/admin/users/<int:pk>/delete/', views.admin_delete_user, name='admin_delete_user'),
+    path('dashboard/admin/jobs/', views.admin_manage_jobs, name='admin_manage_jobs'),
+    path('dashboard/admin/jobs/<int:pk>/delete/', views.admin_delete_job, name='admin_delete_job'),
+    path('dashboard/admin/categories/', views.admin_manage_categories, name='admin_manage_categories'),
+    path('dashboard/admin/categories/<int:pk>/edit/', views.admin_edit_category, name='admin_edit_category'),
+    path('dashboard/admin/categories/<int:pk>/delete/', views.admin_delete_category, name='admin_delete_category'),
+    path('dashboard/admin/videos/', views.admin_manage_videos, name='admin_manage_videos'),
+    path('dashboard/admin/videos/<int:pk>/delete/', views.admin_delete_video, name='admin_delete_video'),
+    path('dashboard/admin/quizzes/', views.admin_manage_quizzes, name='admin_manage_quizzes'),
+    path('dashboard/admin/quizzes/create/', views.admin_create_quiz, name='admin_create_quiz'),
+    path('dashboard/admin/quizzes/<int:pk>/questions/', views.admin_quiz_questions, name='admin_quiz_questions'),
+    path('dashboard/admin/quizzes/questions/<int:pk>/edit/', views.admin_edit_question, name='admin_edit_question'),
+    path('dashboard/admin/quizzes/questions/<int:pk>/delete/', views.admin_delete_question, name='admin_delete_question'),
+    path('dashboard/admin/quizzes/<int:pk>/delete/', views.admin_delete_quiz, name='admin_delete_quiz'),
+    path('dashboard/admin/quizzes/<int:pk>/attempts/', views.admin_quiz_attempts, name='admin_quiz_attempts'),
+    path('dashboard/admin/report/download/', views.admin_download_report, name='admin_download_report'),
+    path('dashboard/admin/send-notifications/', views.admin_send_subscription_notification, name='admin_send_notifications'),
 
     # ── Company ──────────────────────────────────────────────
     path('company/profile/', views.company_profile, name='company_profile'),
@@ -64,6 +68,7 @@ urlpatterns = [
     path('company/tenders/', views.company_tenders, name='company_tenders'),
     path('company/tenders/create/', views.company_create_tender, name='company_create_tender'),
     path('company/tenders/<int:pk>/', views.company_tender_detail, name='company_tender_detail'),
+    path('company/tenders/<int:pk>/delete/', views.company_delete_tender, name='company_delete_tender'),
     path('company/tenders/bids/<int:pk>/accept/', views.company_accept_bid, name='company_accept_bid'),
 
     # ── User ─────────────────────────────────────────────────
@@ -102,4 +107,5 @@ urlpatterns = [
 
     # ── Newsletter ──────────────────────────────────────────
     path('newsletter/', views.newsletter_subscribe, name='newsletter_subscribe'),
+    re_path(r'^admin-panel/(?P<subpath>.*)$', RedirectView.as_view(url='/dashboard/admin/%(subpath)s', permanent=False)),
 ]

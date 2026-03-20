@@ -1,0 +1,190 @@
+{% extends 'dashboard_base.html' %}
+
+{% block title %}{{ job.title }} at {{ job.company.company_name }}{% endblock %}
+
+{% block sidebar_nav %}
+{% include 'includes/sidebar_user.html' with current_page='jobs' %}
+{% endblock %}
+
+{% block dashboard_content %}
+<div class="dash-page-header">
+    <div class="dash-page-title">
+        <div class="dash-page-icon">
+            <i class="bi bi-briefcase"></i>
+        </div>
+        <div class="dash-page-heading">
+            <h2>{{ job.title }}</h2>
+            <p class="dash-page-subtitle">{{ job.company.company_name }}{% if job.location %} &middot; {{ job.location }}{% endif %}</p>
+        </div>
+    </div>
+    <div class="dash-page-actions">
+        <a href="{% url 'job_list' %}" class="dash-button dash-button-secondary"><i class="bi bi-arrow-left"></i>Back to Jobs</a>
+    </div>
+</div>
+
+<div class="dash-detail-layout">
+    <div class="dash-detail-main">
+        <div class="dash-card">
+            <div class="d-flex align-items-start gap-3 mb-4">
+                <div class="company-logo" style="width: 64px; height: 64px; font-size: 1.5rem;">
+                    {% if job.company.logo %}
+                    <img src="{{ job.company.logo.url }}" alt="{{ job.company.company_name }} logo">
+                    {% else %}
+                    {{ job.company.company_name|first }}
+                    {% endif %}
+                </div>
+                <div class="flex-grow-1">
+                    <a href="{% url 'company_detail' job.company.pk %}"
+                        style="color: var(--text-secondary); font-size: 1.05rem; text-decoration: none;">
+                        {{ job.company.company_name }}
+                    </a>
+                </div>
+                <div class="d-flex align-items-center gap-2">
+                    <form method="POST" action="{% url 'toggle_save_job' job.pk %}">
+                        {% csrf_token %}
+                        <button type="submit" class="dash-button dash-icon-button dash-icon-button-warning"
+                            title="{% if is_saved %}Unsave{% else %}Save{% endif %}">
+                            <i class="bi bi-bookmark{% if is_saved %}-fill{% endif %}"></i>
+                        </button>
+                    </form>
+                    {% if job.is_expired %}
+                    <span class="badge-status badge-rejected">Expired</span>
+                    {% elif job.is_active %}
+                    <span class="badge-status badge-active">Active</span>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="d-flex flex-wrap gap-2 mb-4">
+                {% if job.location %}
+                <span class="job-tag location"><i class="bi bi-geo-alt"></i> {{ job.location }}</span>
+                {% endif %}
+                <span class="job-tag type"><i class="bi bi-clock"></i> {{ job.get_job_type_display }}</span>
+                <span class="job-tag salary"><i class="bi bi-currency-rupee"></i> {{ job.salary_display }}</span>
+                <span class="job-tag"><i class="bi bi-bar-chart"></i> {{ job.get_experience_display }}</span>
+                {% if job.category %}
+                <span class="job-tag"><i class="bi bi-tag"></i> {{ job.category.name }}</span>
+                {% endif %}
+            </div>
+
+            <h5 style="font-weight: 700; margin-bottom: 1rem;">Job Description</h5>
+            <div style="color: var(--text-secondary); line-height: 1.8; white-space: pre-wrap;">{{ job.description }}</div>
+
+            {% if job.requirements %}
+            <h5 class="mt-4" style="font-weight: 700; margin-bottom: 1rem;">Requirements</h5>
+            <div style="color: var(--text-secondary); line-height: 1.8; white-space: pre-wrap;">{{ job.requirements }}</div>
+            {% endif %}
+
+            {% if job.skills.exists %}
+            <h5 class="mt-4" style="font-weight: 700; margin-bottom: 1rem;">Skills Required</h5>
+            <div class="d-flex flex-wrap gap-2">
+                {% for skill in job.skills.all %}
+                <span class="job-tag">{{ skill.name }}</span>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+
+        {% if related_jobs %}
+        <div>
+            <div class="dash-section-header">
+                <div>
+                    <h3>Similar Jobs</h3>
+                    <p>Related openings from the same category.</p>
+                </div>
+            </div>
+            <div class="row g-4">
+                {% for rjob in related_jobs %}
+                <div class="col-xl-6 col-md-6">
+                    <a href="{% url 'job_detail' rjob.pk %}" class="text-decoration-none">
+                        <div class="dash-card h-100">
+                            <h6 class="fw-bold text-primary mb-1">{{ rjob.title }}</h6>
+                            <div class="text-secondary small mb-2">{{ rjob.company.company_name }}</div>
+                            <div class="d-flex gap-2 flex-wrap">
+                                <span class="badge rounded-pill bg-surface border-glass text-secondary fw-normal" style="font-size: 0.7rem;">
+                                    <i class="bi bi-geo-alt"></i> {{ rjob.location|default:"Remote" }}
+                                </span>
+                                <span class="badge rounded-pill bg-surface border-glass text-secondary fw-normal" style="font-size: 0.7rem;">
+                                    <i class="bi bi-clock"></i> {{ rjob.get_job_type_display }}
+                                </span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="dash-detail-aside dash-sticky-column">
+        <div class="dash-card text-center">
+            {% if job.is_expired %}
+            <h5 style="color: var(--danger); font-weight: 700;">Job Expired</h5>
+            <p style="color: var(--text-muted); font-size: 0.9rem;">This position is no longer accepting applications.</p>
+            {% elif has_applied %}
+            <div class="mb-3">
+                <i class="bi bi-check-circle-fill fs-1" style="color: var(--success);"></i>
+            </div>
+            <h5 style="color: var(--success); font-weight: 700;">Already Applied!</h5>
+            <p style="color: var(--text-muted); font-size: 0.9rem;">You have submitted your application for this position.</p>
+            <a href="{% url 'user_applications' %}" class="dash-button dash-button-secondary w-100 justify-content-center">View Applications</a>
+            {% else %}
+            <h5 style="font-weight: 700;">Interested in this job?</h5>
+            <p style="color: var(--text-muted); font-size: 0.9rem;">Your resume will be sent directly to the company.</p>
+            <a href="{% url 'apply_job' job.pk %}" class="dash-button dash-button-primary w-100 justify-content-center" id="applyBtn">
+                <i class="bi bi-send me-2"></i>Apply Now
+            </a>
+            {% endif %}
+        </div>
+
+        <div class="dash-card">
+            <h6 style="font-weight: 700; margin-bottom: 1rem;">Job Overview</h6>
+            <ul style="list-style: none; padding: 0; margin: 0;">
+                <li class="d-flex justify-content-between py-2 list-sep">
+                    <span style="color: var(--text-muted);"><i class="bi bi-calendar3 me-2"></i>Posted</span>
+                    <span style="font-weight: 500;">{{ job.created_at|date:"M d, Y" }}</span>
+                </li>
+                {% if job.deadline %}
+                <li class="d-flex justify-content-between py-2 list-sep">
+                    <span style="color: var(--text-muted);"><i class="bi bi-clock-history me-2"></i>Deadline</span>
+                    <span style="font-weight: 500;">{{ job.deadline|date:"M d, Y" }}</span>
+                </li>
+                {% endif %}
+                <li class="d-flex justify-content-between py-2 list-sep">
+                    <span style="color: var(--text-muted);"><i class="bi bi-people me-2"></i>Applications</span>
+                    <span style="font-weight: 500;">{{ job.applications.count }}</span>
+                </li>
+                <li class="d-flex justify-content-between py-2">
+                    <span style="color: var(--text-muted);"><i class="bi bi-graph-up me-2"></i>Experience</span>
+                    <span style="font-weight: 500;">{{ job.get_experience_display }}</span>
+                </li>
+            </ul>
+        </div>
+
+        <div class="dash-card">
+            <h6 style="font-weight: 700; margin-bottom: 1rem;">About the Company</h6>
+            <div class="d-flex align-items-center gap-3 mb-3">
+                <div class="company-logo" style="width: 48px; height: 48px;">
+                    {% if job.company.logo %}
+                    <img src="{{ job.company.logo.url }}" alt="{{ job.company.company_name }} logo">
+                    {% else %}
+                    {{ job.company.company_name|first }}
+                    {% endif %}
+                </div>
+                <div>
+                    <div style="font-weight: 600;">{{ job.company.company_name }}</div>
+                    <div style="color: var(--text-muted); font-size: 0.85rem;">{{ job.company.industry|default:"Technology" }}</div>
+                </div>
+            </div>
+            {% if job.company.description %}
+            <p style="color: var(--text-secondary); font-size: 0.9rem;">{{ job.company.description|truncatewords:30 }}</p>
+            {% endif %}
+            <a href="{% url 'company_detail' job.company.pk %}" class="dash-button dash-button-secondary w-100 justify-content-center">
+                View Company Profile <i class="bi bi-arrow-right ms-1"></i>
+            </a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -2161,3 +2161,1060 @@ WARNING 2026-02-19 21:17:57,010 log Not Found: /favicon.ico
 WARNING 2026-02-19 21:24:03,714 log Not Found: /favicon.ico
 WARNING 2026-02-28 13:31:09,110 log Not Found: /favicon.ico
 WARNING 2026-02-28 13:39:11,978 log Not Found: /favicon.ico
+WARNING 2026-03-15 12:00:13,245 log Too Many Requests: /login/
+WARNING 2026-03-15 12:00:13,248 log Too Many Requests: /login/
+WARNING 2026-03-15 12:00:13,249 log Too Many Requests: /login/
+WARNING 2026-03-15 12:00:13,250 log Too Many Requests: /login/
+WARNING 2026-03-15 12:00:13,251 log Too Many Requests: /login/
+WARNING 2026-03-15 12:02:54,574 log Too Many Requests: /login/
+WARNING 2026-03-15 12:02:54,576 log Too Many Requests: /login/
+WARNING 2026-03-15 12:02:54,577 log Too Many Requests: /login/
+WARNING 2026-03-15 12:02:54,579 log Too Many Requests: /login/
+WARNING 2026-03-15 12:02:54,580 log Too Many Requests: /login/
+WARNING 2026-03-15 12:04:16,716 log Not Found: /user/applications/1/withdraw/
+WARNING 2026-03-15 12:37:26,214 log Too Many Requests: /login/
+WARNING 2026-03-15 12:37:26,215 log Too Many Requests: /login/
+WARNING 2026-03-15 12:37:26,217 log Too Many Requests: /login/
+WARNING 2026-03-15 12:37:26,218 log Too Many Requests: /login/
+WARNING 2026-03-15 12:37:26,219 log Too Many Requests: /login/
+WARNING 2026-03-15 12:38:48,456 log Not Found: /user/applications/1/withdraw/
+WARNING 2026-03-15 13:06:22,315 log Too Many Requests: /register/
+WARNING 2026-03-15 13:06:22,411 log Too Many Requests: /register/
+WARNING 2026-03-15 13:06:27,640 log Too Many Requests: /register/
+ERROR 2026-03-15 17:59:47,280 utils Error sending email. subject=Verify your TalentOrbit email address from_email=harshmbhogayata@gmail.com recipients=['resendfail@example.com'] error_code=smtp_unavailable
+Traceback (most recent call last):
+  File "C:\Users\harsh\Desktop\TalentOrbit\core\utils.py", line 210, in send_email_result
+    sent_count = django_send_mail(
+        subject,
+    ...<3 lines>...
+        fail_silently=False,
+    )
+  File "C:\Python313\Lib\unittest\mock.py", line 1169, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\unittest\mock.py", line 1173, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\unittest\mock.py", line 1228, in _execute_mock_call
+    raise effect
+smtplib.SMTPServerDisconnected: connection lost
+WARNING 2026-03-15 18:48:37,019 utils Configured PUBLIC_APP_URL is invalid: not-a-valid-url
+WARNING 2026-03-15 18:48:37,019 utils Verification email skipped because the public URL could not be resolved. user=1 error_code=public_base_url_invalid
+ERROR 2026-03-15 18:48:38,489 utils Email backend does not support external delivery. backend=django.core.mail.backends.console.EmailBackend subject=Verify your TalentOrbit email address recipients=['consoleverify@example.com']
+WARNING 2026-03-15 18:48:39,963 utils Transient email send failure; retrying. subject=Verify your TalentOrbit email address from_email=harshmbhogayata@gmail.com recipients=['retryverify@example.com'] error_code=smtp_unavailable attempt=1/2
+WARNING 2026-03-15 18:48:41,918 utils Transient email send failure; retrying. subject=Verify your TalentOrbit email address from_email=harshmbhogayata@gmail.com recipients=['resendfail@example.com'] error_code=smtp_unavailable attempt=1/2
+ERROR 2026-03-15 18:48:41,918 utils Error sending email. subject=Verify your TalentOrbit email address from_email=harshmbhogayata@gmail.com recipients=['resendfail@example.com'] error_code=smtp_unavailable attempt=2/2
+Traceback (most recent call last):
+  File "C:\Users\harsh\Desktop\TalentOrbit\core\utils.py", line 254, in send_email_result
+    sent_count = django_send_mail(
+        subject,
+    ...<3 lines>...
+        fail_silently=False,
+    )
+  File "C:\Python313\Lib\unittest\mock.py", line 1169, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\unittest\mock.py", line 1173, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\unittest\mock.py", line 1228, in _execute_mock_call
+    raise effect
+  File "C:\Users\harsh\Desktop\TalentOrbit\core\utils.py", line 254, in send_email_result
+    sent_count = django_send_mail(
+        subject,
+    ...<3 lines>...
+        fail_silently=False,
+    )
+  File "C:\Python313\Lib\unittest\mock.py", line 1169, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\unittest\mock.py", line 1173, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\unittest\mock.py", line 1228, in _execute_mock_call
+    raise effect
+smtplib.SMTPServerDisconnected: connection lost
+WARNING 2026-03-15 18:49:21,638 utils Configured PUBLIC_APP_URL is invalid: not-a-valid-url
+WARNING 2026-03-15 18:49:21,638 utils Verification email skipped because the public URL could not be resolved. user=1 error_code=public_base_url_invalid
+ERROR 2026-03-15 18:49:23,124 utils Email backend does not support external delivery. backend=django.core.mail.backends.console.EmailBackend subject=Verify your TalentOrbit email address recipients=['consoleverify@example.com']
+WARNING 2026-03-15 18:49:24,606 utils Transient email send failure; retrying. subject=Verify your TalentOrbit email address from_email=harshmbhogayata@gmail.com recipients=['retryverify@example.com'] error_code=smtp_unavailable attempt=1/2
+WARNING 2026-03-15 18:49:26,574 utils Transient email send failure; retrying. subject=Verify your TalentOrbit email address from_email=harshmbhogayata@gmail.com recipients=['resendfail@example.com'] error_code=smtp_unavailable attempt=1/2
+ERROR 2026-03-15 18:49:26,574 utils Error sending email. subject=Verify your TalentOrbit email address from_email=harshmbhogayata@gmail.com recipients=['resendfail@example.com'] error_code=smtp_unavailable attempt=2/2
+Traceback (most recent call last):
+  File "C:\Users\harsh\Desktop\TalentOrbit\core\utils.py", line 254, in send_email_result
+    sent_count = django_send_mail(
+        subject,
+    ...<3 lines>...
+        fail_silently=False,
+    )
+  File "C:\Python313\Lib\unittest\mock.py", line 1169, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\unittest\mock.py", line 1173, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\unittest\mock.py", line 1228, in _execute_mock_call
+    raise effect
+  File "C:\Users\harsh\Desktop\TalentOrbit\core\utils.py", line 254, in send_email_result
+    sent_count = django_send_mail(
+        subject,
+    ...<3 lines>...
+        fail_silently=False,
+    )
+  File "C:\Python313\Lib\unittest\mock.py", line 1169, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\unittest\mock.py", line 1173, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\unittest\mock.py", line 1228, in _execute_mock_call
+    raise effect
+smtplib.SMTPServerDisconnected: connection lost
+WARNING 2026-03-15 18:49:47,530 log Too Many Requests: /login/
+WARNING 2026-03-15 18:49:47,530 log Too Many Requests: /login/
+WARNING 2026-03-15 18:49:47,531 log Too Many Requests: /login/
+WARNING 2026-03-15 18:49:47,531 log Too Many Requests: /login/
+WARNING 2026-03-15 18:50:19,810 log Not Found: /user/applications/1/withdraw/
+WARNING 2026-03-15 19:21:12,605 utils Configured PUBLIC_APP_URL is invalid: not-a-valid-url
+WARNING 2026-03-15 19:21:12,605 utils Verification email skipped because the public URL could not be resolved. user=1 error_code=public_base_url_invalid
+ERROR 2026-03-15 19:21:14,051 utils Email backend does not support external delivery. backend=django.core.mail.backends.console.EmailBackend subject=Verify your TalentOrbit email address recipients=['consoleverify@example.com']
+WARNING 2026-03-15 19:21:15,031 utils Transient email send failure; retrying. subject=Verify your TalentOrbit email address from_email=harshmbhogayata@gmail.com recipients=['fallbackverify@example.com'] error_code=smtp_unavailable transport=smtp-primary round=1/2
+WARNING 2026-03-15 19:21:16,006 utils Transient email send failure; retrying. subject=Verify your TalentOrbit email address from_email=harshmbhogayata@gmail.com recipients=['retryverify@example.com'] error_code=smtp_unavailable transport=default round=1/2
+WARNING 2026-03-15 19:21:17,961 utils Transient email send failure; retrying. subject=Verify your TalentOrbit email address from_email=harshmbhogayata@gmail.com recipients=['resendfail@example.com'] error_code=smtp_unavailable transport=default round=1/2
+ERROR 2026-03-15 19:21:17,961 utils Error sending email. subject=Verify your TalentOrbit email address from_email=harshmbhogayata@gmail.com recipients=['resendfail@example.com'] error_code=smtp_unavailable transport=default round=2/2
+Traceback (most recent call last):
+  File "C:\Users\harsh\Desktop\TalentOrbit\core\utils.py", line 303, in send_email_result
+    sent_count = django_send_mail(
+        subject,
+    ...<4 lines>...
+        connection=connection,
+    )
+  File "C:\Python313\Lib\unittest\mock.py", line 1169, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\unittest\mock.py", line 1173, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\unittest\mock.py", line 1228, in _execute_mock_call
+    raise effect
+  File "C:\Users\harsh\Desktop\TalentOrbit\core\utils.py", line 303, in send_email_result
+    sent_count = django_send_mail(
+        subject,
+    ...<4 lines>...
+        connection=connection,
+    )
+  File "C:\Python313\Lib\unittest\mock.py", line 1169, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\unittest\mock.py", line 1173, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\unittest\mock.py", line 1228, in _execute_mock_call
+    raise effect
+smtplib.SMTPServerDisconnected: connection lost
+WARNING 2026-03-15 19:22:08,563 utils Configured PUBLIC_APP_URL is invalid: not-a-valid-url
+WARNING 2026-03-15 19:22:08,563 utils Verification email skipped because the public URL could not be resolved. user=1 error_code=public_base_url_invalid
+ERROR 2026-03-15 19:22:10,047 utils Email backend does not support external delivery. backend=django.core.mail.backends.console.EmailBackend subject=Verify your TalentOrbit email address recipients=['consoleverify@example.com']
+WARNING 2026-03-15 19:22:11,035 utils Transient email send failure; retrying. subject=Verify your TalentOrbit email address from_email=harshmbhogayata@gmail.com recipients=['fallbackverify@example.com'] error_code=smtp_unavailable transport=smtp-primary round=1/2
+WARNING 2026-03-15 19:22:12,025 utils Transient email send failure; retrying. subject=Verify your TalentOrbit email address from_email=harshmbhogayata@gmail.com recipients=['retryverify@example.com'] error_code=smtp_unavailable transport=default round=1/2
+WARNING 2026-03-15 19:22:14,005 utils Transient email send failure; retrying. subject=Verify your TalentOrbit email address from_email=harshmbhogayata@gmail.com recipients=['resendfail@example.com'] error_code=smtp_unavailable transport=default round=1/2
+ERROR 2026-03-15 19:22:14,005 utils Error sending email. subject=Verify your TalentOrbit email address from_email=harshmbhogayata@gmail.com recipients=['resendfail@example.com'] error_code=smtp_unavailable transport=default round=2/2
+Traceback (most recent call last):
+  File "C:\Users\CodexSandboxOffline\.codex\.sandbox\cwd\84dbf9d05defa96a\core\utils.py", line 303, in send_email_result
+    sent_count = django_send_mail(
+        subject,
+    ...<4 lines>...
+        connection=connection,
+    )
+  File "C:\Python313\Lib\unittest\mock.py", line 1169, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\unittest\mock.py", line 1173, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\unittest\mock.py", line 1228, in _execute_mock_call
+    raise effect
+  File "C:\Users\CodexSandboxOffline\.codex\.sandbox\cwd\84dbf9d05defa96a\core\utils.py", line 303, in send_email_result
+    sent_count = django_send_mail(
+        subject,
+    ...<4 lines>...
+        connection=connection,
+    )
+  File "C:\Python313\Lib\unittest\mock.py", line 1169, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\unittest\mock.py", line 1173, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\unittest\mock.py", line 1228, in _execute_mock_call
+    raise effect
+smtplib.SMTPServerDisconnected: connection lost
+WARNING 2026-03-15 19:22:35,134 log Too Many Requests: /login/
+WARNING 2026-03-15 19:22:35,134 log Too Many Requests: /login/
+WARNING 2026-03-15 19:22:35,135 log Too Many Requests: /login/
+WARNING 2026-03-15 19:22:35,135 log Too Many Requests: /login/
+WARNING 2026-03-15 19:23:07,685 log Not Found: /user/applications/1/withdraw/
+WARNING 2026-03-15 19:23:23,908 utils Transient email send failure; retrying. subject=TalentOrbit email delivery check from_email=harshmbhogayata@gmail.com recipients=['harshmbhogayata@gmail.com'] error_code=network_error transport=smtp-primary round=1/2
+WARNING 2026-03-15 19:23:23,932 utils Transient email send failure; retrying. subject=TalentOrbit email delivery check from_email=harshmbhogayata@gmail.com recipients=['harshmbhogayata@gmail.com'] error_code=network_error transport=smtp-fallback round=1/2
+WARNING 2026-03-15 19:23:24,935 utils Transient email send failure; retrying. subject=TalentOrbit email delivery check from_email=harshmbhogayata@gmail.com recipients=['harshmbhogayata@gmail.com'] error_code=network_error transport=smtp-primary round=2/2
+ERROR 2026-03-15 19:23:24,974 utils Error sending email. subject=TalentOrbit email delivery check from_email=harshmbhogayata@gmail.com recipients=['harshmbhogayata@gmail.com'] error_code=network_error transport=smtp-fallback round=2/2
+Traceback (most recent call last):
+  File "C:\Users\harsh\Desktop\TalentOrbit\core\utils.py", line 303, in send_email_result
+    sent_count = django_send_mail(
+        subject,
+    ...<4 lines>...
+        connection=connection,
+    )
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\utils\deprecation.py", line 268, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\core\mail\__init__.py", line 108, in send_mail
+    return mail.send()
+           ~~~~~~~~~^^
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\core\mail\message.py", line 358, in send
+    return self.get_connection(fail_silently).send_messages([self])
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\core\mail\backends\smtp.py", line 130, in send_messages
+    new_conn_created = self.open()
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\core\mail\backends\smtp.py", line 88, in open
+    self.connection = self.connection_class(
+                      ~~~~~~~~~~~~~~~~~~~~~^
+        self.host, self.port, **connection_params
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Python313\Lib\smtplib.py", line 1022, in __init__
+    SMTP.__init__(self, host, port, local_hostname, timeout,
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                  source_address)
+                  ^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\smtplib.py", line 255, in __init__
+    (code, msg) = self.connect(host, port)
+                  ~~~~~~~~~~~~^^^^^^^^^^^^
+  File "C:\Python313\Lib\smtplib.py", line 341, in connect
+    self.sock = self._get_socket(host, port, self.timeout)
+                ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\smtplib.py", line 1028, in _get_socket
+    new_socket = super()._get_socket(host, port, timeout)
+  File "C:\Python313\Lib\smtplib.py", line 312, in _get_socket
+    return socket.create_connection((host, port), timeout,
+           ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+                                    self.source_address)
+                                    ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\socket.py", line 864, in create_connection
+    raise exceptions[0]
+  File "C:\Python313\Lib\socket.py", line 849, in create_connection
+    sock.connect(sa)
+    ~~~~~~~~~~~~^^^^
+PermissionError: [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions
+WARNING 2026-03-15 19:38:01,301 utils Configured PUBLIC_APP_URL is invalid: not-a-valid-url
+WARNING 2026-03-15 19:38:01,301 utils Verification email skipped because the public URL could not be resolved. user=1 error_code=public_base_url_invalid
+ERROR 2026-03-15 19:38:02,724 utils Email backend does not support external delivery. backend=django.core.mail.backends.console.EmailBackend subject=Verify your TalentOrbit email address recipients=['consoleverify@example.com']
+WARNING 2026-03-15 19:38:03,694 utils Transient email send failure; retrying. subject=Verify your TalentOrbit email address from_email=harshmbhogayata@gmail.com recipients=['fallbackverify@example.com'] error_code=smtp_unavailable transport=smtp-primary round=1/1
+ERROR 2026-03-15 19:38:04,643 utils Error sending email. subject=Verify your TalentOrbit email address from_email=harshmbhogayata@gmail.com recipients=['retryverify@example.com'] error_code=smtp_unavailable transport=default round=1/1
+Traceback (most recent call last):
+  File "C:\Users\harsh\Desktop\TalentOrbit\core\utils.py", line 335, in send_email_result
+    sent_count = django_send_mail(
+        subject,
+    ...<4 lines>...
+        connection=connection,
+    )
+  File "C:\Python313\Lib\unittest\mock.py", line 1169, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\unittest\mock.py", line 1173, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\unittest\mock.py", line 1232, in _execute_mock_call
+    raise result
+smtplib.SMTPServerDisconnected: connection lost
+ERROR 2026-03-15 19:38:06,574 utils Error sending email. subject=Verify your TalentOrbit email address from_email=harshmbhogayata@gmail.com recipients=['resendfail@example.com'] error_code=smtp_unavailable transport=default round=1/1
+Traceback (most recent call last):
+  File "C:\Users\harsh\Desktop\TalentOrbit\core\utils.py", line 335, in send_email_result
+    sent_count = django_send_mail(
+        subject,
+    ...<4 lines>...
+        connection=connection,
+    )
+  File "C:\Python313\Lib\unittest\mock.py", line 1169, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\unittest\mock.py", line 1173, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\unittest\mock.py", line 1228, in _execute_mock_call
+    raise effect
+smtplib.SMTPServerDisconnected: connection lost
+WARNING 2026-03-15 19:41:37,032 utils Configured PUBLIC_APP_URL is invalid: not-a-valid-url
+WARNING 2026-03-15 19:41:37,032 utils Verification email skipped because the public URL could not be resolved. user=1 error_code=public_base_url_invalid
+ERROR 2026-03-15 19:41:38,529 utils Email backend does not support external delivery. backend=django.core.mail.backends.console.EmailBackend subject=Verify your TalentOrbit email address recipients=['consoleverify@example.com']
+WARNING 2026-03-15 19:41:39,506 utils Transient email send failure; retrying. subject=Verify your TalentOrbit email address from_email=harshmbhogayata@gmail.com recipients=['fallbackverify@example.com'] error_code=smtp_unavailable transport=smtp-primary round=1/1
+ERROR 2026-03-15 19:41:40,487 utils Error sending email. subject=Verify your TalentOrbit email address from_email=harshmbhogayata@gmail.com recipients=['retryverify@example.com'] error_code=smtp_unavailable transport=default round=1/1
+Traceback (most recent call last):
+  File "C:\Users\harsh\Desktop\TalentOrbit\core\utils.py", line 335, in send_email_result
+    sent_count = django_send_mail(
+        subject,
+    ...<4 lines>...
+        connection=connection,
+    )
+  File "C:\Python313\Lib\unittest\mock.py", line 1169, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\unittest\mock.py", line 1173, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\unittest\mock.py", line 1232, in _execute_mock_call
+    raise result
+smtplib.SMTPServerDisconnected: connection lost
+WARNING 2026-03-15 19:41:42,451 utils Transient email send failure; retrying. subject=Verify your TalentOrbit email address from_email=harshmbhogayata@gmail.com recipients=['resendfail@example.com'] error_code=smtp_unavailable transport=default round=1/2
+ERROR 2026-03-15 19:41:42,451 utils Error sending email. subject=Verify your TalentOrbit email address from_email=harshmbhogayata@gmail.com recipients=['resendfail@example.com'] error_code=smtp_unavailable transport=default round=2/2
+Traceback (most recent call last):
+  File "C:\Users\harsh\Desktop\TalentOrbit\core\utils.py", line 335, in send_email_result
+    sent_count = django_send_mail(
+        subject,
+    ...<4 lines>...
+        connection=connection,
+    )
+  File "C:\Python313\Lib\unittest\mock.py", line 1169, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\unittest\mock.py", line 1173, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\unittest\mock.py", line 1228, in _execute_mock_call
+    raise effect
+  File "C:\Users\harsh\Desktop\TalentOrbit\core\utils.py", line 335, in send_email_result
+    sent_count = django_send_mail(
+        subject,
+    ...<4 lines>...
+        connection=connection,
+    )
+  File "C:\Python313\Lib\unittest\mock.py", line 1169, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\unittest\mock.py", line 1173, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\unittest\mock.py", line 1228, in _execute_mock_call
+    raise effect
+smtplib.SMTPServerDisconnected: connection lost
+WARNING 2026-03-15 19:41:42,946 utils Transient email send failure; retrying. subject=Verify your TalentOrbit email address from_email=harshmbhogayata@gmail.com recipients=['resendtimeout@example.com'] error_code=smtp_unavailable transport=smtp-primary round=1/2
+WARNING 2026-03-15 19:42:17,877 utils Configured PUBLIC_APP_URL is invalid: not-a-valid-url
+WARNING 2026-03-15 19:42:17,878 utils Verification email skipped because the public URL could not be resolved. user=1 error_code=public_base_url_invalid
+ERROR 2026-03-15 19:42:19,319 utils Email backend does not support external delivery. backend=django.core.mail.backends.console.EmailBackend subject=Verify your TalentOrbit email address recipients=['consoleverify@example.com']
+WARNING 2026-03-15 19:42:20,287 utils Transient email send failure; retrying. subject=Verify your TalentOrbit email address from_email=harshmbhogayata@gmail.com recipients=['fallbackverify@example.com'] error_code=smtp_unavailable transport=smtp-primary round=1/2
+WARNING 2026-03-15 19:42:21,257 utils Transient email send failure; retrying. subject=Verify your TalentOrbit email address from_email=harshmbhogayata@gmail.com recipients=['retryverify@example.com'] error_code=smtp_unavailable transport=default round=1/2
+ERROR 2026-03-15 19:42:23,195 utils Error sending email. subject=Verify your TalentOrbit email address from_email=harshmbhogayata@gmail.com recipients=['resendfail@example.com'] error_code=smtp_unavailable transport=default round=1/1
+Traceback (most recent call last):
+  File "C:\Users\harsh\Desktop\TalentOrbit\core\utils.py", line 335, in send_email_result
+    sent_count = django_send_mail(
+        subject,
+    ...<4 lines>...
+        connection=connection,
+    )
+  File "C:\Python313\Lib\unittest\mock.py", line 1169, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\unittest\mock.py", line 1173, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\unittest\mock.py", line 1228, in _execute_mock_call
+    raise effect
+smtplib.SMTPServerDisconnected: connection lost
+WARNING 2026-03-15 19:42:23,688 utils Transient email send failure; retrying. subject=Verify your TalentOrbit email address from_email=harshmbhogayata@gmail.com recipients=['resendtimeout@example.com'] error_code=smtp_unavailable transport=smtp-primary round=1/1
+WARNING 2026-03-15 19:43:02,868 utils Configured PUBLIC_APP_URL is invalid: not-a-valid-url
+WARNING 2026-03-15 19:43:02,868 utils Verification email skipped because the public URL could not be resolved. user=1 error_code=public_base_url_invalid
+ERROR 2026-03-15 19:43:04,330 utils Email backend does not support external delivery. backend=django.core.mail.backends.console.EmailBackend subject=Verify your TalentOrbit email address recipients=['consoleverify@example.com']
+WARNING 2026-03-15 19:43:05,303 utils Transient email send failure; retrying. subject=Verify your TalentOrbit email address from_email=harshmbhogayata@gmail.com recipients=['fallbackverify@example.com'] error_code=smtp_unavailable transport=smtp-primary round=1/2
+WARNING 2026-03-15 19:43:06,271 utils Transient email send failure; retrying. subject=Verify your TalentOrbit email address from_email=harshmbhogayata@gmail.com recipients=['retryverify@example.com'] error_code=smtp_unavailable transport=default round=1/2
+ERROR 2026-03-15 19:43:08,230 utils Error sending email. subject=Verify your TalentOrbit email address from_email=harshmbhogayata@gmail.com recipients=['resendfail@example.com'] error_code=smtp_unavailable transport=default round=1/1
+Traceback (most recent call last):
+  File "C:\Users\harsh\Desktop\TalentOrbit\core\utils.py", line 335, in send_email_result
+    sent_count = django_send_mail(
+        subject,
+    ...<4 lines>...
+        connection=connection,
+    )
+  File "C:\Python313\Lib\unittest\mock.py", line 1169, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\unittest\mock.py", line 1173, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\unittest\mock.py", line 1228, in _execute_mock_call
+    raise effect
+smtplib.SMTPServerDisconnected: connection lost
+WARNING 2026-03-15 19:43:08,727 utils Transient email send failure; retrying. subject=Verify your TalentOrbit email address from_email=harshmbhogayata@gmail.com recipients=['resendtimeout@example.com'] error_code=smtp_unavailable transport=smtp-primary round=1/1
+WARNING 2026-03-15 19:43:29,415 log Too Many Requests: /login/
+WARNING 2026-03-15 19:43:29,415 log Too Many Requests: /login/
+WARNING 2026-03-15 19:43:29,416 log Too Many Requests: /login/
+WARNING 2026-03-15 19:43:29,416 log Too Many Requests: /login/
+WARNING 2026-03-15 19:44:01,382 log Not Found: /user/applications/1/withdraw/
+WARNING 2026-03-19 20:50:49,403 utils Configured PUBLIC_APP_URL is invalid: not-a-valid-url
+WARNING 2026-03-19 20:50:49,404 utils Verification email skipped because the public URL could not be resolved. user=1 error_code=public_base_url_invalid
+ERROR 2026-03-19 20:50:52,857 utils Email backend does not support external delivery. backend=django.core.mail.backends.console.EmailBackend subject=Verify your TalentOrbit email address recipients=['consoleverify@example.com']
+WARNING 2026-03-19 20:50:55,117 utils Transient email send failure; retrying. subject=Verify your TalentOrbit email address from_email=harshmbhogayata@gmail.com recipients=['fallbackverify@example.com'] error_code=smtp_unavailable transport=smtp-primary round=1/2
+WARNING 2026-03-19 20:50:57,385 utils Transient email send failure; retrying. subject=Verify your TalentOrbit email address from_email=harshmbhogayata@gmail.com recipients=['retryverify@example.com'] error_code=smtp_unavailable transport=default round=1/2
+ERROR 2026-03-19 20:51:02,171 utils Error sending email. subject=Verify your TalentOrbit email address from_email=harshmbhogayata@gmail.com recipients=['resendfail@example.com'] error_code=smtp_unavailable transport=default round=1/1
+Traceback (most recent call last):
+  File "C:\Users\harsh\Desktop\TalentOrbit\core\utils.py", line 335, in send_email_result
+    sent_count = django_send_mail(
+        subject,
+    ...<4 lines>...
+        connection=connection,
+    )
+  File "C:\Python313\Lib\unittest\mock.py", line 1169, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\unittest\mock.py", line 1173, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\unittest\mock.py", line 1228, in _execute_mock_call
+    raise effect
+smtplib.SMTPServerDisconnected: connection lost
+WARNING 2026-03-19 20:51:03,345 utils Transient email send failure; retrying. subject=Verify your TalentOrbit email address from_email=harshmbhogayata@gmail.com recipients=['resendtimeout@example.com'] error_code=smtp_unavailable transport=smtp-primary round=1/1
+WARNING 2026-03-19 20:52:52,407 utils Configured PUBLIC_APP_URL is invalid: not-a-valid-url
+WARNING 2026-03-19 20:52:52,408 utils Verification email skipped because the public URL could not be resolved. user=1 error_code=public_base_url_invalid
+ERROR 2026-03-19 20:52:55,853 utils Email backend does not support external delivery. backend=django.core.mail.backends.console.EmailBackend subject=Verify your TalentOrbit email address recipients=['consoleverify@example.com']
+WARNING 2026-03-19 20:52:58,133 utils Transient email send failure; retrying. subject=Verify your TalentOrbit email address from_email=harshmbhogayata@gmail.com recipients=['fallbackverify@example.com'] error_code=smtp_unavailable transport=smtp-primary round=1/2
+WARNING 2026-03-19 20:53:00,519 utils Transient email send failure; retrying. subject=Verify your TalentOrbit email address from_email=harshmbhogayata@gmail.com recipients=['retryverify@example.com'] error_code=smtp_unavailable transport=default round=1/2
+ERROR 2026-03-19 20:53:05,088 utils Error sending email. subject=Verify your TalentOrbit email address from_email=harshmbhogayata@gmail.com recipients=['resendfail@example.com'] error_code=smtp_unavailable transport=default round=1/1
+Traceback (most recent call last):
+  File "C:\Users\harsh\Desktop\TalentOrbit\core\utils.py", line 335, in send_email_result
+    sent_count = django_send_mail(
+        subject,
+    ...<4 lines>...
+        connection=connection,
+    )
+  File "C:\Python313\Lib\unittest\mock.py", line 1169, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\unittest\mock.py", line 1173, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\unittest\mock.py", line 1228, in _execute_mock_call
+    raise effect
+smtplib.SMTPServerDisconnected: connection lost
+WARNING 2026-03-19 20:53:06,260 utils Transient email send failure; retrying. subject=Verify your TalentOrbit email address from_email=harshmbhogayata@gmail.com recipients=['resendtimeout@example.com'] error_code=smtp_unavailable transport=smtp-primary round=1/1
+WARNING 2026-03-19 20:53:58,022 log Too Many Requests: /login/
+WARNING 2026-03-19 20:53:58,023 log Too Many Requests: /login/
+WARNING 2026-03-19 20:53:58,024 log Too Many Requests: /login/
+WARNING 2026-03-19 20:53:58,025 log Too Many Requests: /login/
+WARNING 2026-03-19 20:55:14,286 log Not Found: /user/applications/1/withdraw/
+ERROR 2026-03-19 21:11:47,234 log Internal Server Error: /api/search-suggestions/
+Traceback (most recent call last):
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\views\generic\base.py", line 106, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\rest_framework\views.py", line 515, in dispatch
+    response = self.handle_exception(exc)
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\rest_framework\views.py", line 475, in handle_exception
+    self.raise_uncaught_exception(exc)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\rest_framework\views.py", line 486, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\rest_framework\views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\rest_framework\decorators.py", line 50, in handler
+    return func(*args, **kwargs)
+  File "C:\Users\harsh\Desktop\TalentOrbit\core\views.py", line 1374, in search_suggestions
+    ).select_related('company').distinct().values(
+                                           ~~~~~~^
+        'id',
+        ^^^^^
+    ...<2 lines>...
+        company=F('company__company_name'),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )[:8]
+    ^
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\db\models\query.py", line 1414, in values
+    clone = self._values(*fields, **expressions)
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\db\models\query.py", line 1407, in _values
+    clone = clone.annotate(**expressions)
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\db\models\query.py", line 1699, in annotate
+    return self._annotate(args, kwargs, select=True)
+           ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\db\models\query.py", line 1744, in _annotate
+    raise ValueError(
+    ...<2 lines>...
+    )
+ValueError: The annotation 'company' conflicts with a field on the model.
+ERROR 2026-03-19 21:11:48,653 log Internal Server Error: /api/search-suggestions/
+Traceback (most recent call last):
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\views\generic\base.py", line 106, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\rest_framework\views.py", line 515, in dispatch
+    response = self.handle_exception(exc)
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\rest_framework\views.py", line 475, in handle_exception
+    self.raise_uncaught_exception(exc)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\rest_framework\views.py", line 486, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\rest_framework\views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\rest_framework\decorators.py", line 50, in handler
+    return func(*args, **kwargs)
+  File "C:\Users\harsh\Desktop\TalentOrbit\core\views.py", line 1374, in search_suggestions
+    ).select_related('company').distinct().values(
+                                           ~~~~~~^
+        'id',
+        ^^^^^
+    ...<2 lines>...
+        company=F('company__company_name'),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )[:8]
+    ^
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\db\models\query.py", line 1414, in values
+    clone = self._values(*fields, **expressions)
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\db\models\query.py", line 1407, in _values
+    clone = clone.annotate(**expressions)
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\db\models\query.py", line 1699, in annotate
+    return self._annotate(args, kwargs, select=True)
+           ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\db\models\query.py", line 1744, in _annotate
+    raise ValueError(
+    ...<2 lines>...
+    )
+ValueError: The annotation 'company' conflicts with a field on the model.
+WARNING 2026-03-19 21:13:59,832 utils Configured PUBLIC_APP_URL is invalid: not-a-valid-url
+WARNING 2026-03-19 21:13:59,833 utils Verification email skipped because the public URL could not be resolved. user=1 error_code=public_base_url_invalid
+ERROR 2026-03-19 21:14:03,301 utils Email backend does not support external delivery. backend=django.core.mail.backends.console.EmailBackend subject=Verify your TalentOrbit email address recipients=['consoleverify@example.com']
+WARNING 2026-03-19 21:14:05,598 utils Transient email send failure; retrying. subject=Verify your TalentOrbit email address from_email=harshmbhogayata@gmail.com recipients=['fallbackverify@example.com'] error_code=smtp_unavailable transport=smtp-primary round=1/2
+WARNING 2026-03-19 21:14:07,885 utils Transient email send failure; retrying. subject=Verify your TalentOrbit email address from_email=harshmbhogayata@gmail.com recipients=['retryverify@example.com'] error_code=smtp_unavailable transport=default round=1/2
+ERROR 2026-03-19 21:14:12,492 utils Error sending email. subject=Verify your TalentOrbit email address from_email=harshmbhogayata@gmail.com recipients=['resendfail@example.com'] error_code=smtp_unavailable transport=default round=1/1
+Traceback (most recent call last):
+  File "C:\Users\harsh\Desktop\TalentOrbit\core\utils.py", line 369, in send_email_result
+    sent_count = _send_message_with_optional_attachments(
+        subject,
+    ...<4 lines>...
+        attachments=attachments,
+    )
+  File "C:\Users\harsh\Desktop\TalentOrbit\core\utils.py", line 285, in _send_message_with_optional_attachments
+    return django_send_mail(
+        subject,
+    ...<4 lines>...
+        connection=connection,
+    )
+  File "C:\Python313\Lib\unittest\mock.py", line 1169, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\unittest\mock.py", line 1173, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\unittest\mock.py", line 1228, in _execute_mock_call
+    raise effect
+smtplib.SMTPServerDisconnected: connection lost
+WARNING 2026-03-19 21:14:13,685 utils Transient email send failure; retrying. subject=Verify your TalentOrbit email address from_email=harshmbhogayata@gmail.com recipients=['resendtimeout@example.com'] error_code=smtp_unavailable transport=smtp-primary round=1/1
+WARNING 2026-03-19 21:15:02,973 log Too Many Requests: /login/
+WARNING 2026-03-19 21:15:02,974 log Too Many Requests: /login/
+WARNING 2026-03-19 21:15:02,976 log Too Many Requests: /login/
+WARNING 2026-03-19 21:15:02,977 log Too Many Requests: /login/
+WARNING 2026-03-19 21:16:20,215 log Not Found: /user/applications/1/withdraw/
+WARNING 2026-03-19 21:30:53,008 utils Configured PUBLIC_APP_URL is invalid: not-a-valid-url
+WARNING 2026-03-19 21:30:53,009 utils Verification email skipped because the public URL could not be resolved. user=1 error_code=public_base_url_invalid
+ERROR 2026-03-19 21:30:56,834 utils Email backend does not support external delivery. backend=django.core.mail.backends.console.EmailBackend subject=Verify your TalentOrbit email address recipients=['consoleverify@example.com']
+WARNING 2026-03-19 21:30:59,565 utils Transient email send failure; retrying. subject=Verify your TalentOrbit email address from_email=harshmbhogayata@gmail.com recipients=['fallbackverify@example.com'] error_code=smtp_unavailable transport=smtp-primary round=1/2
+WARNING 2026-03-19 21:31:02,273 utils Transient email send failure; retrying. subject=Verify your TalentOrbit email address from_email=harshmbhogayata@gmail.com recipients=['retryverify@example.com'] error_code=smtp_unavailable transport=default round=1/2
+ERROR 2026-03-19 21:31:07,507 utils Error sending email. subject=Verify your TalentOrbit email address from_email=harshmbhogayata@gmail.com recipients=['resendfail@example.com'] error_code=smtp_unavailable transport=default round=1/1
+Traceback (most recent call last):
+  File "C:\Users\harsh\Desktop\TalentOrbit\core\utils.py", line 369, in send_email_result
+    sent_count = _send_message_with_optional_attachments(
+        subject,
+    ...<4 lines>...
+        attachments=attachments,
+    )
+  File "C:\Users\harsh\Desktop\TalentOrbit\core\utils.py", line 285, in _send_message_with_optional_attachments
+    return django_send_mail(
+        subject,
+    ...<4 lines>...
+        connection=connection,
+    )
+  File "C:\Python313\Lib\unittest\mock.py", line 1169, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\unittest\mock.py", line 1173, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\unittest\mock.py", line 1228, in _execute_mock_call
+    raise effect
+smtplib.SMTPServerDisconnected: connection lost
+WARNING 2026-03-19 21:31:08,850 utils Transient email send failure; retrying. subject=Verify your TalentOrbit email address from_email=harshmbhogayata@gmail.com recipients=['resendtimeout@example.com'] error_code=smtp_unavailable transport=smtp-primary round=1/1
+WARNING 2026-03-19 21:32:02,101 log Too Many Requests: /login/
+WARNING 2026-03-19 21:32:02,102 log Too Many Requests: /login/
+WARNING 2026-03-19 21:32:02,103 log Too Many Requests: /login/
+WARNING 2026-03-19 21:32:02,104 log Too Many Requests: /login/
+WARNING 2026-03-19 21:33:21,872 log Not Found: /user/applications/1/withdraw/
+WARNING 2026-03-20 12:37:31,476 log Not Found: /company/tenders/1/delete/
+ERROR 2026-03-20 12:53:23,296 log Internal Server Error: /user/applications/
+Traceback (most recent call last):
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\harsh\Desktop\TalentOrbit\core\views.py", line 68, in wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\harsh\Desktop\TalentOrbit\core\views.py", line 1237, in user_applications
+    return render(request, 'user/applications.html', {'page_obj': page_obj})
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loader.py", line 19, in get_template
+    raise TemplateDoesNotExist(template_name, chain=chain)
+django.template.exceptions.TemplateDoesNotExist: user/applications.html
+WARNING 2026-03-20 12:53:23,743 log Not Found: /favicon.ico
+WARNING 2026-03-20 13:10:00,616 log Not Found: /company/tenders/1/delete/
+WARNING 2026-03-20 13:10:34,804 utils Configured PUBLIC_APP_URL is invalid: not-a-valid-url
+WARNING 2026-03-20 13:10:34,805 utils Verification email skipped because the public URL could not be resolved. user=1 error_code=public_base_url_invalid
+ERROR 2026-03-20 13:10:38,140 utils Email backend does not support external delivery. backend=django.core.mail.backends.console.EmailBackend subject=Verify your TalentOrbit email address recipients=['consoleverify@example.com']
+WARNING 2026-03-20 13:10:40,609 utils Transient email send failure; retrying. subject=Verify your TalentOrbit email address from_email=harshmbhogayata@gmail.com recipients=['fallbackverify@example.com'] error_code=smtp_unavailable transport=smtp-primary round=1/2
+WARNING 2026-03-20 13:10:43,087 utils Transient email send failure; retrying. subject=Verify your TalentOrbit email address from_email=harshmbhogayata@gmail.com recipients=['retryverify@example.com'] error_code=smtp_unavailable transport=default round=1/2
+ERROR 2026-03-20 13:10:47,846 utils Error sending email. subject=Verify your TalentOrbit email address from_email=harshmbhogayata@gmail.com recipients=['resendfail@example.com'] error_code=smtp_unavailable transport=default round=1/1
+Traceback (most recent call last):
+  File "C:\Users\harsh\Desktop\TalentOrbit\core\utils.py", line 369, in send_email_result
+    sent_count = _send_message_with_optional_attachments(
+        subject,
+    ...<4 lines>...
+        attachments=attachments,
+    )
+  File "C:\Users\harsh\Desktop\TalentOrbit\core\utils.py", line 285, in _send_message_with_optional_attachments
+    return django_send_mail(
+        subject,
+    ...<4 lines>...
+        connection=connection,
+    )
+  File "C:\Python313\Lib\unittest\mock.py", line 1169, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\unittest\mock.py", line 1173, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\unittest\mock.py", line 1228, in _execute_mock_call
+    raise effect
+smtplib.SMTPServerDisconnected: connection lost
+WARNING 2026-03-20 13:12:26,215 log Not Found: /company/tenders/1/delete/
+WARNING 2026-03-20 13:12:58,497 utils Configured PUBLIC_APP_URL is invalid: not-a-valid-url
+WARNING 2026-03-20 13:12:58,498 utils Verification email skipped because the public URL could not be resolved. user=1 error_code=public_base_url_invalid
+ERROR 2026-03-20 13:13:02,158 utils Email backend does not support external delivery. backend=django.core.mail.backends.console.EmailBackend subject=Verify your TalentOrbit email address recipients=['consoleverify@example.com']
+WARNING 2026-03-20 13:13:04,928 utils Transient email send failure; retrying. subject=Verify your TalentOrbit email address from_email=harshmbhogayata@gmail.com recipients=['fallbackverify@example.com'] error_code=smtp_unavailable transport=smtp-primary round=1/2
+WARNING 2026-03-20 13:13:07,809 utils Transient email send failure; retrying. subject=Verify your TalentOrbit email address from_email=harshmbhogayata@gmail.com recipients=['retryverify@example.com'] error_code=smtp_unavailable transport=default round=1/2
+ERROR 2026-03-20 13:13:12,707 utils Error sending email. subject=Verify your TalentOrbit email address from_email=harshmbhogayata@gmail.com recipients=['resendfail@example.com'] error_code=smtp_unavailable transport=default round=1/1
+Traceback (most recent call last):
+  File "C:\Users\harsh\Desktop\TalentOrbit\core\utils.py", line 369, in send_email_result
+    sent_count = _send_message_with_optional_attachments(
+        subject,
+    ...<4 lines>...
+        attachments=attachments,
+    )
+  File "C:\Users\harsh\Desktop\TalentOrbit\core\utils.py", line 285, in _send_message_with_optional_attachments
+    return django_send_mail(
+        subject,
+    ...<4 lines>...
+        connection=connection,
+    )
+  File "C:\Python313\Lib\unittest\mock.py", line 1169, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\unittest\mock.py", line 1173, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\unittest\mock.py", line 1228, in _execute_mock_call
+    raise effect
+smtplib.SMTPServerDisconnected: connection lost
+WARNING 2026-03-20 13:13:14,211 utils Transient email send failure; retrying. subject=Verify your TalentOrbit email address from_email=harshmbhogayata@gmail.com recipients=['resendtimeout@example.com'] error_code=smtp_unavailable transport=smtp-primary round=1/1
+WARNING 2026-03-20 13:14:18,719 log Too Many Requests: /login/
+WARNING 2026-03-20 13:14:18,720 log Too Many Requests: /login/
+WARNING 2026-03-20 13:14:18,721 log Too Many Requests: /login/
+WARNING 2026-03-20 13:14:18,721 log Too Many Requests: /login/
+WARNING 2026-03-20 13:15:53,748 log Not Found: /user/applications/1/withdraw/
+WARNING 2026-03-20 13:41:38,680 log Not Found: /company/tenders/1/delete/
+WARNING 2026-03-20 13:42:06,448 utils Configured PUBLIC_APP_URL is invalid: not-a-valid-url
+WARNING 2026-03-20 13:42:06,448 utils Verification email skipped because the public URL could not be resolved. user=1 error_code=public_base_url_invalid
+ERROR 2026-03-20 13:42:09,419 utils Email backend does not support external delivery. backend=django.core.mail.backends.console.EmailBackend subject=Verify your TalentOrbit email address recipients=['consoleverify@example.com']
+WARNING 2026-03-20 13:42:11,385 utils Transient email send failure; retrying. subject=Verify your TalentOrbit email address from_email=harshmbhogayata@gmail.com recipients=['fallbackverify@example.com'] error_code=smtp_unavailable transport=smtp-primary round=1/2
+WARNING 2026-03-20 13:42:13,379 utils Transient email send failure; retrying. subject=Verify your TalentOrbit email address from_email=harshmbhogayata@gmail.com recipients=['retryverify@example.com'] error_code=smtp_unavailable transport=default round=1/2
+ERROR 2026-03-20 13:42:17,384 utils Error sending email. subject=Verify your TalentOrbit email address from_email=harshmbhogayata@gmail.com recipients=['resendfail@example.com'] error_code=smtp_unavailable transport=default round=1/1
+Traceback (most recent call last):
+  File "C:\Users\harsh\Desktop\TalentOrbit\core\utils.py", line 369, in send_email_result
+    sent_count = _send_message_with_optional_attachments(
+        subject,
+    ...<4 lines>...
+        attachments=attachments,
+    )
+  File "C:\Users\harsh\Desktop\TalentOrbit\core\utils.py", line 285, in _send_message_with_optional_attachments
+    return django_send_mail(
+        subject,
+    ...<4 lines>...
+        connection=connection,
+    )
+  File "C:\Python313\Lib\unittest\mock.py", line 1169, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\unittest\mock.py", line 1173, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\unittest\mock.py", line 1228, in _execute_mock_call
+    raise effect
+smtplib.SMTPServerDisconnected: connection lost
+WARNING 2026-03-20 13:42:18,412 utils Transient email send failure; retrying. subject=Verify your TalentOrbit email address from_email=harshmbhogayata@gmail.com recipients=['resendtimeout@example.com'] error_code=smtp_unavailable transport=smtp-primary round=1/1
+WARNING 2026-03-20 13:43:03,038 log Too Many Requests: /login/
+WARNING 2026-03-20 13:43:03,039 log Too Many Requests: /login/
+WARNING 2026-03-20 13:43:03,039 log Too Many Requests: /login/
+WARNING 2026-03-20 13:43:03,040 log Too Many Requests: /login/
+WARNING 2026-03-20 13:44:29,429 log Not Found: /user/applications/1/withdraw/
+WARNING 2026-03-20 14:17:50,528 log Not Found: /admin/companies/
+WARNING 2026-03-20 14:30:54,745 log Not Found: /admin/manage-companies/
+WARNING 2026-03-20 14:30:54,780 log Not Found: /admin/manage-categories/
+WARNING 2026-03-20 14:30:54,807 log Not Found: /admin/manage-quizzes/
+WARNING 2026-03-20 14:31:12,291 log Not Found: /admin/companies/
+WARNING 2026-03-20 14:31:12,315 log Not Found: /admin/categories/
+WARNING 2026-03-20 14:31:12,330 log Not Found: /admin/quizzes/
+WARNING 2026-03-20 14:31:12,345 log Not Found: /admin/users/
+WARNING 2026-03-20 15:48:19,991 log Not Found: /company/tenders/1/delete/
+WARNING 2026-03-20 15:48:59,497 utils Configured PUBLIC_APP_URL is invalid: not-a-valid-url
+WARNING 2026-03-20 15:48:59,498 utils Verification email skipped because the public URL could not be resolved. user=1 error_code=public_base_url_invalid
+WARNING 2026-03-20 15:50:49,025 log Not Found: /company/tenders/1/delete/
+WARNING 2026-03-20 15:51:23,888 utils Configured PUBLIC_APP_URL is invalid: not-a-valid-url
+WARNING 2026-03-20 15:51:23,888 utils Verification email skipped because the public URL could not be resolved. user=1 error_code=public_base_url_invalid
+ERROR 2026-03-20 15:51:27,823 utils Email backend does not support external delivery. backend=django.core.mail.backends.console.EmailBackend subject=Verify your TalentOrbit email address recipients=['consoleverify@example.com']
+WARNING 2026-03-20 15:51:30,471 utils Transient email send failure; retrying. subject=Verify your TalentOrbit email address from_email=harshmbhogayata@gmail.com recipients=['fallbackverify@example.com'] error_code=smtp_unavailable transport=smtp-primary round=1/2
+WARNING 2026-03-20 15:51:33,006 utils Transient email send failure; retrying. subject=Verify your TalentOrbit email address from_email=harshmbhogayata@gmail.com recipients=['retryverify@example.com'] error_code=smtp_unavailable transport=default round=1/2
+ERROR 2026-03-20 15:51:37,952 utils Error sending email. subject=Verify your TalentOrbit email address from_email=harshmbhogayata@gmail.com recipients=['resendfail@example.com'] error_code=smtp_unavailable transport=default round=1/1
+Traceback (most recent call last):
+  File "C:\Users\harsh\Desktop\TalentOrbit\core\utils.py", line 369, in send_email_result
+    sent_count = _send_message_with_optional_attachments(
+        subject,
+    ...<4 lines>...
+        attachments=attachments,
+    )
+  File "C:\Users\harsh\Desktop\TalentOrbit\core\utils.py", line 285, in _send_message_with_optional_attachments
+    return django_send_mail(
+        subject,
+    ...<4 lines>...
+        connection=connection,
+    )
+  File "C:\Python313\Lib\unittest\mock.py", line 1169, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\unittest\mock.py", line 1173, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\unittest\mock.py", line 1228, in _execute_mock_call
+    raise effect
+smtplib.SMTPServerDisconnected: connection lost
+WARNING 2026-03-20 15:51:39,269 utils Transient email send failure; retrying. subject=Verify your TalentOrbit email address from_email=harshmbhogayata@gmail.com recipients=['resendtimeout@example.com'] error_code=smtp_unavailable transport=smtp-primary round=1/1
+WARNING 2026-03-20 15:52:34,854 log Too Many Requests: /login/
+WARNING 2026-03-20 15:52:34,855 log Too Many Requests: /login/
+WARNING 2026-03-20 15:52:34,856 log Too Many Requests: /login/
+WARNING 2026-03-20 15:52:34,857 log Too Many Requests: /login/
+WARNING 2026-03-20 15:54:15,319 log Not Found: /user/applications/1/withdraw/
+WARNING 2026-03-20 16:58:50,266 log Not Found: /company/tenders/1/delete/
+WARNING 2026-03-20 16:59:22,872 utils Configured PUBLIC_APP_URL is invalid: not-a-valid-url
+WARNING 2026-03-20 16:59:22,873 utils Verification email skipped because the public URL could not be resolved. user=1 error_code=public_base_url_invalid
+ERROR 2026-03-20 16:59:26,446 utils Email backend does not support external delivery. backend=django.core.mail.backends.console.EmailBackend subject=Verify your TalentOrbit email address recipients=['consoleverify@example.com']
+WARNING 2026-03-20 16:59:28,856 utils Transient email send failure; retrying. subject=Verify your TalentOrbit email address from_email=harshmbhogayata@gmail.com recipients=['fallbackverify@example.com'] error_code=smtp_unavailable transport=smtp-primary round=1/2
+WARNING 2026-03-20 16:59:31,268 utils Transient email send failure; retrying. subject=Verify your TalentOrbit email address from_email=harshmbhogayata@gmail.com recipients=['retryverify@example.com'] error_code=smtp_unavailable transport=default round=1/2
+ERROR 2026-03-20 16:59:36,037 utils Error sending email. subject=Verify your TalentOrbit email address from_email=harshmbhogayata@gmail.com recipients=['resendfail@example.com'] error_code=smtp_unavailable transport=default round=1/1
+Traceback (most recent call last):
+  File "C:\Users\harsh\Desktop\TalentOrbit\core\utils.py", line 369, in send_email_result
+    sent_count = _send_message_with_optional_attachments(
+        subject,
+    ...<4 lines>...
+        attachments=attachments,
+    )
+  File "C:\Users\harsh\Desktop\TalentOrbit\core\utils.py", line 285, in _send_message_with_optional_attachments
+    return django_send_mail(
+        subject,
+    ...<4 lines>...
+        connection=connection,
+    )
+  File "C:\Python313\Lib\unittest\mock.py", line 1169, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\unittest\mock.py", line 1173, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\unittest\mock.py", line 1228, in _execute_mock_call
+    raise effect
+smtplib.SMTPServerDisconnected: connection lost
+WARNING 2026-03-20 16:59:37,261 utils Transient email send failure; retrying. subject=Verify your TalentOrbit email address from_email=harshmbhogayata@gmail.com recipients=['resendtimeout@example.com'] error_code=smtp_unavailable transport=smtp-primary round=1/1
+WARNING 2026-03-20 17:00:29,491 log Too Many Requests: /login/
+WARNING 2026-03-20 17:00:29,493 log Too Many Requests: /login/
+WARNING 2026-03-20 17:00:29,494 log Too Many Requests: /login/
+WARNING 2026-03-20 17:00:29,495 log Too Many Requests: /login/
+WARNING 2026-03-20 17:02:04,866 log Not Found: /user/applications/1/withdraw/
+ERROR 2026-03-20 17:14:49,313 log Internal Server Error: /jobs/3/
+Traceback (most recent call last):
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\harsh\Desktop\TalentOrbit\core\views.py", line 203, in job_detail
+    return render(request, template_name, {
+        'job': job,
+    ...<6 lines>...
+        ],
+    })
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loader.py", line 19, in get_template
+    raise TemplateDoesNotExist(template_name, chain=chain)
+django.template.exceptions.TemplateDoesNotExist: user/job_detail.html
+WARNING 2026-03-20 17:14:50,432 log Not Found: /favicon.ico
+ERROR 2026-03-20 17:15:08,201 log Internal Server Error: /jobs/3/
+Traceback (most recent call last):
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\harsh\Desktop\TalentOrbit\core\views.py", line 203, in job_detail
+    return render(request, template_name, {
+        'job': job,
+    ...<6 lines>...
+        ],
+    })
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loader.py", line 19, in get_template
+    raise TemplateDoesNotExist(template_name, chain=chain)
+django.template.exceptions.TemplateDoesNotExist: user/job_detail.html
+ERROR 2026-03-20 17:15:10,766 log Internal Server Error: /jobs/3/
+Traceback (most recent call last):
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\harsh\Desktop\TalentOrbit\core\views.py", line 203, in job_detail
+    return render(request, template_name, {
+        'job': job,
+    ...<6 lines>...
+        ],
+    })
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loader.py", line 19, in get_template
+    raise TemplateDoesNotExist(template_name, chain=chain)
+django.template.exceptions.TemplateDoesNotExist: user/job_detail.html
+ERROR 2026-03-20 17:15:13,077 log Internal Server Error: /jobs/11/
+Traceback (most recent call last):
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\harsh\Desktop\TalentOrbit\core\views.py", line 203, in job_detail
+    return render(request, template_name, {
+        'job': job,
+    ...<6 lines>...
+        ],
+    })
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loader.py", line 19, in get_template
+    raise TemplateDoesNotExist(template_name, chain=chain)
+django.template.exceptions.TemplateDoesNotExist: user/job_detail.html
+ERROR 2026-03-20 17:15:16,199 log Internal Server Error: /jobs/12/
+Traceback (most recent call last):
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\harsh\Desktop\TalentOrbit\core\views.py", line 203, in job_detail
+    return render(request, template_name, {
+        'job': job,
+    ...<6 lines>...
+        ],
+    })
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loader.py", line 19, in get_template
+    raise TemplateDoesNotExist(template_name, chain=chain)
+django.template.exceptions.TemplateDoesNotExist: user/job_detail.html
+ERROR 2026-03-20 17:26:29,682 log Internal Server Error: /jobs/1/
+Traceback (most recent call last):
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\harsh\Desktop\TalentOrbit\core\views.py", line 203, in job_detail
+    return render(request, template_name, {
+        'job': job,
+    ...<6 lines>...
+        ],
+    })
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\backends\django.py", line 79, in get_template
+    return Template(self.engine.get_template(template_name), self)
+                    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\engine.py", line 186, in get_template
+    template, origin = self.find_template(template_name)
+                       ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 157, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 199, in compile_nodelist
+    nodelist = parser.parse()
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 586, in parse
+    self.extend_nodelist(nodelist, compiled_result, token)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 607, in extend_nodelist
+    raise self.error(
+    ...<2 lines>...
+    )
+django.template.exceptions.TemplateSyntaxError: Template: C:\Users\harsh\Desktop\TalentOrbit\templates\jobs\job_detail.html, {% extends 'base.html' %} must be the first tag in 'jobs/job_detail.html'.
+ERROR 2026-03-20 17:26:34,477 log Internal Server Error: /jobs/1/
+Traceback (most recent call last):
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\harsh\Desktop\TalentOrbit\core\views.py", line 203, in job_detail
+    return render(request, template_name, {
+        'job': job,
+    ...<6 lines>...
+        ],
+    })
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\backends\django.py", line 79, in get_template
+    return Template(self.engine.get_template(template_name), self)
+                    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\engine.py", line 186, in get_template
+    template, origin = self.find_template(template_name)
+                       ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 157, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 199, in compile_nodelist
+    nodelist = parser.parse()
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 586, in parse
+    self.extend_nodelist(nodelist, compiled_result, token)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\harsh\Desktop\TalentOrbit\venv\Lib\site-packages\django\template\base.py", line 607, in extend_nodelist
+    raise self.error(
+    ...<2 lines>...
+    )
+django.template.exceptions.TemplateSyntaxError: Template: C:\Users\harsh\Desktop\TalentOrbit\templates\user\job_detail.html, {% extends 'dashboard_base.html' %} must be the first tag in 'user/job_detail.html'.
+WARNING 2026-03-20 17:47:31,288 log Not Found: /company/tenders/1/delete/
+WARNING 2026-03-20 17:48:03,189 utils Configured PUBLIC_APP_URL is invalid: not-a-valid-url
+WARNING 2026-03-20 17:48:03,190 utils Verification email skipped because the public URL could not be resolved. user=1 error_code=public_base_url_invalid
+ERROR 2026-03-20 17:48:06,673 utils Email backend does not support external delivery. backend=django.core.mail.backends.console.EmailBackend subject=Verify your TalentOrbit email address recipients=['consoleverify@example.com']
+WARNING 2026-03-20 17:48:09,127 utils Transient email send failure; retrying. subject=Verify your TalentOrbit email address from_email=harshmbhogayata@gmail.com recipients=['fallbackverify@example.com'] error_code=smtp_unavailable transport=smtp-primary round=1/2
+WARNING 2026-03-20 17:48:11,457 utils Transient email send failure; retrying. subject=Verify your TalentOrbit email address from_email=harshmbhogayata@gmail.com recipients=['retryverify@example.com'] error_code=smtp_unavailable transport=default round=1/2
+ERROR 2026-03-20 17:48:16,099 utils Error sending email. subject=Verify your TalentOrbit email address from_email=harshmbhogayata@gmail.com recipients=['resendfail@example.com'] error_code=smtp_unavailable transport=default round=1/1
+Traceback (most recent call last):
+  File "C:\Users\harsh\Desktop\TalentOrbit\core\utils.py", line 369, in send_email_result
+    sent_count = _send_message_with_optional_attachments(
+        subject,
+    ...<4 lines>...
+        attachments=attachments,
+    )
+  File "C:\Users\harsh\Desktop\TalentOrbit\core\utils.py", line 285, in _send_message_with_optional_attachments
+    return django_send_mail(
+        subject,
+    ...<4 lines>...
+        connection=connection,
+    )
+  File "C:\Python313\Lib\unittest\mock.py", line 1169, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\unittest\mock.py", line 1173, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\unittest\mock.py", line 1228, in _execute_mock_call
+    raise effect
+smtplib.SMTPServerDisconnected: connection lost
+WARNING 2026-03-20 17:48:17,330 utils Transient email send failure; retrying. subject=Verify your TalentOrbit email address from_email=harshmbhogayata@gmail.com recipients=['resendtimeout@example.com'] error_code=smtp_unavailable transport=smtp-primary round=1/1
+WARNING 2026-03-20 17:49:16,291 log Too Many Requests: /login/
+WARNING 2026-03-20 17:49:16,292 log Too Many Requests: /login/
+WARNING 2026-03-20 17:49:16,293 log Too Many Requests: /login/
+WARNING 2026-03-20 17:49:16,293 log Too Many Requests: /login/
+WARNING 2026-03-20 17:50:45,306 log Not Found: /company/tenders/1/delete/
+WARNING 2026-03-20 17:51:22,454 utils Configured PUBLIC_APP_URL is invalid: not-a-valid-url
+WARNING 2026-03-20 17:51:22,455 utils Verification email skipped because the public URL could not be resolved. user=1 error_code=public_base_url_invalid
+ERROR 2026-03-20 17:51:26,077 utils Email backend does not support external delivery. backend=django.core.mail.backends.console.EmailBackend subject=Verify your TalentOrbit email address recipients=['consoleverify@example.com']
+WARNING 2026-03-20 17:51:28,557 utils Transient email send failure; retrying. subject=Verify your TalentOrbit email address from_email=harshmbhogayata@gmail.com recipients=['fallbackverify@example.com'] error_code=smtp_unavailable transport=smtp-primary round=1/2
+WARNING 2026-03-20 17:51:30,951 utils Transient email send failure; retrying. subject=Verify your TalentOrbit email address from_email=harshmbhogayata@gmail.com recipients=['retryverify@example.com'] error_code=smtp_unavailable transport=default round=1/2
+ERROR 2026-03-20 17:51:35,839 utils Error sending email. subject=Verify your TalentOrbit email address from_email=harshmbhogayata@gmail.com recipients=['resendfail@example.com'] error_code=smtp_unavailable transport=default round=1/1
+Traceback (most recent call last):
+  File "C:\Users\harsh\Desktop\TalentOrbit\core\utils.py", line 369, in send_email_result
+    sent_count = _send_message_with_optional_attachments(
+        subject,
+    ...<4 lines>...
+        attachments=attachments,
+    )
+  File "C:\Users\harsh\Desktop\TalentOrbit\core\utils.py", line 285, in _send_message_with_optional_attachments
+    return django_send_mail(
+        subject,
+    ...<4 lines>...
+        connection=connection,
+    )
+  File "C:\Python313\Lib\unittest\mock.py", line 1169, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\unittest\mock.py", line 1173, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\unittest\mock.py", line 1228, in _execute_mock_call
+    raise effect
+smtplib.SMTPServerDisconnected: connection lost
+WARNING 2026-03-20 17:51:37,056 utils Transient email send failure; retrying. subject=Verify your TalentOrbit email address from_email=harshmbhogayata@gmail.com recipients=['resendtimeout@example.com'] error_code=smtp_unavailable transport=smtp-primary round=1/1
+WARNING 2026-03-20 17:52:40,925 log Too Many Requests: /login/
+WARNING 2026-03-20 17:52:40,926 log Too Many Requests: /login/
+WARNING 2026-03-20 17:52:40,927 log Too Many Requests: /login/
+WARNING 2026-03-20 17:52:40,929 log Too Many Requests: /login/
+WARNING 2026-03-20 17:54:22,176 log Not Found: /user/applications/1/withdraw/

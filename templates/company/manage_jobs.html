@@ -5,14 +5,32 @@
 {% endblock %}
 
 {% block dashboard_content %}
-<div class="d-flex justify-content-between align-items-center mb-4">
-    <h2 style="font-weight: 800;"><i class="bi bi-briefcase me-2" style="color: var(--primary-light);"></i>My Jobs</h2>
-    <a href="{% url 'company_post_job' %}" class="btn btn-primary-gradient"><i class="bi bi-plus-circle me-2"></i>Post
-        New Job</a>
+<div class="dash-page-header">
+    <div class="dash-page-title">
+        <div class="dash-page-icon">
+            <i class="bi bi-briefcase"></i>
+        </div>
+        <div class="dash-page-heading">
+            <h2>My Jobs</h2>
+            <p class="dash-page-subtitle">Track openings, manage status, and review candidate activity from one place.</p>
+        </div>
+    </div>
+    <div class="dash-page-actions">
+        <a href="{% url 'company_post_job' %}" class="dash-button dash-button-primary"><i class="bi bi-plus-circle"></i>Post New Job</a>
+    </div>
 </div>
 
-<div class="table-dark-custom">
-    <table class="table mb-0">
+<div class="dash-table-card">
+    <div class="table-responsive">
+    <table class="table mb-0 company-jobs-table dash-table-fit">
+        <colgroup>
+            <col style="width: 28%;">
+            <col style="width: 18%;">
+            <col style="width: 14%;">
+            <col style="width: 12%;">
+            <col style="width: 10%;">
+            <col style="width: 18%;">
+        </colgroup>
         <thead>
             <tr>
                 <th>Job Title</th>
@@ -26,29 +44,41 @@
         <tbody>
             {% for job in jobs %}
             <tr>
-                <td><strong>{{ job.title }}</strong></td>
-                <td>{{ job.category.name|default:"—" }}</td>
+                <td><strong class="dash-cell-wrap">{{ job.title }}</strong></td>
+                <td><span class="dash-cell-wrap">{% if job.category %}{{ job.category.name }}{% else %}Uncategorized{% endif %}</span></td>
                 <td><a href="{% url 'company_view_applications' job.pk %}" style="color: var(--primary-light);">{{ job.app_count }} applicants</a></td>
-                <td>{% if job.is_active %}<span class="badge-status badge-active">Active</span>{% else %}<span
-                        class="badge-status badge-rejected">Inactive</span>{% endif %}</td>
+                <td>{% if job.is_active %}<span class="badge-status badge-active">Active</span>{% else %}<span class="badge-status badge-rejected">Inactive</span>{% endif %}</td>
                 <td>{{ job.created_at|date:"M d" }}</td>
                 <td>
-                    <a href="{% url 'company_view_applications' job.pk %}" class="btn btn-sm btn-glass"
-                        title="Applications"><i class="bi bi-people"></i></a>
-                    <a href="{% url 'company_edit_job' job.pk %}" class="btn btn-sm btn-glass" title="Edit"><i
-                            class="bi bi-pencil"></i></a>
-                    <form method="POST" action="{% url 'company_toggle_job' job.pk %}" class="d-inline">
-                        {% csrf_token %}
-                        <button type="submit" class="btn btn-sm btn-glass" title="Toggle">
-                            <i class="bi bi-{% if job.is_active %}pause{% else %}play{% endif %}"></i>
-                        </button>
-                    </form>
-                    <form method="POST" action="{% url 'company_delete_job' job.pk %}" class="d-inline"
-                        onsubmit="return confirm('Delete?')">
-                        {% csrf_token %}
-                        <button type="submit" class="btn btn-sm"
-                            style="background: var(--danger-light); color: var(--danger);"><i class="bi bi-trash"></i></button>
-                    </form>
+                    <div class="dash-table-actions">
+                        <a href="{% url 'company_view_applications' job.pk %}"
+                            class="dash-button dash-icon-button dash-icon-button-info"
+                            title="View applications" aria-label="View applications">
+                            <i class="bi bi-people"></i>
+                        </a>
+                        <a href="{% url 'company_edit_job' job.pk %}"
+                            class="dash-button dash-icon-button dash-button-secondary"
+                            title="Edit job" aria-label="Edit job">
+                            <i class="bi bi-pencil"></i>
+                        </a>
+                        <form method="POST" action="{% url 'company_toggle_job' job.pk %}" class="dash-inline-form">
+                            {% csrf_token %}
+                            <button type="submit"
+                                class="dash-button dash-icon-button {% if job.is_active %}dash-icon-button-warning{% else %}dash-icon-button-success{% endif %}"
+                                title="{% if job.is_active %}Pause job{% else %}Activate job{% endif %}"
+                                aria-label="{% if job.is_active %}Pause job{% else %}Activate job{% endif %}">
+                                <i class="bi bi-{% if job.is_active %}pause{% else %}play{% endif %}"></i>
+                            </button>
+                        </form>
+                        <form method="POST" action="{% url 'company_delete_job' job.pk %}" class="dash-inline-form"
+                            onsubmit="return confirm('Delete this job?')">
+                            {% csrf_token %}
+                            <button type="submit" class="dash-button dash-icon-button dash-icon-button-danger"
+                                title="Delete job" aria-label="Delete job">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </form>
+                    </div>
                 </td>
             </tr>
             {% empty %}
@@ -59,5 +89,6 @@
             {% endfor %}
         </tbody>
     </table>
+    </div>
 </div>
 {% endblock %}

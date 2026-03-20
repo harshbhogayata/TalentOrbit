@@ -5,99 +5,245 @@
 {% endblock %}
 
 {% block dashboard_content %}
-<h2 style="font-weight: 800; margin-bottom: 0.5rem;">
-    Welcome back, <span class="gradient-text">{{ user.get_full_name|default:user.username }}</span>! 👋
-</h2>
-<p style="color: var(--text-muted); margin-bottom: 2rem;">Here's your career dashboard overview.</p>
-
-<!-- Quick Stats -->
-<div class="row g-3 mb-4 fade-up">
-    <div class="col-lg-3 col-md-6">
-        <div class="glass-card p-3 h-100 d-flex flex-column justify-content-center align-items-center text-center">
-            <div class="rounded-circle d-flex align-items-center justify-content-center mb-3"
-                style="width: 56px; height: 56px; background: rgba(59, 130, 246, 0.1); color: var(--brand-primary); font-size: 1.5rem;">
-                <i class="bi bi-inbox"></i>
-            </div>
-            <div class="display-6 fw-bold text-primary mb-1">{{ total_applications }}</div>
-            <div class="text-secondary small text-uppercase tracking-wider">Applications Sent</div>
+<div class="dash-page-header dash-page-header-compact">
+    <div class="dash-page-title">
+        <div class="dash-page-icon">
+            <i class="bi bi-stars"></i>
+        </div>
+        <div class="dash-page-heading">
+            <h2>Dashboard</h2>
+            <p class="dash-page-subtitle">Track applications, saved roles, learning activity, and account updates from one place.</p>
         </div>
     </div>
-    <div class="col-lg-3 col-md-6">
-        <div class="glass-card p-3 h-100 d-flex flex-column justify-content-center align-items-center text-center">
-            <div class="rounded-circle d-flex align-items-center justify-content-center mb-3"
-                style="width: 56px; height: 56px; background: rgba(16, 185, 129, 0.1); color: #34d399; font-size: 1.5rem;">
-                <i class="bi bi-{% if subscription_active %}check-circle{% else %}star{% endif %}"></i>
+    <div class="dash-page-actions">
+        <a href="{% url 'job_list' %}" class="dash-button dash-button-secondary"><i class="bi bi-search"></i>Browse Jobs</a>
+    </div>
+</div>
+
+<div class="dash-card dash-dashboard-hero mb-4">
+    <div class="dash-hero-grid">
+        <div class="dash-hero-copy">
+            <span class="dash-dashboard-kicker"><i class="bi bi-stars"></i>Candidate Workspace</span>
+            <h3>Welcome back, {{ user.get_full_name|default:user.username }}</h3>
+            <p>
+                {% if subscription_active %}
+                Your premium learning access is active. Keep applications moving and stay on top of new updates.
+                {% else %}
+                Keep applications moving, save promising roles, and upgrade when you want access to premium learning content.
+                {% endif %}
+            </p>
+            <div class="dash-hero-metrics">
+                <div class="dash-hero-metric">
+                    <strong>{{ total_applications }}</strong>
+                    <span>applications submitted</span>
+                </div>
+                <div class="dash-hero-metric">
+                    <strong>{{ saved_jobs_count }}</strong>
+                    <span>jobs saved for later</span>
+                </div>
+                <div class="dash-hero-metric">
+                    <strong>{{ unread_notification_count }}</strong>
+                    <span>unread updates waiting</span>
+                </div>
             </div>
-            <div class="display-6 fw-bold text-primary mb-1">{% if subscription_active %}Active{% else %}Free{% endif %}
-            </div>
-            <div class="text-secondary small text-uppercase tracking-wider">Subscription</div>
+        </div>
+        <div class="dash-action-grid">
+            <a href="{% url 'job_list' %}" class="dash-action-card">
+                <div class="dash-action-icon"><i class="bi bi-search"></i></div>
+                <div class="dash-action-copy">
+                    <strong>Browse Jobs</strong>
+                    <span>Explore new openings and apply quickly.</span>
+                </div>
+            </a>
+            <a href="{% url 'user_applications' %}" class="dash-action-card">
+                <div class="dash-action-icon"><i class="bi bi-inbox"></i></div>
+                <div class="dash-action-copy">
+                    <strong>My Applications</strong>
+                    <span>Review statuses and withdraw pending applications.</span>
+                </div>
+            </a>
+            <a href="{% url 'saved_jobs' %}" class="dash-action-card">
+                <div class="dash-action-icon"><i class="bi bi-bookmark-heart"></i></div>
+                <div class="dash-action-copy">
+                    <strong>Saved Jobs</strong>
+                    <span>Return to the roles you want to revisit.</span>
+                </div>
+            </a>
+            <a href="{% if subscription_active %}{% url 'video_list' %}{% else %}{% url 'subscription_page' %}{% endif %}" class="dash-action-card">
+                <div class="dash-action-icon"><i class="bi bi-{% if subscription_active %}play-circle{% else %}star{% endif %}"></i></div>
+                <div class="dash-action-copy">
+                    <strong>{% if subscription_active %}Skill Videos{% else %}Subscription{% endif %}</strong>
+                    <span>{% if subscription_active %}Continue learning from premium video content.{% else %}Upgrade to unlock premium learning resources.{% endif %}</span>
+                </div>
+            </a>
         </div>
     </div>
 </div>
 
-<!-- Recent Applications -->
-<div class="glass-card mb-4 fade-up">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h5 class="fw-bold text-primary mb-0"><i class="bi bi-inbox me-2 text-primary"></i>Recent Applications</h5>
-        <a href="{% url 'user_applications' %}" class="btn btn-glass btn-sm rounded-pill px-3">View All</a>
+<div class="row g-4 mb-4">
+    <div class="col-xl-3 col-md-6">
+        <div class="dash-card h-100">
+            <div class="dash-stat-card">
+                <div class="dash-stat-icon dash-tone-blue"><i class="bi bi-inbox"></i></div>
+                <div class="dash-stat-copy">
+                    <div class="dash-stat-value">{{ total_applications }}</div>
+                    <div class="dash-stat-label">Applications Sent</div>
+                    <div class="dash-stat-meta">Track every role you have applied for.</div>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="table-responsive">
-        <table class="table table-dark-custom align-middle">
-            <thead>
-                <tr>
-                    <th>Position</th>
-                    <th>Company</th>
-                    <th>Status</th>
-                    <th>Applied</th>
-                </tr>
-            </thead>
-            <tbody>
+    <div class="col-xl-3 col-md-6">
+        <div class="dash-card h-100">
+            <div class="dash-stat-card">
+                <div class="dash-stat-icon dash-tone-indigo"><i class="bi bi-bookmark-heart"></i></div>
+                <div class="dash-stat-copy">
+                    <div class="dash-stat-value">{{ saved_jobs_count }}</div>
+                    <div class="dash-stat-label">Saved Jobs</div>
+                    <div class="dash-stat-meta">Roles you have bookmarked for a later decision.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-3 col-md-6">
+        <div class="dash-card h-100">
+            <div class="dash-stat-card">
+                <div class="dash-stat-icon {% if subscription_active %}dash-tone-green{% else %}dash-tone-amber{% endif %}">
+                    <i class="bi bi-{% if subscription_active %}check-circle{% else %}star{% endif %}"></i>
+                </div>
+                <div class="dash-stat-copy">
+                    <div class="dash-stat-value">{{ quiz_attempt_count }}</div>
+                    <div class="dash-stat-label">Quiz Attempts</div>
+                    <div class="dash-stat-meta">Practice sessions completed to sharpen interview readiness.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-3 col-md-6">
+        <div class="dash-card h-100">
+            <div class="dash-stat-card">
+                <div class="dash-stat-icon dash-tone-indigo"><i class="bi bi-bell"></i></div>
+                <div class="dash-stat-copy">
+                    <div class="dash-stat-value">{{ unread_notification_count }}</div>
+                    <div class="dash-stat-label">Unread Alerts</div>
+                    <div class="dash-stat-meta">Recent updates from applications, subscriptions, and platform activity.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4">
+    <div class="col-xl-7">
+        <div class="dash-card h-100">
+            <div class="dash-section-header">
+                <div class="dash-section-copy">
+                    <h3 class="dash-section-title">Recent Applications</h3>
+                    <p class="dash-section-subtitle">Latest movement across the jobs you applied for.</p>
+                </div>
+                <a href="{% url 'user_applications' %}" class="dash-button dash-button-secondary"><i class="bi bi-arrow-right-circle"></i>View All</a>
+            </div>
+            {% if applications %}
+            <div class="dash-stack-list">
                 {% for app in applications %}
-                <tr>
-                    <td>
-                        <a href="{% url 'job_detail' app.job.pk %}"
-                            class="text-primary text-decoration-none fw-bold hover-text-primary">
-                            {{ app.job.title }}
-                        </a>
-                    </td>
-                    <td class="text-secondary">{{ app.job.company.company_name }}</td>
-                    <td>
-                        <span class="badge badge-status badge-{{ app.status }}">{{ app.get_status_display }}</span>
-                    </td>
-                    <td class="text-secondary">{{ app.applied_at|date:"M d, Y" }}</td>
-                </tr>
-                {% empty %}
-                <tr>
-                    <td colspan="4" class="text-center py-5 text-secondary">
-                        <i class="bi bi-inbox d-block fs-2 mb-2 opacity-50"></i>
-                        No applications yet. <a href="{% url 'job_list' %}"
-                            class="text-primary text-decoration-none">Browse jobs</a>
-                    </td>
-                </tr>
+                <div class="dash-list-item">
+                    <div class="dash-mini-avatar"><i class="bi bi-briefcase"></i></div>
+                    <div class="dash-list-copy">
+                        <strong class="dash-cell-wrap">
+                            <a href="{% url 'job_detail' app.job.pk %}" class="text-decoration-none" style="color: var(--text-primary);">
+                                {{ app.job.title }}
+                            </a>
+                        </strong>
+                        <span class="dash-cell-wrap">{{ app.job.company.company_name }}</span>
+                    </div>
+                    <div class="dash-list-meta">
+                        <span class="badge-status badge-{{ app.status }}">{{ app.get_status_display }}</span>
+                        <span>{{ app.applied_at|date:"M d, Y" }}</span>
+                    </div>
+                </div>
                 {% endfor %}
-            </tbody>
-        </table>
+            </div>
+            {% else %}
+            <div class="dash-surface-panel text-center">
+                <strong class="d-block mb-2">No applications yet</strong>
+                <span class="dash-page-subtitle">Start browsing jobs to build your application history.</span>
+            </div>
+            {% endif %}
+        </div>
     </div>
-</div>
 
-<!-- Notifications -->
-{% if notifications %}
-<div class="glass-card fade-up">
-    <h5 class="fw-bold text-primary mb-4"><i class="bi bi-bell me-2 text-warning"></i>Unread Notifications</h5>
-    {% for n in notifications %}
-    <div class="d-flex gap-3 mb-3 p-3 rounded-3" style="background: rgba(0,0,0,0.02);">
-        <div class="rounded-circle d-flex align-items-center justify-content-center flex-shrink-0"
-            style="width: 40px; height: 40px; background: rgba(37, 99, 235, 0.1); color: var(--brand-primary);">
-            <i
-                class="bi bi-{% if n.notif_type == 'application' %}briefcase{% elif n.notif_type == 'subscription' %}star{% else %}bell{% endif %}"></i>
+    <div class="col-xl-5">
+        <div class="d-flex flex-column gap-4">
+            <div class="dash-card">
+                <div class="dash-section-header">
+                    <div class="dash-section-copy">
+                        <h3 class="dash-section-title">Quiz Activity</h3>
+                        <p class="dash-section-subtitle">Your latest practice sessions and outcomes.</p>
+                    </div>
+                    <a href="{% url 'quiz_history' %}" class="dash-button dash-button-secondary"><i class="bi bi-clock-history"></i>History</a>
+                </div>
+                {% if quiz_attempts %}
+                <div class="dash-stack-list">
+                    {% for attempt in quiz_attempts %}
+                    <div class="dash-list-item">
+                        <div class="dash-mini-avatar"><i class="bi bi-patch-question"></i></div>
+                        <div class="dash-list-copy">
+                            <strong class="dash-cell-wrap">{{ attempt.quiz.title }}</strong>
+                            <span>{{ attempt.score }} / {{ attempt.total_questions }} · {{ attempt.percentage }}%</span>
+                        </div>
+                        <div class="dash-list-meta">
+                            {% if attempt.passed %}
+                            <span class="badge-status badge-active">Passed</span>
+                            {% else %}
+                            <span class="badge-status badge-rejected">Retry</span>
+                            {% endif %}
+                            <span>{{ attempt.completed_at|date:"M d, Y" }}</span>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <div class="dash-surface-panel text-center">
+                    <strong class="d-block mb-2">No quiz activity yet</strong>
+                    <span class="dash-page-subtitle">Take a quiz to start building your history.</span>
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="dash-card">
+                <div class="dash-section-header">
+                    <div class="dash-section-copy">
+                        <h3 class="dash-section-title">Unread Notifications</h3>
+                        <p class="dash-section-subtitle">Keep up with application movement and account updates.</p>
+                    </div>
+                    <a href="{% url 'notifications' %}" class="dash-button dash-button-secondary"><i class="bi bi-bell"></i>Inbox</a>
+                </div>
+                {% if notifications %}
+                <div class="dash-stack-list">
+                    {% for n in notifications %}
+                    <a href="{% url 'notifications' %}" class="dash-list-item text-decoration-none">
+                        <div class="dash-mini-avatar">
+                            <i class="bi bi-{% if n.notif_type == 'application' %}briefcase{% elif n.notif_type == 'subscription' %}star{% else %}bell{% endif %}"></i>
+                        </div>
+                        <div class="dash-list-copy">
+                            <strong class="dash-cell-wrap">{{ n.title }}</strong>
+                            <span class="dash-cell-wrap">{{ n.message|truncatewords:14 }}</span>
+                        </div>
+                        <div class="dash-list-meta">
+                            <span class="badge-status badge-pending">Unread</span>
+                            <span>{{ n.created_at|timesince }} ago</span>
+                        </div>
+                    </a>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <div class="dash-surface-panel text-center">
+                    <strong class="d-block mb-2">Inbox is clear</strong>
+                    <span class="dash-page-subtitle">You do not have any unread notifications right now.</span>
+                </div>
+                {% endif %}
+            </div>
         </div>
-        <div class="flex-grow-1">
-            <div class="fw-bold text-primary mb-1">{{ n.title }}</div>
-            <div class="text-secondary small">{{ n.message|truncatewords:20 }}</div>
-        </div>
-        <small class="text-muted" style="white-space: nowrap;">{{ n.created_at|timesince }} ago</small>
     </div>
-    {% endfor %}
 </div>
-{% endif %}
 {% endblock %}

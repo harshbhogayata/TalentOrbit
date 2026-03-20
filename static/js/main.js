@@ -3,6 +3,7 @@
    ============================================= */
 
 document.addEventListener('DOMContentLoaded', () => {
+    const root = document.documentElement;
 
     // ── Scroll Reveal (Intersection Observer) ──────
     const revealElements = document.querySelectorAll('[data-animate]');
@@ -26,6 +27,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // ── Navbar Scroll Effect ───────────────────────
     const navbar = document.getElementById('mainNav');
     if (navbar) {
+        const syncNavOffset = () => {
+            const navHeight = Math.ceil(navbar.getBoundingClientRect().height);
+            root.style.setProperty('--nav-offset', `${navHeight}px`);
+            root.style.setProperty('--dashboard-nav-offset', `${navHeight}px`);
+        };
+
         const onScroll = () => {
             if (window.scrollY > 50) {
                 navbar.classList.add('scrolled');
@@ -33,7 +40,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 navbar.classList.remove('scrolled');
             }
         };
+        syncNavOffset();
         window.addEventListener('scroll', onScroll, { passive: true });
+        window.addEventListener('resize', syncNavOffset, { passive: true });
+        window.addEventListener('load', syncNavOffset, { once: true });
         onScroll();
     }
 

@@ -5,11 +5,33 @@
 {% endblock %}
 
 {% block dashboard_content %}
-<h2 style="font-weight: 800; margin-bottom: 2rem;"><i class="bi bi-inbox me-2"
-        style="color: var(--primary-light);"></i>My Applications</h2>
+<div class="dash-page-header">
+    <div class="dash-page-title">
+        <div class="dash-page-icon">
+            <i class="bi bi-inbox"></i>
+        </div>
+        <div class="dash-page-heading">
+            <h2>My Applications</h2>
+            <p class="dash-page-subtitle">Review every application, download submitted resumes, and withdraw pending ones if needed.</p>
+        </div>
+    </div>
+    <div class="dash-page-actions">
+        <a href="{% url 'job_list' %}" class="dash-button dash-button-secondary"><i class="bi bi-search"></i>Browse Jobs</a>
+    </div>
+</div>
 
-<div class="table-dark-custom">
-    <table class="table mb-0">
+<div class="dash-table-card">
+    <div class="table-responsive">
+    <table class="table mb-0 dash-table-fit">
+        <colgroup>
+            <col style="width: 22%;">
+            <col style="width: 18%;">
+            <col style="width: 10%;">
+            <col style="width: 12%;">
+            <col style="width: 14%;">
+            <col style="width: 10%;">
+            <col style="width: 14%;">
+        </colgroup>
         <thead>
             <tr>
                 <th>Position</th>
@@ -25,38 +47,46 @@
             {% for app in page_obj %}
             <tr>
                 <td>
-                    <a href="{% url 'user_application_detail' app.pk %}"
-                        style="color: var(--text-primary); font-weight: 500;">
-                        {{ app.job.title }}
+                    <a href="{% url 'user_application_detail' app.pk %}" class="text-decoration-none" style="color: var(--text-primary); font-weight: 600;">
+                        <span class="dash-cell-wrap">{{ app.job.title }}</span>
                     </a>
                 </td>
-                <td>{{ app.job.company.company_name }}</td>
-                <td>{{ app.job.get_job_type_display }}</td>
+                <td><span class="dash-cell-wrap">{{ app.job.company.company_name }}</span></td>
+                <td><span class="dash-cell-wrap">{{ app.job.get_job_type_display }}</span></td>
                 <td><span class="badge-status badge-{{ app.status }}">{{ app.get_status_display }}</span></td>
                 <td>{{ app.applied_at|date:"M d, Y" }}</td>
-                <td><a href="{{ app.resume.url }}" target="_blank" class="btn btn-glass btn-sm"><i
-                            class="bi bi-download"></i></a></td>
                 <td>
-                    {% if app.status == 'pending' %}
-                    <form method="POST" action="{% url 'withdraw_application' app.pk %}" class="d-inline"
-                        onsubmit="return confirm('Withdraw this application?')">
-                        {% csrf_token %}
-                        <button type="submit" class="btn btn-sm"
-                            style="background: var(--danger-light); color: var(--danger);" title="Withdraw Application">
-                            <i class="bi bi-x-circle"></i>
-                        </button>
-                    </form>
-                    {% endif %}
+                    <a href="{{ app.resume.url }}" target="_blank" class="dash-button dash-icon-button dash-icon-button-info" title="Download resume" aria-label="Download resume">
+                        <i class="bi bi-download"></i>
+                    </a>
+                </td>
+                <td>
+                    <div class="dash-table-actions">
+                        <a href="{% url 'user_application_detail' app.pk %}" class="dash-button dash-icon-button dash-button-secondary" title="View application" aria-label="View application">
+                            <i class="bi bi-eye"></i>
+                        </a>
+                        {% if app.status == 'pending' %}
+                        <form method="POST" action="{% url 'withdraw_application' app.pk %}" class="dash-inline-form"
+                            onsubmit="return confirm('Withdraw this application?')">
+                            {% csrf_token %}
+                            <button type="submit" class="dash-button dash-icon-button dash-icon-button-danger" title="Withdraw application" aria-label="Withdraw application">
+                                <i class="bi bi-x-circle"></i>
+                            </button>
+                        </form>
+                        {% endif %}
+                    </div>
                 </td>
             </tr>
             {% empty %}
             <tr>
-                <td colspan="7" class="text-center py-4" style="color: var(--text-muted);">No applications yet. <a
-                        href="{% url 'job_list' %}">Start browsing jobs!</a></td>
+                <td colspan="7" class="text-center py-4" style="color: var(--text-muted);">
+                    No applications yet. <a href="{% url 'job_list' %}">Start browsing jobs</a>.
+                </td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
+    </div>
 </div>
 
 {% include 'includes/pagination.html' %}

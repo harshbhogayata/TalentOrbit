@@ -1,6 +1,6 @@
 <li class="dash-nav-group">Overview</li>
 <li class="dash-nav-item">
-    <a class="dash-nav-link {% if current_page == 'dashboard' %}active{% endif %}" href="{% url 'admin_dashboard' %}">
+    <a class="dash-nav-link {% if current_page == 'dashboard' %}active{% endif %}" href="{% url 'dashboard' %}">
         <i class="bi bi-grid-1x2"></i> Dashboard
     </a>
 </li>
@@ -50,7 +50,7 @@
     </form>
 </li>
 <li class="dash-nav-item">
-    <a class="dash-nav-link {% if current_page == 'messages' %}active{% endif %}" href="{% url 'notifications' %}">
-        <i class="bi bi-envelope"></i> Messages
+    <a class="dash-nav-link {% if current_page == 'notifications' %}active{% endif %}" href="{% url 'notifications' %}">
+        <i class="bi bi-envelope"></i> Notifications
     </a>
 </li>
