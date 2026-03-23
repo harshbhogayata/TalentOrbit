@@ -1,38 +1,49 @@
-# Environment
+# Environment and virtualenvs
 .env
+.env.*
+!.env.example
 venv/
-*.pyc
-__pycache__/
+.venv/
+env/
 .claude/
 
-# Database
+# Python caches
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Databases
 db.sqlite3
 db.backup_*.sqlite3
+*.sqlite3
 *.sqlite3-shm
 *.sqlite3-wal
 *.sqlite3-journal
 
-# Media uploads
+# Runtime and generated application data
 media/
-
-# Static collection
 staticfiles/
-
-# Local generated artifacts
 logs/
 tmp/
 skills/
 .audit_file_list.txt
 *.log
+*.pid
 
-# IDE
+# Test and coverage output
+.coverage
+.coverage.*
+htmlcov/
+.pytest_cache/
+
+# IDE/editor files
 .idea/
 .vscode/
 *.swp
 *.swo
 
-# OS
+# OS files
 .DS_Store
 Thumbs.db
-
 nul
