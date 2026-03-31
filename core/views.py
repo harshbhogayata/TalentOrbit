@@ -6,6 +6,7 @@ Covers auth, dashboards, jobs, tenders, quizzes, videos, subscriptions.
 """
 
 import csv
+import logging
 import mimetypes
 import os
 
@@ -15,10 +16,9 @@ from django.contrib.auth import login, logout, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib import messages
-from django.core.mail import send_mail
 from django.core.paginator import Paginator
 from django.utils import timezone
-from datetime import timedelta
+from datetime import datetime, timedelta
 from django.utils.encoding import force_str
 from django.utils.http import urlsafe_base64_decode
 from django.utils.text import slugify
@@ -49,7 +49,10 @@ from .serializers import (
     SearchSuggestionItemSerializer,
     SearchSuggestionQuerySerializer,
 )
-from .utils import send_verification_email
+from .utils import send_email_result, send_verification_email
+
+
+logger = logging.getLogger(__name__)
 
 
 # ──────────────────────────────────────────────────────────────
@@ -80,6 +83,23 @@ def company_required(view_func):
 
 def user_required(view_func):
     return role_required('user')(view_func)
+
+
+def _require_approved_company(request, *, action_message):
+    try:
+        profile = request.user.company_profile
+    except CompanyProfile.DoesNotExist:
+        messages.error(request, "Company profile not found. Please contact support.")
+        return None
+
+    if profile.status != 'approved':
+        messages.warning(
+            request,
+            f'Your company needs admin approval before you can {action_message}.',
+        )
+        return None
+
+    return profile
 
 
 def get_open_jobs_queryset():
@@ -898,9 +918,8 @@ def company_profile(request):
 @company_required
 def company_post_job(request):
     """Company posts a new job."""
-    profile = request.user.company_profile
-    if profile.status != 'approved':
-        messages.warning(request, 'Your company needs admin approval before posting jobs.')
+    profile = _require_approved_company(request, action_message='post jobs')
+    if profile is None:
         return redirect('dashboard')
 
     if request.method == 'POST':
@@ -1041,7 +1060,9 @@ def admin_delete_job(request, pk):
 @company_required
 def company_tenders(request):
     """Company: view tenders (own + others)."""
-    profile = request.user.company_profile
+    profile = _require_approved_company(request, action_message='access tender workflows')
+    if profile is None:
+        return redirect('dashboard')
     my_tenders = Tender.objects.filter(posted_by=profile).prefetch_related('bids')
     other_tenders = Tender.objects.exclude(posted_by=profile).filter(status='open').select_related('posted_by')
     return render(request, 'company/tenders.html', {
@@ -1053,11 +1074,15 @@ def company_tenders(request):
 @company_required
 def company_create_tender(request):
     """Company: create a new tender."""
+    profile = _require_approved_company(request, action_message='access tender workflows')
+    if profile is None:
+        return redirect('dashboard')
+
     if request.method == 'POST':
         form = TenderForm(request.POST)
         if form.is_valid():
             tender = form.save(commit=False)
-            tender.posted_by = request.user.company_profile
+            tender.posted_by = profile
             tender.save()
             messages.success(request, 'Tender created successfully.')
             return redirect('company_tenders')
@@ -1069,8 +1094,11 @@ def company_create_tender(request):
 @company_required
 def company_tender_detail(request, pk):
     """View tender detail with bids."""
+    profile = _require_approved_company(request, action_message='access tender workflows')
+    if profile is None:
+        return redirect('dashboard')
+
     tender = get_object_or_404(Tender, pk=pk)
-    profile = request.user.company_profile
     is_owner = tender.posted_by == profile
     bids = tender.bids.all().select_related('bidder') if is_owner else None
     my_bid = TenderBid.objects.filter(tender=tender, bidder=profile).first() if not is_owner else None
@@ -1107,9 +1135,12 @@ def company_tender_detail(request, pk):
 @company_required
 def company_delete_tender(request, pk):
     """Delete a tender owned by the current company."""
+    profile = _require_approved_company(request, action_message='access tender workflows')
+    if profile is None:
+        return redirect('dashboard')
     if request.method != 'POST':
         return redirect('company_tenders')
-    tender = get_object_or_404(Tender, pk=pk, posted_by=request.user.company_profile)
+    tender = get_object_or_404(Tender, pk=pk, posted_by=profile)
     title = tender.title
     tender.delete()
     messages.success(request, f'Tender "{title}" deleted.')
@@ -1119,9 +1150,12 @@ def company_delete_tender(request, pk):
 @company_required
 def company_accept_bid(request, pk):
     """Accept a tender bid."""
+    profile = _require_approved_company(request, action_message='access tender workflows')
+    if profile is None:
+        return redirect('dashboard')
     if request.method != 'POST':
         return redirect('company_tenders')
-    bid = get_object_or_404(TenderBid, pk=pk, tender__posted_by=request.user.company_profile)
+    bid = get_object_or_404(TenderBid, pk=pk, tender__posted_by=profile)
     bid.is_accepted = True
     bid.save()
     bid.tender.status = 'awarded'
@@ -1339,6 +1373,30 @@ def quiz_list(request):
     return render(request, 'user/quiz_list.html', {'quizzes': quizzes})
 
 
+QUIZ_START_TIMES_SESSION_KEY = 'quiz_start_times'
+
+
+def _set_quiz_start_time(request, quiz):
+    started_at = timezone.now().isoformat()
+    quiz_start_times = request.session.get(QUIZ_START_TIMES_SESSION_KEY, {}).copy()
+    quiz_start_times[str(quiz.pk)] = started_at
+    request.session[QUIZ_START_TIMES_SESSION_KEY] = quiz_start_times
+    return started_at
+
+
+def _get_quiz_start_time(request, quiz):
+    return request.session.get(QUIZ_START_TIMES_SESSION_KEY, {}).get(str(quiz.pk))
+
+
+def _clear_quiz_start_time(request, quiz):
+    quiz_start_times = request.session.get(QUIZ_START_TIMES_SESSION_KEY, {}).copy()
+    quiz_start_times.pop(str(quiz.pk), None)
+    if quiz_start_times:
+        request.session[QUIZ_START_TIMES_SESSION_KEY] = quiz_start_times
+    else:
+        request.session.pop(QUIZ_START_TIMES_SESSION_KEY, None)
+
+
 @user_required
 def take_quiz(request, pk):
     """Take a quiz."""
@@ -1358,19 +1416,26 @@ def take_quiz(request, pk):
         return redirect('quiz_list')
 
     if request.method == 'POST':
-        # Server-side time validation
-        started_at = request.POST.get('started_at', '')
-        if started_at:
-            try:
-                from datetime import datetime
-                start_time = datetime.fromisoformat(started_at)
-                elapsed_minutes = (timezone.now() - timezone.make_aware(start_time) if timezone.is_naive(start_time) else timezone.now() - start_time).total_seconds() / 60
-                # Allow 1 extra minute for network latency
-                if elapsed_minutes > quiz.time_limit + 1:
-                    messages.error(request, 'Time limit exceeded. Your submission was not recorded.')
-                    return redirect('quiz_list')
-            except (ValueError, TypeError):
-                pass
+        started_at = _get_quiz_start_time(request, quiz)
+        if not started_at:
+            messages.error(request, 'Your quiz session expired. Please start the quiz again.')
+            return redirect('take_quiz', pk=pk)
+
+        try:
+            start_time = datetime.fromisoformat(started_at)
+            if timezone.is_naive(start_time):
+                start_time = timezone.make_aware(start_time)
+        except (ValueError, TypeError):
+            _clear_quiz_start_time(request, quiz)
+            messages.error(request, 'Your quiz session could not be validated. Please start again.')
+            return redirect('take_quiz', pk=pk)
+
+        elapsed_minutes = (timezone.now() - start_time).total_seconds() / 60
+        # Allow 1 extra minute for network latency.
+        if elapsed_minutes > quiz.time_limit + 1:
+            _clear_quiz_start_time(request, quiz)
+            messages.error(request, 'Time limit exceeded. Your submission was not recorded.')
+            return redirect('quiz_list')
 
         score = 0
         for q in questions:
@@ -1389,12 +1454,15 @@ def take_quiz(request, pk):
             passed=passed,
             completed_at=timezone.now(),
         )
+        _clear_quiz_start_time(request, quiz)
         return render(request, 'user/quiz_result.html', {'attempt': attempt, 'quiz': quiz})
 
+    quiz_started_at = _set_quiz_start_time(request, quiz)
     return render(request, 'user/take_quiz.html', {
         'quiz': quiz,
         'questions': questions,
         'attempts_remaining': 3 - attempt_count,
+        'quiz_started_at': quiz_started_at,
     })
 
 
@@ -1491,21 +1559,22 @@ def contact(request):
         form = ContactForm(request.POST)
         if form.is_valid():
             cd = form.cleaned_data
-            try:
-                from django.conf import settings as django_settings
-                send_mail(
-                    subject=f'[TalentOrbit Contact] {cd["subject"]}',
-                    message=f'From: {cd["name"]} <{cd["email"]}>\n\n{cd["message"]}',
-                    from_email=django_settings.DEFAULT_FROM_EMAIL,
-                    recipient_list=[django_settings.DEFAULT_FROM_EMAIL],
-                    fail_silently=True,
-                )
-            except Exception as e:
-                import logging
-                logger = logging.getLogger(__name__)
-                logger.error(f"Contact form email failed: {e}")
-            messages.success(request, 'Thank you for your message! We\'ll get back to you soon.')
-            return redirect('contact')
+            delivery_result = send_email_result(
+                subject=f'[TalentOrbit Contact] {cd["subject"]}',
+                message=f'From: {cd["name"]} <{cd["email"]}>\n\n{cd["message"]}',
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                recipient_list=[settings.DEFAULT_FROM_EMAIL],
+            )
+            if delivery_result:
+                messages.success(request, 'Thank you for your message! We\'ll get back to you soon.')
+                return redirect('contact')
+
+            logger.error(
+                'Contact form email failed. error_code=%s sender=%s',
+                delivery_result.error_code,
+                cd['email'],
+            )
+            messages.error(request, 'We could not send your message right now. Please try again later.')
     else:
         form = ContactForm()
     return render(request, 'pages/contact.html', {'form': form})

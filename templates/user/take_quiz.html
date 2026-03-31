@@ -19,7 +19,7 @@
     <!-- Questions -->
     <form method="POST" id="quizForm">
         {% csrf_token %}
-        <input type="hidden" name="started_at" id="startedAt">
+        <input type="hidden" name="started_at" id="startedAt" value="{{ quiz_started_at }}">
         {% for q in questions %}
         <div class="glass-card p-4 mb-3 fade-in">
             <h6 class="quiz-question mb-4">
@@ -63,9 +63,6 @@
 
 {% block extra_js %}
 <script>
-    // Record start time for server-side validation
-    document.getElementById('startedAt').value = new Date().toISOString();
-
     let totalSecs = {{ quiz.time_limit }} * 60;
     const timerEl = document.getElementById('time');
     const timerBadge = document.getElementById('timer');
