@@ -9,11 +9,11 @@ from django.utils.text import slugify
 from core.models import CompanyProfile, Job, JobCategory, Skill, User
 
 
-PRIMARY_DEMO_INBOX = 'harshmbhogayata@gmail.com'
-SECONDARY_DEMO_INBOX = 'harshmbhogayata5623@gmail.com'
+PRIMARY_DEMO_INBOX = 'demo-users@example.com'
+SECONDARY_DEMO_INBOX = 'demo-companies@example.com'
 
 
-def _gmail_alias(base_email, label):
+def _alias_email(base_email, label):
     local, domain = base_email.split('@', 1)
     return f'{local}+{slugify(label)}@{domain}'
 
@@ -99,7 +99,7 @@ class Command(BaseCommand):
         companies_data = [
             {
                 'username': 'techcorp',
-                'email': _gmail_alias(SECONDARY_DEMO_INBOX, 'techcorp'),
+                'email': _alias_email(SECONDARY_DEMO_INBOX, 'techcorp'),
                 'company_name': 'TechCorp Solutions',
                 'industry': 'Technology',
                 'city': 'Bangalore',
@@ -110,7 +110,7 @@ class Command(BaseCommand):
             },
             {
                 'username': 'designhub',
-                'email': _gmail_alias(SECONDARY_DEMO_INBOX, 'designhub'),
+                'email': _alias_email(SECONDARY_DEMO_INBOX, 'designhub'),
                 'company_name': 'DesignHub Studio',
                 'industry': 'Design',
                 'city': 'Mumbai',
@@ -121,7 +121,7 @@ class Command(BaseCommand):
             },
             {
                 'username': 'datawave',
-                'email': _gmail_alias(SECONDARY_DEMO_INBOX, 'datawave'),
+                'email': _alias_email(SECONDARY_DEMO_INBOX, 'datawave'),
                 'company_name': 'DataWave AI',
                 'industry': 'Artificial Intelligence',
                 'city': 'Hyderabad',
@@ -181,21 +181,21 @@ class Command(BaseCommand):
         demo_users = [
             {
                 'username': 'john_doe',
-                'email': _gmail_alias(PRIMARY_DEMO_INBOX, 'john-doe'),
+                'email': _alias_email(PRIMARY_DEMO_INBOX, 'john-doe'),
                 'first_name': 'John',
                 'last_name': 'Doe',
                 'skills': ['Python', 'React', 'Django'],
             },
             {
                 'username': 'priya_sharma',
-                'email': _gmail_alias(PRIMARY_DEMO_INBOX, 'priya-sharma'),
+                'email': _alias_email(PRIMARY_DEMO_INBOX, 'priya-sharma'),
                 'first_name': 'Priya',
                 'last_name': 'Sharma',
                 'skills': ['Figma', 'UI/UX Design'],
             },
             {
                 'username': 'alex_kumar',
-                'email': _gmail_alias(PRIMARY_DEMO_INBOX, 'alex-kumar'),
+                'email': _alias_email(PRIMARY_DEMO_INBOX, 'alex-kumar'),
                 'first_name': 'Alex',
                 'last_name': 'Kumar',
                 'skills': ['Python', 'Machine Learning', 'PostgreSQL'],
@@ -228,14 +228,14 @@ class Command(BaseCommand):
         admin, _ = User.objects.get_or_create(
             username='admin',
             defaults={
-                'email': _gmail_alias(PRIMARY_DEMO_INBOX, 'admin'),
+                'email': _alias_email(PRIMARY_DEMO_INBOX, 'admin'),
                 'role': 'admin',
                 'email_verified': True,
                 'is_staff': True,
                 'is_superuser': True,
             },
         )
-        admin.email = _gmail_alias(PRIMARY_DEMO_INBOX, 'admin')
+        admin.email = _alias_email(PRIMARY_DEMO_INBOX, 'admin')
         admin.role = 'admin'
         admin.email_verified = True
         admin.is_staff = True

@@ -155,7 +155,7 @@ EMAIL_FALLBACK_USE_TLS = env.bool('EMAIL_FALLBACK_USE_TLS', default=False)
 PUBLIC_APP_URL = env('PUBLIC_APP_URL', default='').strip()
 _default_from_email = env('DEFAULT_FROM_EMAIL', default='').strip()
 if not _default_from_email:
-    _default_from_email = EMAIL_HOST_USER or 'harshmbhogayata@gmail.com'
+    _default_from_email = EMAIL_HOST_USER or 'no-reply@example.com'
 DEFAULT_FROM_EMAIL = _default_from_email
 SERVER_EMAIL = env('SERVER_EMAIL', default=DEFAULT_FROM_EMAIL)
 

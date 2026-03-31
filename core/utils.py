@@ -166,7 +166,7 @@ def get_default_from_email():
     return (
         getattr(settings, 'DEFAULT_FROM_EMAIL', '').strip()
         or getattr(settings, 'EMAIL_HOST_USER', '').strip()
-        or 'harshmbhogayata@gmail.com'
+        or 'no-reply@example.com'
     )
 
 

@@ -21,7 +21,7 @@ from .models import (
 class UserRegistrationForm(UserCreationForm):
     """Registration form for regular users."""
     email = forms.EmailField(required=True, widget=forms.EmailInput(attrs={
-        'class': 'form-control', 'placeholder': 'harshmbhogayata+candidate@gmail.com'
+        'class': 'form-control', 'placeholder': 'candidate@example.com'
     }))
     first_name = forms.CharField(max_length=50, widget=forms.TextInput(attrs={
         'class': 'form-control', 'placeholder': 'First Name'
@@ -62,7 +62,7 @@ class UserRegistrationForm(UserCreationForm):
 class CompanyRegistrationForm(UserCreationForm):
     """Registration form for companies."""
     email = forms.EmailField(required=True, widget=forms.EmailInput(attrs={
-        'class': 'form-control', 'placeholder': 'harshmbhogayata5623+company@gmail.com'
+        'class': 'form-control', 'placeholder': 'company@example.com'
     }))
     company_name = forms.CharField(max_length=200, widget=forms.TextInput(attrs={
         'class': 'form-control', 'placeholder': 'Company Name'
@@ -113,7 +113,7 @@ class CompanyRegistrationForm(UserCreationForm):
 class AdminUserCreateForm(UserCreationForm):
     """Admin-managed user creation form."""
     email = forms.EmailField(required=True, widget=forms.EmailInput(attrs={
-        'class': 'form-control', 'placeholder': 'harshmbhogayata+new-user@gmail.com'
+        'class': 'form-control', 'placeholder': 'new-user@example.com'
     }))
     first_name = forms.CharField(max_length=50, required=False, widget=forms.TextInput(attrs={
         'class': 'form-control', 'placeholder': 'First Name'
@@ -161,7 +161,7 @@ class AdminUserCreateForm(UserCreationForm):
 class AdminCompanyCreateForm(UserCreationForm):
     """Admin-managed company creation form."""
     email = forms.EmailField(required=True, widget=forms.EmailInput(attrs={
-        'class': 'form-control', 'placeholder': 'harshmbhogayata5623+new-company@gmail.com'
+        'class': 'form-control', 'placeholder': 'new-company@example.com'
     }))
     company_name = forms.CharField(max_length=200, widget=forms.TextInput(attrs={
         'class': 'form-control', 'placeholder': 'Company Name'
@@ -578,7 +578,7 @@ class StyledPasswordResetForm(PasswordResetForm):
     """Styled password reset request form (email input)."""
     email = forms.EmailField(
         widget=forms.EmailInput(attrs={
-            'class': 'form-control', 'placeholder': 'harshmbhogayata@gmail.com',
+            'class': 'form-control', 'placeholder': 'you@example.com',
         }),
     )
 
@@ -613,7 +613,7 @@ class ContactForm(forms.Form):
     )
     email = forms.EmailField(
         widget=forms.EmailInput(attrs={
-            'class': 'form-control', 'placeholder': 'harshmbhogayata@gmail.com',
+            'class': 'form-control', 'placeholder': 'you@example.com',
         }),
     )
     subject = forms.CharField(

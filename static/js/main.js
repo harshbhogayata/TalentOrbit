@@ -44,11 +44,73 @@ document.addEventListener('DOMContentLoaded', () => {
         window.addEventListener('scroll', onScroll, { passive: true });
         window.addEventListener('resize', syncNavOffset, { passive: true });
         window.addEventListener('load', syncNavOffset, { once: true });
+        const mobileNavPanel = document.getElementById('mobileNavPanel');
+        if (mobileNavPanel) {
+            mobileNavPanel.addEventListener('shown.bs.collapse', syncNavOffset);
+            mobileNavPanel.addEventListener('hidden.bs.collapse', syncNavOffset);
+        }
         onScroll();
     }
 
 
     // ── Back to Top Button ─────────────────────────
+    // —— Dashboard Sidebar Drawer ————————————————————————————————
+    const dashboardSidebar = document.getElementById('dashboardSidebar');
+    const dashboardSidebarToggle = document.querySelector('[data-dashboard-sidebar-toggle]');
+    const dashboardSidebarBackdrop = document.querySelector('[data-dashboard-sidebar-backdrop]');
+    const dashboardSidebarClose = document.querySelector('[data-dashboard-sidebar-close]');
+
+    if (dashboardSidebar && dashboardSidebarToggle) {
+        const mobileSidebarMedia = window.matchMedia('(max-width: 992px)');
+
+        const setDashboardSidebarOpen = (isOpen) => {
+            if (!mobileSidebarMedia.matches) {
+                document.body.classList.remove('dashboard-sidebar-open');
+                dashboardSidebarToggle.setAttribute('aria-expanded', 'false');
+                if (dashboardSidebarBackdrop) dashboardSidebarBackdrop.hidden = true;
+                return;
+            }
+
+            document.body.classList.toggle('dashboard-sidebar-open', isOpen);
+            dashboardSidebarToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+
+            if (dashboardSidebarBackdrop) {
+                dashboardSidebarBackdrop.hidden = !isOpen;
+            }
+        };
+
+        dashboardSidebarToggle.addEventListener('click', () => {
+            const nextOpenState = !document.body.classList.contains('dashboard-sidebar-open');
+            setDashboardSidebarOpen(nextOpenState);
+        });
+
+        if (dashboardSidebarBackdrop) {
+            dashboardSidebarBackdrop.addEventListener('click', () => setDashboardSidebarOpen(false));
+        }
+
+        if (dashboardSidebarClose) {
+            dashboardSidebarClose.addEventListener('click', () => setDashboardSidebarOpen(false));
+        }
+
+        dashboardSidebar.addEventListener('click', (event) => {
+            if (!mobileSidebarMedia.matches) return;
+            if (event.target.closest('.dash-nav-link')) {
+                setDashboardSidebarOpen(false);
+            }
+        });
+
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape' && document.body.classList.contains('dashboard-sidebar-open')) {
+                setDashboardSidebarOpen(false);
+            }
+        });
+
+        mobileSidebarMedia.addEventListener('change', () => {
+            setDashboardSidebarOpen(false);
+        });
+    }
+
+
     const backToTop = document.getElementById('backToTop');
     if (backToTop) {
         window.addEventListener('scroll', () => {
